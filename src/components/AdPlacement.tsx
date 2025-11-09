@@ -1,4 +1,4 @@
-import { getAdminConfig } from '../utils/adminConfig';
+import { useConfig } from '../utils/ConfigContext';
 
 interface AdPlacementProps {
   size: 'medium' | 'mobile' | 'large' | 'leaderboard';
@@ -6,33 +6,79 @@ interface AdPlacementProps {
 }
 
 export function AdPlacement({ size, className = '' }: AdPlacementProps) {
-  const config = getAdminConfig();
+  const { config } = useConfig();
+  
+  // Don't render if config is not loaded yet
+  if (!config) {
+    console.log('🔴 AdPlacement: Config not loaded');
+    return null;
+  }
   
   // Check if ads are enabled globally
-  if (!config.ads.enabled) {
+  if (!config.adsEnabled) {
+    console.log('🔴 AdPlacement: Ads globally disabled');
     return null;
   }
 
-  // Map size to ad configuration
-  let adConfig;
-  let adName;
+  // Map size to ad placement key
+  let placementKey: string;
   
-  if (size === 'leaderboard' || size === 'large') {
-    adConfig = config.ads.largeAd;
-    adName = 'Large Ad';
+  if (size === 'leaderboard') {
+    placementKey = 'headerBanner';
+  } else if (size === 'large') {
+    placementKey = 'footerBanner';
   } else if (size === 'medium') {
-    adConfig = config.ads.mediumAd;
-    adName = 'Medium Ad';
+    placementKey = 'sidebarTop';
   } else {
-    // Mobile uses medium ad config as fallback
-    adConfig = config.ads.headerAd;
-    adName = 'Header Ad';
+    // Mobile
+    placementKey = 'contentTop';
   }
 
-  // Check if this specific ad placement is enabled
-  if (!adConfig.enabled) {
+  console.log(`🎯 AdPlacement: size=${size}, placementKey=${placementKey}`);
+
+  const adConfig = config.adPlacements?.[placementKey];
+
+  // Check if this specific ad placement exists and is enabled
+  if (!adConfig) {
+    console.log(`🔴 AdPlacement: No ad config found for ${placementKey}`);
     return null;
   }
+  
+  if (!adConfig.enabled) {
+    console.log(`🔴 AdPlacement: ${placementKey} is disabled`);
+    return null;
+  }
+  
+  const hasCode = adConfig.code && adConfig.code.trim() !== '';
+  
+  if (!hasCode) {
+    console.log(`⚠️ AdPlacement: ${placementKey} has no ad code - showing placeholder`);
+    // Show placeholder in development/testing
+    return (
+      <div className={`flex justify-center py-4 md:py-6 ${className}`}>
+        <div className="w-full max-w-full overflow-hidden">
+          <div className="text-center mb-2">
+            <span className="text-[10px] text-white/40 uppercase tracking-wider">Advertisement (Placeholder)</span>
+          </div>
+          <div 
+            className="mx-auto rounded-lg overflow-hidden bg-white/5 border border-white/10 flex items-center justify-center"
+            style={{ 
+              width: '100%',
+              maxWidth: size === 'medium' ? '300px' : '728px',
+              minHeight: size === 'medium' ? '250px' : '90px'
+            }}
+          >
+            <div className="text-center p-4">
+              <p className="text-white/60 text-sm mb-2">Ad Slot: {placementKey}</p>
+              <p className="text-white/40 text-xs">Go to Admin Panel to add ad code</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
+  console.log(`✅ AdPlacement: Rendering ad for ${placementKey}`);
 
   const dimensions = size === 'medium' 
     ? { width: 300, height: 250, name: 'Medium Rectangle', mobileWidth: 300, mobileHeight: 250 } 

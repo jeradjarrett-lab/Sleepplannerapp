@@ -7,9 +7,9 @@ import { Switch } from './ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Label } from './ui/label';
 import { AlertCircle, Check, Lock, Settings, Code, Eye, EyeOff, Plus, Trash2, Save, RefreshCw, LogOut, Loader2, Globe } from 'lucide-react';
-import { toast } from 'sonner@2.0.3';
+import { toast, Toaster } from 'sonner@2.0.3';
 import * as adminApi from '../utils/adminApi';
-import { DatabaseTest } from './DatabaseTest';
+import { DatabaseSetupRequired } from './DatabaseSetupRequired';
 
 type CustomScript = {
   id: string;
@@ -29,6 +29,7 @@ export function AdminPage() {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [currentPasswordForChange, setCurrentPasswordForChange] = useState('');
+  const [databaseSetupRequired, setDatabaseSetupRequired] = useState(false);
 
   // Load configuration on mount
   useEffect(() => {
@@ -37,19 +38,65 @@ export function AdminPage() {
     }
   }, [isAuthenticated]);
 
+  // Safety timeout - if loading for more than 10 seconds, assume database issue
+  useEffect(() => {
+    if (loading && !config && !databaseSetupRequired) {
+      const timeout = setTimeout(() => {
+        console.log('⚠️ Loading timeout - assuming database setup required');
+        setDatabaseSetupRequired(true);
+        setLoading(false);
+      }, 10000);
+      return () => clearTimeout(timeout);
+    }
+  }, [loading, config, databaseSetupRequired]);
+
   // Load configuration from API
   const loadConfig = async () => {
-    setLoading(true);
-    const result = await adminApi.getConfig();
-    if (result.success && result.config) {
-      setConfig(result.config);
-    } else {
-      toast.error(result.error || 'Failed to load configuration');
-      if (result.error?.includes('Unauthorized') || result.error?.includes('No session')) {
-        setIsAuthenticated(false);
+    try {
+      console.log('📡 Loading configuration from API...');
+      console.log('   Has session token:', adminApi.hasSession());
+      setLoading(true);
+      const result = await adminApi.getConfig();
+      console.log('📡 API result:', result);
+      console.log('   Success:', result.success);
+      console.log('   Has config:', !!result.config);
+      console.log('   Error:', result.error);
+      
+      if (result.success && result.config) {
+        console.log('✅ Configuration loaded successfully');
+        console.log('   Config keys:', Object.keys(result.config));
+        setConfig(result.config);
+        setDatabaseSetupRequired(false);
+      } else {
+        console.log('❌ Failed to load configuration');
+        console.log('   Error message:', result.error);
+        console.log('   Error type:', typeof result.error);
+        
+        if (result.error?.includes('Database tables not created') || result.error?.includes('Could not find the table')) {
+          console.log('⚠️ Database tables not found, showing setup screen');
+          setDatabaseSetupRequired(true);
+        } else if (result.error?.includes('Unauthorized') || result.error?.includes('No session')) {
+          console.log('⚠️ Session invalid, clearing authentication');
+          toast.error('Session expired. Please log in again.');
+          setIsAuthenticated(false);
+        } else {
+          console.log('⚠️ Unknown error, showing error toast');
+          const errorMessage = result.error || 'Failed to load configuration';
+          console.log('   Toast message:', errorMessage);
+          toast.error(errorMessage);
+        }
       }
+    } catch (error) {
+      console.error('❌ Unexpected error in loadConfig:', error);
+      console.error('   Error type:', error.constructor.name);
+      const errorMessage = 'An unexpected error occurred: ' + (error instanceof Error ? error.message : String(error));
+      console.error('   Toast message:', errorMessage);
+      toast.error(errorMessage);
+      setIsAuthenticated(false);
+    } finally {
+      console.log('🏁 loadConfig complete, setting loading to false');
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   // Handle login
@@ -57,17 +104,32 @@ export function AdminPage() {
     e.preventDefault();
     setLoading(true);
     
-    const result = await adminApi.login(password);
-    
-    if (result.success) {
-      setIsAuthenticated(true);
-      toast.success('Successfully logged in');
-      setPassword('');
-    } else {
-      toast.error(result.error || 'Invalid password');
+    try {
+      console.log('🔐 Attempting login...');
+      const result = await adminApi.login(password);
+      console.log('🔐 Login result:', result);
+      
+      if (result.success) {
+        console.log('✅ Login successful, setting authenticated state');
+        setIsAuthenticated(true);
+        toast.success('Successfully logged in');
+        setPassword('');
+      } else {
+        console.log('❌ Login failed:', result.error);
+        if (result.error?.includes('Database tables not created') || result.error?.includes('Could not find the table')) {
+          console.log('⚠️ Database setup required');
+          setDatabaseSetupRequired(true);
+          toast.error('Database setup required. Please run the SQL script.');
+        } else {
+          toast.error(result.error || 'Invalid password');
+        }
+      }
+    } catch (error) {
+      console.error('❌ Unexpected error during login:', error);
+      toast.error('An unexpected error occurred during login: ' + (error instanceof Error ? error.message : String(error)));
+    } finally {
+      setLoading(false);
     }
-    
-    setLoading(false);
   };
 
   // Handle logout
@@ -81,7 +143,7 @@ export function AdminPage() {
   // Go back to main app
   const handleBackToApp = () => {
     window.location.hash = '';
-    window.location.reload();
+    // Don't reload - let React handle the navigation
   };
 
   // Handle configuration changes
@@ -95,18 +157,25 @@ export function AdminPage() {
     if (!config) return;
     
     setLoading(true);
-    const result = await adminApi.updateConfig(config);
-    
-    if (result.success) {
-      setHasChanges(false);
-      toast.success('Configuration saved successfully');
-      // Reload page to apply changes
-      setTimeout(() => window.location.reload(), 1000);
-    } else {
-      toast.error(result.error || 'Failed to save configuration');
+    try {
+      console.log('💾 Saving configuration...');
+      const result = await adminApi.updateConfig(config);
+      
+      if (result.success) {
+        console.log('✅ Configuration saved successfully');
+        setHasChanges(false);
+        toast.success('Configuration saved successfully');
+        // Don't reload - we already have the current config in state
+      } else {
+        console.error('❌ Failed to save configuration:', result.error);
+        toast.error(result.error || 'Failed to save configuration');
+      }
+    } catch (error) {
+      console.error('❌ Save error:', error);
+      toast.error('An error occurred while saving');
+    } finally {
+      setLoading(false);
     }
-    
-    setLoading(false);
   };
 
   // Reset configuration
@@ -198,7 +267,7 @@ export function AdminPage() {
     };
     updateConfig({
       ...config,
-      customScripts: [...config.customScripts, newScript]
+      customScripts: [...(config.customScripts || []), newScript]
     });
   };
 
@@ -209,7 +278,7 @@ export function AdminPage() {
     if (confirm('Are you sure you want to delete this script?')) {
       updateConfig({
         ...config,
-        customScripts: config.customScripts.filter(s => s.id !== id)
+        customScripts: (config.customScripts || []).filter(s => s.id !== id)
       });
     }
   };
@@ -220,7 +289,7 @@ export function AdminPage() {
     
     updateConfig({
       ...config,
-      customScripts: config.customScripts.map(s => 
+      customScripts: (config.customScripts || []).map(s => 
         s.id === id ? { ...s, ...updates } : s
       )
     });
@@ -278,36 +347,104 @@ export function AdminPage() {
             </p>
           </form>
 
-          <div className="mt-4 text-center">
-            <button
-              onClick={handleBackToApp}
-              className="text-sm text-white/50 hover:text-white/80 transition-colors underline-offset-2 hover:underline"
-            >
-              ← Back to App
-            </button>
-          </div>
-          
-          <details className="mt-6">
-            <summary className="text-xs text-white/40 cursor-pointer hover:text-white/60 text-center">
-              🔧 Debug: Test Database Connection
-            </summary>
-            <div className="mt-4">
-              <DatabaseTest />
+          <div className="mt-6 space-y-2 text-center">
+            <div>
+              <button
+                onClick={() => window.location.hash = 'admin-debug'}
+                className="text-sm text-blue-400 hover:text-blue-300 transition-colors underline-offset-2 hover:underline"
+              >
+                🔧 Open Debug Panel
+              </button>
             </div>
-          </details>
+            <div>
+              <button
+                onClick={handleBackToApp}
+                className="text-sm text-white/50 hover:text-white/80 transition-colors underline-offset-2 hover:underline"
+              >
+                ← Back to App
+              </button>
+            </div>
+          </div>
         </Card>
+        <Toaster position="top-right" expand={false} richColors />
       </div>
     );
   }
 
+  // Database setup required screen
+  if (databaseSetupRequired) {
+    return (
+      <>
+        <DatabaseSetupRequired />
+        <Toaster position="top-right" expand={false} richColors />
+      </>
+    );
+  }
+
   // Show loading state while fetching config
+  if (!config && !databaseSetupRequired && loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
+        <Card className="bg-white/5 backdrop-blur-sm border border-white/10 shadow-2xl p-8 w-full max-w-md">
+          <div className="text-white text-center">
+            <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4" />
+            <p className="mb-4">Loading configuration...</p>
+            <p className="text-sm text-white/60 mb-6">If this takes more than a few seconds, try clearing your session.</p>
+            <Button
+              onClick={() => {
+                console.log('🗑️ Manually clearing session and reloading');
+                adminApi.logout();
+                setIsAuthenticated(false);
+                window.location.reload();
+              }}
+              variant="outline"
+              className="border-white/20 text-white hover:bg-white/10"
+            >
+              Clear Session & Reload
+            </Button>
+          </div>
+        </Card>
+        <Toaster position="top-right" expand={false} richColors />
+      </div>
+    );
+  }
+
+  // If config is still null and not loading, show error
   if (!config) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center">
-        <div className="text-white text-center">
-          <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4" />
-          <p>Loading configuration...</p>
-        </div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
+        <Card className="bg-white/5 backdrop-blur-sm border border-white/10 shadow-2xl p-8 w-full max-w-md">
+          <div className="text-white text-center">
+            <AlertCircle className="w-12 h-12 text-red-400 mx-auto mb-4" />
+            <h2 className="text-xl mb-4">Configuration Error</h2>
+            <p className="text-white/70 mb-6">Unable to load configuration. Please try again.</p>
+            <div className="space-y-2">
+              <Button
+                onClick={() => {
+                  console.log('🔄 Retrying configuration load...');
+                  loadConfig();
+                }}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+              >
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Retry
+              </Button>
+              <Button
+                onClick={() => {
+                  console.log('🗑️ Clearing session and logging out');
+                  adminApi.logout();
+                  setIsAuthenticated(false);
+                }}
+                variant="outline"
+                className="w-full border-white/20 text-white hover:bg-white/10"
+              >
+                <LogOut className="w-4 h-4 mr-2" />
+                Logout & Try Again
+              </Button>
+            </div>
+          </div>
+        </Card>
+        <Toaster position="top-right" expand={false} richColors />
       </div>
     );
   }
@@ -403,14 +540,14 @@ export function AdminPage() {
                   <Label htmlFor="ads-enabled" className="text-white">Enable All Ads</Label>
                   <Switch
                     id="ads-enabled"
-                    checked={config.adsEnabled}
+                    checked={config.adsEnabled ?? true}
                     onCheckedChange={(checked) => updateConfig({ ...config, adsEnabled: checked })}
                   />
                 </div>
               </div>
 
               <div className="space-y-6">
-                {Object.entries(config.adPlacements).map(([key, placement]) => (
+                {Object.entries(config.adPlacements || {}).map(([key, placement]) => (
                   <Card key={key} className="bg-white/5 border-white/10 p-4">
                     <div className="flex items-center justify-between mb-3">
                       <h3 className="text-white capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</h3>
@@ -462,7 +599,7 @@ export function AdminPage() {
               </div>
 
               <div className="space-y-4">
-                {config.customScripts.length === 0 ? (
+                {(!config.customScripts || config.customScripts.length === 0) ? (
                   <p className="text-white/40 text-center py-8">No custom scripts added yet</p>
                 ) : (
                   config.customScripts.map((script) => (
@@ -541,7 +678,7 @@ export function AdminPage() {
                   <Label htmlFor="site-name" className="text-white mb-2 block">Site Name</Label>
                   <Input
                     id="site-name"
-                    value={config.seo.siteName}
+                    value={config.seo?.siteName || ''}
                     onChange={(e) => updateConfig({
                       ...config,
                       seo: { ...config.seo, siteName: e.target.value }
@@ -560,7 +697,7 @@ export function AdminPage() {
                       <Label htmlFor="sleep-calc-title" className="text-white/80 text-sm mb-1 block">Page Title</Label>
                       <Input
                         id="sleep-calc-title"
-                        value={config.seo.pages.sleepCalculator.title}
+                        value={config.seo?.pages?.sleepCalculator?.title || ''}
                         onChange={(e) => updateConfig({
                           ...config,
                           seo: {
@@ -868,6 +1005,7 @@ export function AdminPage() {
           </TabsContent>
         </Tabs>
       </div>
+      <Toaster position="top-right" expand={false} richColors />
     </div>
   );
 }

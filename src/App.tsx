@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { SleepCalculator } from "./components/SleepCalculator";
 import { JetLagCalculator } from "./components/JetLagCalculator";
 import { SleepRecommendations } from "./components/SleepRecommendations";
 import { AdminPage } from "./components/AdminPage";
+import { AdminDebugPanel } from "./components/AdminDebugPanel";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { FAQSection } from "./components/FAQSection";
@@ -10,53 +11,54 @@ import { HowToSection } from "./components/HowToSection";
 import { QuickAnswers } from "./components/QuickAnswers";
 import { ComparisonTable } from "./components/ComparisonTable";
 import { Moon, Plane, User } from "lucide-react";
-import { getAdminConfig } from "./utils/adminConfig";
-import * as adminApi from "./utils/adminApi";
+import { ConfigProvider, useConfig } from "./utils/ConfigContext";
 import { Toaster } from "./components/ui/sonner";
 
-export default function App() {
+function AppContent() {
   const [activeSection, setActiveSection] = useState<
-    "sleep" | "recommendations" | "jetlag" | "admin"
+    "sleep" | "recommendations" | "jetlag" | "admin" | "admin-debug"
   >("sleep");
-  const [seoConfig, setSeoConfig] = useState<adminApi.AdminConfig['seo'] | null>(null);
-
-  // Load SEO config from API
-  useEffect(() => {
-    const loadSeoConfig = async () => {
-      try {
-        const response = await fetch(
-          `https://qglpvmhpkbptyfmseqre.supabase.co/functions/v1/make-server-bb7cbf27/public/config`,
-          {
-            headers: {
-              'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFnbHB2bWhwa2JwdHlmbXNlcXJlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI2NDkwOTQsImV4cCI6MjA3ODIyNTA5NH0.KsAaeRVsFVvmgqeMcajlGutfCRhVvNsEeHFaMgnyFuE'
-            }
-          }
-        );
-        if (response.ok) {
-          const config = await response.json();
-          if (config.seo) {
-            setSeoConfig(config.seo);
-          }
-        }
-      } catch (error) {
-        console.log('SEO config not yet available, using defaults');
-      }
-    };
-    loadSeoConfig();
-  }, []);
+  
+  // Track previous section to detect when returning from admin
+  const previousSectionRef = useRef<string>(activeSection);
+  
+  // Get config from context
+  const { config, loading: configLoading, refetch } = useConfig();
+  const seoConfig = config?.seo || null;
 
   // Check if we should show admin page based on URL
   useEffect(() => {
     const hash = window.location.hash;
     if (hash === "#admin") {
       setActiveSection("admin");
+    } else if (hash === "#admin-debug") {
+      setActiveSection("admin-debug");
+    } else if (hash === "") {
+      // Reset to sleep calculator when hash is cleared
+      setActiveSection("sleep");
     }
 
     // Listen for hash changes
     const handleHashChange = () => {
       const hash = window.location.hash;
+      const wasPreviouslyAdmin = previousSectionRef.current === "admin";
+      
       if (hash === "#admin") {
+        previousSectionRef.current = "admin";
         setActiveSection("admin");
+      } else if (hash === "#admin-debug") {
+        previousSectionRef.current = "admin-debug";
+        setActiveSection("admin-debug");
+      } else if (hash === "") {
+        // Reset to sleep calculator when returning from admin
+        setActiveSection("sleep");
+        previousSectionRef.current = "sleep";
+        
+        // Refetch config when returning from admin (in case it was changed)
+        if (wasPreviouslyAdmin) {
+          console.log('🔄 Returning from admin, refetching config...');
+          refetch();
+        }
       }
     };
 
@@ -66,11 +68,12 @@ export default function App() {
         "hashchange",
         handleHashChange,
       );
-  }, []);
+  }, [refetch]);
 
   // Inject custom scripts from admin config
   useEffect(() => {
-    const config = getAdminConfig();
+    if (!config || !config.customScripts) return;
+    
     const enabledScripts = config.customScripts.filter(
       (s) => s.enabled,
     );
@@ -93,7 +96,7 @@ export default function App() {
         document.body.appendChild(container);
       }
     });
-  }, [activeSection]); // Re-run when section changes to ensure scripts are loaded
+  }, [config, activeSection]); // Re-run when config or section changes
 
   // SEO optimization - Update meta tags based on active section
   useEffect(() => {
@@ -136,9 +139,13 @@ export default function App() {
     const data = defaultSeoData[activeSection as keyof typeof defaultSeoData];
 
     // Safety check
-    if (!data) return;
+    if (!data) {
+      console.log('⚠️ SEO: No data for section', activeSection);
+      return;
+    }
 
     // Update document title
+    console.log('📝 SEO: Setting title to', data.title);
     document.title = data.title;
 
     // Update or create meta tags
@@ -345,11 +352,38 @@ export default function App() {
       script.text = JSON.stringify(schema);
       document.head.appendChild(script);
     });
-  }, [activeSection]);
+  }, [activeSection, seoConfig]);
+
+  // Show admin debug panel if active
+  if (activeSection === "admin-debug") {
+    return (
+      <>
+        <AdminDebugPanel />
+        <Toaster position="top-right" theme="dark" />
+      </>
+    );
+  }
 
   // Show admin page if active
   if (activeSection === "admin") {
-    return <AdminPage />;
+    return (
+      <>
+        <AdminPage />
+        <Toaster position="top-right" theme="dark" />
+      </>
+    );
+  }
+
+  // Show loading state while config is loading (only for main app, not admin)
+  if (configLoading && !config) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] dark flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+          <p className="text-white/60">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -449,5 +483,14 @@ export default function App() {
       {/* Toast notifications */}
       <Toaster position="top-right" theme="dark" />
     </div>
+  );
+}
+
+// Main app with ConfigProvider wrapper
+export default function App() {
+  return (
+    <ConfigProvider>
+      <AppContent />
+    </ConfigProvider>
   );
 }
