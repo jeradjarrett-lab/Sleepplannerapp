@@ -37,6 +37,20 @@ export function Footer() {
         <div className="text-[9px] md:text-[10px] text-white/30 max-w-2xl mx-auto pt-2">
           <p>Keywords: sleep calculator, bedtime calculator, wake time calculator, jet lag calculator, sleep cycles, 90 minute sleep cycle, REM sleep, sleep by age, sleep recommendations, circadian rhythm, sleep hygiene, time zone adjustment</p>
         </div>
+        
+        {/* Histats noscript fallback */}
+        <noscript>
+          <div className="pt-2">
+            <a href="/" target="_blank" rel="noopener noreferrer">
+              <img 
+                src="//sstatic1.histats.com/0.gif?4990579&101" 
+                alt="analytics" 
+                className="inline-block opacity-0 w-0 h-0"
+                style={{ border: 0 }}
+              />
+            </a>
+          </div>
+        </noscript>
       </div>
     </footer>
   );

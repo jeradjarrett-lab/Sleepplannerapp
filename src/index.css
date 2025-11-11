@@ -612,40 +612,6 @@
     grid-row-start: 1;
   }
 
-  .container {
-    width: 100%;
-  }
-
-  @media (width >= 40rem) {
-    .container {
-      max-width: 40rem;
-    }
-  }
-
-  @media (width >= 48rem) {
-    .container {
-      max-width: 48rem;
-    }
-  }
-
-  @media (width >= 64rem) {
-    .container {
-      max-width: 64rem;
-    }
-  }
-
-  @media (width >= 80rem) {
-    .container {
-      max-width: 80rem;
-    }
-  }
-
-  @media (width >= 96rem) {
-    .container {
-      max-width: 96rem;
-    }
-  }
-
   .-mx-1 {
     margin-inline: calc(var(--spacing) * -1);
   }
@@ -791,6 +757,10 @@
     height: calc(var(--spacing) * 9);
   }
 
+  .h-0 {
+    height: calc(var(--spacing) * 0);
+  }
+
   .h-1\.5 {
     height: calc(var(--spacing) * 1.5);
   }
@@ -839,6 +809,10 @@
     height: calc(var(--spacing) * 16);
   }
 
+  .h-20 {
+    height: calc(var(--spacing) * 20);
+  }
+
   .h-40 {
     height: calc(var(--spacing) * 40);
   }
@@ -873,6 +847,10 @@
 
   .min-h-screen {
     min-height: 100vh;
+  }
+
+  .w-0 {
+    width: calc(var(--spacing) * 0);
   }
 
   .w-1\.5 {
@@ -1824,6 +1802,16 @@
 
   .bg-secondary {
     background-color: var(--secondary);
+  }
+
+  .bg-slate-800\/20 {
+    background-color: color-mix(in srgb, oklch(.279 .041 260.031) 20%, transparent);
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-slate-800\/20 {
+      background-color: color-mix(in oklab, var(--color-slate-800) 20%, transparent);
+    }
   }
 
   .bg-transparent {
@@ -4386,6 +4374,7 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeSpeed;
+  overflow-y: scroll;
 }
 
 @supports (font: -apple-system) {
@@ -4404,10 +4393,21 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
-.animate-spin, [class*="transition"], [class*="hover:"] {
-  will-change: transform, opacity;
+.animate-spin {
+  will-change: transform;
   backface-visibility: hidden;
   transform: translateZ(0);
+}
+
+@media (hover: hover) {
+  [class*="transition"]:hover, [class*="hover:"]:hover {
+    transform: translateZ(0);
+  }
+}
+
+.below-fold {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
 }
 
 body {

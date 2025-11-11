@@ -62,40 +62,36 @@ export function AdPlacement({
     // Only run on client side
     if (typeof window === 'undefined' || !containerRef.current) return;
     
-    // Defer ad loading until after page is interactive (improves performance)
-    const deferTimer = setTimeout(() => {
-      // Check if the container is actually visible (not hidden by CSS)
-      const checkVisibility = () => {
-        if (!containerRef.current) return false;
-        
-        const rect = containerRef.current.getBoundingClientRect();
-        const styles = window.getComputedStyle(containerRef.current);
-        
-        // Check if element is visible and has dimensions
-        const visible = 
-          styles.display !== 'none' &&
-          styles.visibility !== 'hidden' &&
-          styles.opacity !== '0' &&
-          rect.width > 0 &&
-          rect.height > 0;
-          
-        return visible;
-      };
+    // Aggressively defer ad loading until after page is interactive
+    // Use Intersection Observer for better performance
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Wait additional time even after intersection
+            setTimeout(() => setIsVisible(true), 2000);
+            observer.disconnect();
+          }
+        });
+      },
+      {
+        rootMargin: '200px', // Load when within 200px of viewport
+        threshold: 0.01
+      }
+    );
 
-      // Wait for container to be visible
-      const visibilityCheck = setInterval(() => {
-        if (checkVisibility()) {
-          setIsVisible(true);
-          clearInterval(visibilityCheck);
-        }
-      }, 100);
-
-      // Cleanup after 5 seconds max
-      setTimeout(() => clearInterval(visibilityCheck), 5000);
-    }, 1500); // Wait 1.5s before checking visibility
+    // Delay observer initialization for better performance
+    const observerTimer = setTimeout(() => {
+      if (containerRef.current) {
+        observer.observe(containerRef.current);
+      }
+    }, 2000); // Wait 2s before even observing
 
     // Cleanup
-    return () => clearTimeout(deferTimer);
+    return () => {
+      clearTimeout(observerTimer);
+      observer.disconnect();
+    };
   }, []);
 
   useEffect(() => {

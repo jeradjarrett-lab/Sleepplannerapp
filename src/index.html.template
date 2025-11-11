@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Critical resource hints for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+  <link rel="dns-prefetch" href="https://platform-api.sharethis.com">
+  
+  <!-- Preload critical font -->
+  <link rel="preload" as="font" type="font/woff2" 
+        href="https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2" 
+        crossorigin="anonymous" fetchpriority="high">
+  
+  <!-- Load Inter font with display=swap for faster rendering -->
+  <link rel="preload" as="style" 
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" 
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        media="print" onload="this.media='all'; this.onload=null;">
+  <noscript>
+    <link rel="stylesheet" 
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  </noscript>
+  
+  <!-- Critical CSS will be injected here by build process -->
+  <style id="critical-css">
+    /* Critical CSS for above-the-fold content */
+    *,::before,::after{box-sizing:border-box;border:0 solid #e5e7eb}
+    html{line-height:1.5;-webkit-text-size-adjust:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;tab-size:4}
+    body{margin:0;line-height:inherit;background:linear-gradient(135deg,#0f172a,#1e293b,#0f172a);min-height:100vh;color:#f8fafc}
+    .header{display:flex;align-items:center;justify-content:space-between;padding:1rem;background:rgba(15,23,42,0.8);backdrop-filter:blur(10px)}
+    .logo{font-size:1.5rem;font-weight:700;color:#4f86f7}
+    .nav-toggle{display:flex;gap:0.25rem;background:rgba(30,41,59,0.8);border-radius:9999px;padding:0.25rem}
+    .nav-button{padding:0.5rem 1rem;border-radius:9999px;transition:all 0.2s;cursor:pointer}
+    .nav-button.active{background:#4f86f7;color:#fff}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .animate-spin{animation:spin 1s linear infinite}
+  </style>
+  
+  <title>EyeLoveSleep - Sleep Calculator & Jet Lag Tool</title>
+  <meta name="description" content="Calculate optimal bedtimes and wake times based on 90-minute sleep cycles. Features jet lag calculator, sleep recommendations, and science-backed sleep guidance.">
+  
+  <!-- Error suppression - Run BEFORE any third-party scripts -->
+  <script>
+    (function() {
+      // Patterns to suppress (harmless third-party errors)
+      var patterns = [
+        '__tcfapilocator', 'tcf iframe locator', 'lt.js:', 'setting up the tcf',
+        'cross-origin frame', 'blocked a frame', 'securityerror: failed to read',
+        '__gpplocator', '__uspapi', '__tcfapi', 'resizeobserver loop'
+      ];
+      
+      function shouldSuppress(msg) {
+        if (!msg) return false;
+        var lower = msg.toString().toLowerCase();
+        for (var i = 0; i < patterns.length; i++) {
+          if (lower.indexOf(patterns[i]) !== -1) return true;
+        }
+        return false;
+      }
+      
+      // Override console methods
+      var origError = console.error;
+      var origWarn = console.warn;
+      var origLog = console.log;
+      
+      console.error = function() {
+        var msg = Array.prototype.slice.call(arguments).join(' ');
+        if (!shouldSuppress(msg)) origError.apply(console, arguments);
+      };
+      
+      console.warn = function() {
+        var msg = Array.prototype.slice.call(arguments).join(' ');
+        if (!shouldSuppress(msg)) origWarn.apply(console, arguments);
+      };
+      
+      console.log = function() {
+        var msg = Array.prototype.slice.call(arguments).join(' ');
+        if (!shouldSuppress(msg)) origLog.apply(console, arguments);
+      };
+      
+      // Global error handler
+      window.addEventListener('error', function(e) {
+        var msg = (e.message || e.error && e.error.message || '').toString();
+        if (shouldSuppress(msg)) {
+          e.preventDefault();
+          e.stopPropagation();
+          e.stopImmediatePropagation();
+          return false;
+        }
+      }, true);
+      
+      // Store originals for restoration
+      window.__origConsole = { error: origError, warn: origWarn, log: origLog };
+    })();
+  </script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+  
+  <!-- Service worker registration -->
+  <script>
+    if ('serviceWorker' in navigator && location.protocol === 'https:') {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/service-worker.js')
+          .catch(function(err) {
+            console.log('SW registration failed:', err);
+          });
+      });
+    }
+  </script>
+</body>
+</html>

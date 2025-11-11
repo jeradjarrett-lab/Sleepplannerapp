@@ -189,8 +189,10 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Optimize rendering */
+  /* Optimize rendering for performance */
   text-rendering: optimizeSpeed;
+  /* Reduce layout shifts */
+  overflow-y: scroll;
 }
 
 /* Ensure system fonts load immediately while custom fonts load */
@@ -213,14 +215,26 @@ html {
 }
 
 /* GPU acceleration for better performance - apply selectively */
-.animate-spin,
-[class*="transition"],
-[class*="hover:"] {
-  will-change: transform, opacity;
+.animate-spin {
+  will-change: transform;
   transform: translateZ(0);
   -webkit-transform: translateZ(0);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+}
+
+/* Remove will-change from hover states to reduce GPU memory */
+@media (hover: hover) {
+  [class*="transition"]:hover,
+  [class*="hover:"]:hover {
+    transform: translateZ(0);
+  }
+}
+
+/* Content visibility for below-the-fold optimization */
+.below-fold {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
 }
 
 /* Improve text readability on mobile */

@@ -48,6 +48,15 @@ Open browser console and use `window.cacheDebug`:
 | `cacheDebug.resources()` | List cached files |
 | `cacheDebug.reset()` | Clear all & reload |
 
+### Error Suppression (Third-Party Scripts)
+
+Harmless errors from AdSense/analytics are automatically suppressed:
+- TCF API cross-origin errors
+- Consent framework iframe errors
+- ResizeObserver warnings
+
+To debug real errors, errors are still logged in dev mode at `console.debug` level.
+
 ---
 
 ## 📦 What Gets Cached?
