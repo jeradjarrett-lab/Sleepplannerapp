@@ -1,9 +1,4 @@
 export function Footer() {
-  const handleAdminClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    window.location.hash = 'admin';
-  };
-
   return (
     <footer className="bg-white/5 backdrop-blur-md border-t border-white/10 mt-12 md:mt-16 py-6 md:py-8" role="contentinfo">
       <div className="max-w-7xl mx-auto px-4 text-center space-y-2 md:space-y-3">
@@ -18,15 +13,6 @@ export function Footer() {
           <a href="#about" className="hover:text-white/80 transition-colors underline-offset-2 hover:underline">About Us</a>
           <span className="hidden sm:inline" aria-hidden="true">|</span>
           <a href="#contact" className="hover:text-white/80 transition-colors underline-offset-2 hover:underline">Contact</a>
-          <span className="hidden sm:inline" aria-hidden="true">|</span>
-          <a 
-            href="#admin" 
-            onClick={handleAdminClick}
-            className="hover:text-white/80 transition-colors underline-offset-2 hover:underline opacity-30 hover:opacity-100"
-            aria-label="Admin panel"
-          >
-            Admin
-          </a>
         </nav>
         <p className="text-[10px] md:text-xs text-white/40">
           © 2025 EyeLoveSleep. All rights reserved.
