@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react';
 import { MapPin } from 'lucide-react';
 
 interface TimeZoneMapProps {
@@ -281,185 +280,6 @@ const cityCoordinates: { [key: string]: [number, number] } = {
 };
 
 export function TimeZoneMap({ fromCity, toCity, fromOffset, toOffset }: TimeZoneMapProps) {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const leafletMapRef = useRef<any>(null);
-
-  useEffect(() => {
-    // Only run on client side
-    if (typeof window === 'undefined' || !mapRef.current) return;
-
-    const initMap = async () => {
-      // Dynamically import Leaflet
-      const L = (await import('leaflet')).default;
-      
-      // Import Leaflet CSS
-      if (!document.querySelector('link[href*="leaflet.css"]')) {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-        document.head.appendChild(link);
-      }
-
-      // Clean up existing map
-      if (leafletMapRef.current) {
-        leafletMapRef.current.remove();
-      }
-
-      const fromCoords = cityCoordinates[fromCity] || [0, 0];
-      const toCoords = cityCoordinates[toCity] || [0, 0];
-
-      // Initialize map
-      const map = L.map(mapRef.current, {
-        scrollWheelZoom: false,
-        zoomControl: true,
-      }).setView([20, 0], 2);
-
-      leafletMapRef.current = map;
-
-      // Add OpenStreetMap tiles (dark theme)
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 20
-      }).addTo(map);
-
-      // Custom icon for markers
-      const createCustomIcon = (color: string) => {
-        return L.divIcon({
-          className: 'custom-marker',
-          html: `
-            <div style="
-              width: 30px;
-              height: 30px;
-              background: ${color};
-              border: 3px solid white;
-              border-radius: 50%;
-              box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            ">
-              <div style="
-                width: 10px;
-                height: 10px;
-                background: white;
-                border-radius: 50%;
-              "></div>
-            </div>
-          `,
-          iconSize: [30, 30],
-          iconAnchor: [15, 15],
-        });
-      };
-
-      // Add departure marker (blue)
-      const fromMarker = L.marker(fromCoords, { 
-        icon: createCustomIcon('#4f86f7') 
-      }).addTo(map);
-      fromMarker.bindPopup(`
-        <div style="color: #1e293b; padding: 4px;">
-          <strong>Departing From</strong><br/>
-          ${fromCity}<br/>
-          <span style="color: #64748b;">UTC ${fromOffset >= 0 ? '+' : ''}${fromOffset}</span>
-        </div>
-      `);
-
-      // Add arrival marker (purple)
-      const toMarker = L.marker(toCoords, { 
-        icon: createCustomIcon('#a855f7') 
-      }).addTo(map);
-      toMarker.bindPopup(`
-        <div style="color: #1e293b; padding: 4px;">
-          <strong>Traveling To</strong><br/>
-          ${toCity}<br/>
-          <span style="color: #64748b;">UTC ${toOffset >= 0 ? '+' : ''}${toOffset}</span>
-        </div>
-      `);
-
-      // Draw curved line between cities
-      const latlngs = [fromCoords, toCoords];
-      
-      // Calculate control point for curved line (above the midpoint)
-      const midLat = (fromCoords[0] + toCoords[0]) / 2;
-      const midLng = (fromCoords[1] + toCoords[1]) / 2;
-      const distance = Math.sqrt(
-        Math.pow(toCoords[0] - fromCoords[0], 2) + 
-        Math.pow(toCoords[1] - fromCoords[1], 2)
-      );
-      const curvature = distance * 0.3; // Adjust curvature
-      
-      // Create curved path using quadratic bezier curve
-      const curvePoints: [number, number][] = [];
-      const steps = 50;
-      for (let i = 0; i <= steps; i++) {
-        const t = i / steps;
-        const lat = (1 - t) * (1 - t) * fromCoords[0] + 
-                   2 * (1 - t) * t * (midLat + curvature) + 
-                   t * t * toCoords[0];
-        const lng = (1 - t) * (1 - t) * fromCoords[1] + 
-                   2 * (1 - t) * t * midLng + 
-                   t * t * toCoords[1];
-        curvePoints.push([lat, lng]);
-      }
-
-      // Draw the path
-      L.polyline(curvePoints, {
-        color: '#a855f7',
-        weight: 3,
-        opacity: 0.7,
-        dashArray: '10, 5',
-      }).addTo(map);
-
-      // Add animated marker along the path
-      const planeIcon = L.divIcon({
-        className: 'plane-marker',
-        html: `
-          <div style="
-            font-size: 24px;
-            transform: rotate(45deg);
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-          ">
-            ✈️
-          </div>
-        `,
-        iconSize: [24, 24],
-        iconAnchor: [12, 12],
-      });
-
-      const planeMarker = L.marker(fromCoords, { icon: planeIcon }).addTo(map);
-
-      // Animate plane
-      let step = 0;
-      const animatePlane = () => {
-        if (step < curvePoints.length) {
-          planeMarker.setLatLng(curvePoints[step]);
-          step++;
-          setTimeout(animatePlane, 50);
-        } else {
-          // Reset animation
-          setTimeout(() => {
-            step = 0;
-            animatePlane();
-          }, 2000);
-        }
-      };
-      animatePlane();
-
-      // Fit map to show both markers
-      const bounds = L.latLngBounds([fromCoords, toCoords]);
-      map.fitBounds(bounds, { padding: [50, 50] });
-    };
-
-    initMap();
-
-    return () => {
-      if (leafletMapRef.current) {
-        leafletMapRef.current.remove();
-        leafletMapRef.current = null;
-      }
-    };
-  }, [fromCity, toCity, fromOffset, toOffset]);
-
   // Show placeholder if cities not selected
   if (!fromCity || !toCity) {
     return (
@@ -474,6 +294,42 @@ export function TimeZoneMap({ fromCity, toCity, fromOffset, toOffset }: TimeZone
     );
   }
 
+  const fromCoords = cityCoordinates[fromCity] || [0, 0];
+  const toCoords = cityCoordinates[toCity] || [0, 0];
+
+  // Convert lat/lng to SVG coordinates
+  // Lat: -90 to 90, Lng: -180 to 180
+  const latToY = (lat: number) => {
+    return ((90 - lat) / 180) * 100;
+  };
+
+  const lngToX = (lng: number) => {
+    return ((lng + 180) / 360) * 100;
+  };
+
+  const fromX = lngToX(fromCoords[1]);
+  const fromY = latToY(fromCoords[0]);
+  const toX = lngToX(toCoords[1]);
+  const toY = latToY(toCoords[0]);
+
+  // Create a curved path between the two points
+  const midX = (fromX + toX) / 2;
+  const midY = (fromY + toY) / 2;
+  const distance = Math.sqrt(Math.pow(toX - fromX, 2) + Math.pow(toY - fromY, 2));
+  const curvature = Math.min(distance * 0.3, 20);
+
+  // Control point for the curve (perpendicular to midpoint)
+  const dx = toX - fromX;
+  const dy = toY - fromY;
+  const perpX = -dy / distance;
+  const perpY = dx / distance;
+  const controlX = midX + perpX * curvature;
+  const controlY = midY + perpY * curvature;
+
+  const pathData = `M ${fromX} ${fromY} Q ${controlX} ${controlY} ${toX} ${toY}`;
+
+  const timeDiff = Math.abs(toOffset - fromOffset);
+
   return (
     <div className="w-full space-y-2">
       <div className="flex items-center justify-between px-1">
@@ -486,13 +342,166 @@ export function TimeZoneMap({ fromCity, toCity, fromOffset, toOffset }: TimeZone
           <div className="w-3 h-3 rounded-full bg-[#a855f7] border-2 border-white"></div>
         </div>
       </div>
-      <div 
-        ref={mapRef} 
-        className="w-full h-[300px] md:h-[400px] rounded-lg overflow-hidden border-2 border-white/10 shadow-xl"
-        style={{ background: '#1e293b' }}
-      />
+      
+      <div className="w-full h-[300px] md:h-[400px] rounded-lg overflow-hidden border-2 border-white/10 shadow-xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative">
+        {/* World map SVG visualization */}
+        <svg
+          viewBox="0 0 100 100"
+          className="w-full h-full"
+          preserveAspectRatio="xMidYMid meet"
+        >
+          {/* Background grid */}
+          <defs>
+            <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+              <path
+                d="M 10 0 L 0 0 0 10"
+                fill="none"
+                stroke="rgba(255,255,255,0.05)"
+                strokeWidth="0.2"
+              />
+            </pattern>
+          </defs>
+          <rect width="100" height="100" fill="url(#grid)" />
+
+          {/* Equator line */}
+          <line
+            x1="0"
+            y1="50"
+            x2="100"
+            y2="50"
+            stroke="rgba(255,255,255,0.1)"
+            strokeWidth="0.3"
+            strokeDasharray="2,2"
+          />
+
+          {/* Prime Meridian */}
+          <line
+            x1="50"
+            y1="0"
+            x2="50"
+            y2="100"
+            stroke="rgba(255,255,255,0.1)"
+            strokeWidth="0.3"
+            strokeDasharray="2,2"
+          />
+
+          {/* Flight path */}
+          <path
+            d={pathData}
+            fill="none"
+            stroke="url(#gradient)"
+            strokeWidth="0.5"
+            strokeDasharray="2,1"
+            opacity="0.8"
+          />
+
+          <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#4f86f7" />
+              <stop offset="100%" stopColor="#a855f7" />
+            </linearGradient>
+          </defs>
+
+          {/* Departure marker */}
+          <g>
+            <circle
+              cx={fromX}
+              cy={fromY}
+              r="2"
+              fill="#4f86f7"
+              stroke="white"
+              strokeWidth="0.5"
+              opacity="0.9"
+            />
+            <circle
+              cx={fromX}
+              cy={fromY}
+              r="3"
+              fill="none"
+              stroke="#4f86f7"
+              strokeWidth="0.3"
+              opacity="0.5"
+            >
+              <animate
+                attributeName="r"
+                from="2"
+                to="5"
+                dur="2s"
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="opacity"
+                from="0.5"
+                to="0"
+                dur="2s"
+                repeatCount="indefinite"
+              />
+            </circle>
+          </g>
+
+          {/* Destination marker */}
+          <g>
+            <circle
+              cx={toX}
+              cy={toY}
+              r="2"
+              fill="#a855f7"
+              stroke="white"
+              strokeWidth="0.5"
+              opacity="0.9"
+            />
+            <circle
+              cx={toX}
+              cy={toY}
+              r="3"
+              fill="none"
+              stroke="#a855f7"
+              strokeWidth="0.3"
+              opacity="0.5"
+            >
+              <animate
+                attributeName="r"
+                from="2"
+                to="5"
+                dur="2s"
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="opacity"
+                from="0.5"
+                to="0"
+                dur="2s"
+                repeatCount="indefinite"
+              />
+            </circle>
+          </g>
+
+          {/* Animated plane */}
+          <g>
+            <text fontSize="3" fill="#a855f7">
+              <animateMotion dur="6s" repeatCount="indefinite" path={pathData} />
+              ✈️
+            </text>
+          </g>
+        </svg>
+
+        {/* Info overlay */}
+        <div className="absolute bottom-4 left-4 right-4 bg-black/50 backdrop-blur-sm rounded-lg p-3 text-white/80 text-sm">
+          <div className="flex justify-between items-center">
+            <div>
+              <div className="text-xs text-white/60">Time Difference</div>
+              <div className="text-white">{timeDiff} hour{timeDiff !== 1 ? 's' : ''}</div>
+            </div>
+            <div className="text-right">
+              <div className="text-xs text-white/60">Travel Route</div>
+              <div className="text-white">{fromCity} → {toCity}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <p className="text-xs text-white/40 text-center">
-        Interactive map showing your travel route • Scroll to zoom
+        Simplified world map showing your travel route between time zones
       </p>
     </div>
   );

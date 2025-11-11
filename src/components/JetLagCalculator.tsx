@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { format } from 'date-fns@4.1.0';
 import { TimeZoneMap } from './TimeZoneMap';
 import { TimezoneCombobox, allTimezones } from './TimezoneCombobox';
+import { motion } from 'motion/react';
 
 export function JetLagCalculator() {
   const [fromTimezone, setFromTimezone] = useState('');
@@ -249,8 +250,49 @@ export function JetLagCalculator() {
 
       {/* Hero Section */}
       <div className="text-center space-y-1 md:space-y-2 px-4">
-        <div className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-purple-500/20 rounded-full mb-1 md:mb-2">
-          <Plane className="w-8 h-8 md:w-10 md:h-10 text-purple-400" />
+        <div className="relative inline-block">
+          <motion.div 
+            className="inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-purple-500/20 rounded-full mb-1 md:mb-2"
+            animate={{
+              y: [0, -12, 0],
+              x: [0, 8, 0, -8, 0],
+              rotate: [0, -3, 0, 3, 0],
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
+            <Plane className="w-8 h-8 md:w-10 md:h-10 text-purple-400" />
+          </motion.div>
+          
+          {/* Animated ZZZ sleep symbols */}
+          {[0, 1, 2].map((index) => (
+            <motion.span
+              key={index}
+              className="absolute text-purple-300/60 pointer-events-none select-none"
+              style={{
+                left: '60%',
+                top: '20%',
+                fontSize: index === 0 ? '12px' : index === 1 ? '16px' : '20px',
+              }}
+              initial={{ opacity: 0, y: 0, x: 0 }}
+              animate={{
+                opacity: [0, 0.8, 0.6, 0],
+                y: [0, -40, -60, -80],
+                x: [0, 10, 15, 20],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                delay: index * 0.6,
+                ease: "easeOut",
+              }}
+            >
+              Z
+            </motion.span>
+          ))}
         </div>
         <h1 className="text-white text-2xl md:text-3xl lg:text-4xl">Jet Lag Calculator</h1>
         <p className="text-white/70 max-w-2xl mx-auto text-sm md:text-base">

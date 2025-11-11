@@ -94,11 +94,11 @@ function SleepTips() {
 
   return (
     <Card className="bg-white/5 backdrop-blur-sm border border-white/10 p-3 md:p-4">
-      <div className="space-y-3">
+      <aside className="space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Lightbulb className="w-5 h-5 text-yellow-400" />
-            <h3 className="text-white text-base md:text-lg">Sleep Tips</h3>
+            <h2 className="text-white text-base md:text-lg">Science-Based Sleep Tips</h2>
           </div>
           <Button
             onClick={handleRefresh}
@@ -124,7 +124,7 @@ function SleepTips() {
             </motion.div>
           ))}
         </div>
-      </div>
+      </aside>
     </Card>
   );
 }
@@ -236,7 +236,7 @@ export function SleepCalculator() {
       <AdPlacement size="mobile" className="md:hidden" />
 
       {/* Hero Section */}
-      <div className="text-center space-y-1 px-4">
+      <header className="text-center space-y-1 px-4">
         <div className="relative inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-blue-500/20 rounded-full mb-1">
           {/* Animated Moon Icon */}
           <motion.div
@@ -284,11 +284,11 @@ export function SleepCalculator() {
             </motion.div>
           ))}
         </div>
-        <h1 className="text-white text-xl md:text-2xl">Sleep Calculator</h1>
+        <h1 className="text-white text-xl md:text-2xl">Sleep Cycle Calculator - Find Your Perfect Bedtime & Wake Time</h1>
         <p className="text-white/70 max-w-2xl mx-auto text-xs md:text-sm">
-          Calculate the best time to go to bed or wake up based on 90-minute sleep cycles.
+          Calculate the best time to go to bed or wake up based on 90-minute sleep cycles. Free bedtime calculator for optimal rest and energy.
         </p>
-      </div>
+      </header>
 
       {/* Calculator Card */}
       <Card className="bg-white/5 backdrop-blur-sm border border-white/10 shadow-2xl">
