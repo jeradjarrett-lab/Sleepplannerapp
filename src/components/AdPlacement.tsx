@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 interface AdPlacementProps {
   size: "medium" | "mobile" | "large" | "leaderboard";
   className?: string;
+  maxHeight?: number; // Optional max height constraint in pixels
 }
 
 declare global {
@@ -14,6 +15,7 @@ declare global {
 export function AdPlacement({
   size,
   className = "",
+  maxHeight,
 }: AdPlacementProps) {
   const adRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -43,48 +45,57 @@ export function AdPlacement({
               height: 90,
               name: "Leaderboard Banner",
               mobileWidth: 320,
-              mobileHeight: 100,
+              mobileHeight: 90,
             }
           : {
               width: 320,
-              height: 100,
+              height: 90,
               name: "Mobile Banner",
               mobileWidth: 320,
-              mobileHeight: 100,
+              mobileHeight: 90,
             };
+  
+  // Apply maxHeight override if provided
+  const effectiveMaxHeight = maxHeight || Math.max(dimensions.height, dimensions.mobileHeight);
 
   useEffect(() => {
     // Only run on client side
     if (typeof window === 'undefined' || !containerRef.current) return;
     
-    // Check if the container is actually visible (not hidden by CSS)
-    const checkVisibility = () => {
-      if (!containerRef.current) return false;
-      
-      const rect = containerRef.current.getBoundingClientRect();
-      const styles = window.getComputedStyle(containerRef.current);
-      
-      // Check if element is visible and has dimensions
-      const visible = 
-        styles.display !== 'none' &&
-        styles.visibility !== 'hidden' &&
-        styles.opacity !== '0' &&
-        rect.width > 0 &&
-        rect.height > 0;
+    // Defer ad loading until after page is interactive (improves performance)
+    const deferTimer = setTimeout(() => {
+      // Check if the container is actually visible (not hidden by CSS)
+      const checkVisibility = () => {
+        if (!containerRef.current) return false;
         
-      return visible;
-    };
+        const rect = containerRef.current.getBoundingClientRect();
+        const styles = window.getComputedStyle(containerRef.current);
+        
+        // Check if element is visible and has dimensions
+        const visible = 
+          styles.display !== 'none' &&
+          styles.visibility !== 'hidden' &&
+          styles.opacity !== '0' &&
+          rect.width > 0 &&
+          rect.height > 0;
+          
+        return visible;
+      };
 
-    // Wait for container to be visible
-    const visibilityCheck = setInterval(() => {
-      if (checkVisibility()) {
-        setIsVisible(true);
-        clearInterval(visibilityCheck);
-      }
-    }, 100);
+      // Wait for container to be visible
+      const visibilityCheck = setInterval(() => {
+        if (checkVisibility()) {
+          setIsVisible(true);
+          clearInterval(visibilityCheck);
+        }
+      }, 100);
+
+      // Cleanup after 5 seconds max
+      setTimeout(() => clearInterval(visibilityCheck), 5000);
+    }, 1500); // Wait 1.5s before checking visibility
 
     // Cleanup
-    return () => clearInterval(visibilityCheck);
+    return () => clearTimeout(deferTimer);
   }, []);
 
   useEffect(() => {
@@ -149,8 +160,10 @@ export function AdPlacement({
           style={{
             width: "100%",
             maxWidth: `${dimensions.width}px`,
-            minHeight: `${dimensions.mobileHeight}px`,
+            maxHeight: `${effectiveMaxHeight}px`,
+            minHeight: `${Math.min(dimensions.mobileHeight, effectiveMaxHeight)}px`,
             minWidth: '300px',
+            overflow: 'hidden',
           }}
         >
           {isVisible && (
@@ -159,7 +172,8 @@ export function AdPlacement({
               style={{ 
                 display: 'block',
                 width: '100%',
-                minHeight: `${dimensions.mobileHeight}px`,
+                height: '100%',
+                maxHeight: `${effectiveMaxHeight}px`,
               }}
               data-ad-client="ca-pub-0855352021512673"
               data-ad-slot="2434396144"

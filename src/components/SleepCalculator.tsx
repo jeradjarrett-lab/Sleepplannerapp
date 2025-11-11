@@ -231,9 +231,9 @@ export function SleepCalculator() {
 
   return (
     <div className="space-y-1 md:space-y-2">
-      {/* Top Ad - Leaderboard */}
-      <AdPlacement size="leaderboard" className="hidden md:block" />
-      <AdPlacement size="mobile" className="md:hidden" />
+      {/* Top Ad - Leaderboard (max 90px height) */}
+      <AdPlacement size="leaderboard" maxHeight={90} className="hidden md:block" />
+      <AdPlacement size="mobile" maxHeight={90} className="md:hidden" />
 
       {/* Hero Section */}
       <header className="text-center space-y-1 px-4">
