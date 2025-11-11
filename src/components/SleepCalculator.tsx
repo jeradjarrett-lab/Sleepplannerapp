@@ -10,6 +10,10 @@ import { Button } from './ui/button';
 interface SleepCycle {
   time: string;
   cycles: number;
+  rating: 'Poor' | 'Fair' | 'Good' | 'Ideal';
+  ratingColor: string;
+  ratingEmoji: string;
+  description: string;
 }
 
 // Comprehensive sleep tips database
@@ -133,6 +137,52 @@ function formatTime12Hour(time24: string): string {
   return `${displayHours}:${minutes.toString().padStart(2, '0')} ${period}`;
 }
 
+// Get rating based on number of sleep cycles
+function getSleepCycleRating(cycles: number): { 
+  rating: 'Poor' | 'Fair' | 'Good' | 'Ideal'; 
+  ratingColor: string; 
+  ratingEmoji: string;
+  description: string;
+} {
+  switch(cycles) {
+    case 4:
+      return {
+        rating: 'Fair',
+        ratingColor: 'text-orange-400',
+        ratingEmoji: '😴',
+        description: 'Minimum recommended'
+      };
+    case 5:
+      return {
+        rating: 'Good',
+        ratingColor: 'text-blue-400',
+        ratingEmoji: '😊',
+        description: 'Good for most adults'
+      };
+    case 6:
+      return {
+        rating: 'Ideal',
+        ratingColor: 'text-green-400',
+        ratingEmoji: '⭐',
+        description: 'Optimal sleep duration'
+      };
+    case 7:
+      return {
+        rating: 'Good',
+        ratingColor: 'text-blue-400',
+        ratingEmoji: '😌',
+        description: 'Extended rest'
+      };
+    default:
+      return {
+        rating: 'Poor',
+        ratingColor: 'text-red-400',
+        ratingEmoji: '😫',
+        description: 'Not recommended'
+      };
+  }
+}
+
 function generateSleepTimes(baseTime: string, mode: 'wake' | 'sleep'): SleepCycle[] {
   const [hours, minutes] = baseTime.split(':').map(Number);
   const baseMinutes = hours * 60 + minutes;
@@ -141,7 +191,7 @@ function generateSleepTimes(baseTime: string, mode: 'wake' | 'sleep'): SleepCycl
   
   const results: SleepCycle[] = [];
   
-  for (let cycles = 4; cycles <= 6; cycles++) {
+  for (let cycles = 4; cycles <= 7; cycles++) {
     const totalSleepMinutes = cycles * sleepCycleDuration;
     let targetMinutes: number;
     
@@ -160,9 +210,12 @@ function generateSleepTimes(baseTime: string, mode: 'wake' | 'sleep'): SleepCycl
     const period = targetHours >= 12 ? 'PM' : 'AM';
     const displayHours = targetHours === 0 ? 12 : targetHours > 12 ? targetHours - 12 : targetHours;
     
+    const ratingInfo = getSleepCycleRating(cycles);
+    
     results.push({
       time: `${displayHours}:${targetMins.toString().padStart(2, '0')} ${period}`,
-      cycles: cycles
+      cycles: cycles,
+      ...ratingInfo
     });
   }
   
@@ -241,11 +294,11 @@ export function SleepCalculator() {
       <Card className="bg-white/5 backdrop-blur-sm border border-white/10 shadow-2xl">
         <Tabs defaultValue="wake" className="p-3 md:p-4">
           <TabsList className="grid w-full grid-cols-2 mb-3 bg-white/5">
-            <TabsTrigger value="wake" className="gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white">
+            <TabsTrigger value="wake" className="gap-2 data-[state=active]:bg-gradient-to-br data-[state=active]:from-blue-500 data-[state=active]:to-purple-600 data-[state=active]:text-white">
               <Sun className="w-4 h-4" />
               I want to wake up at...
             </TabsTrigger>
-            <TabsTrigger value="sleep" className="gap-2 data-[state=active]:bg-blue-600 data-[state=active]:text-white">
+            <TabsTrigger value="sleep" className="gap-2 data-[state=active]:bg-gradient-to-br data-[state=active]:from-blue-500 data-[state=active]:to-purple-600 data-[state=active]:text-white">
               <Moon className="w-4 h-4" />
               I want to sleep at...
             </TabsTrigger>
@@ -268,26 +321,32 @@ export function SleepCalculator() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
                 {wakeResults.map((result, index) => (
                   <div
                     key={index}
                     className={`p-2.5 md:p-3 rounded-lg border-2 transition-all hover:shadow-lg ${
-                      index === 1
+                      result.rating === 'Ideal'
+                        ? 'bg-green-600/20 border-green-500'
+                        : result.rating === 'Good'
                         ? 'bg-blue-600/20 border-blue-500'
                         : 'bg-white/5 border-white/10 hover:border-blue-500/50'
                     }`}
                   >
-                    <div className="text-center space-y-0.5">
+                    <div className="text-center space-y-1">
+                      <div className="flex items-center justify-center gap-1">
+                        <span className="text-lg">{result.ratingEmoji}</span>
+                        <span className={`text-xs ${result.ratingColor}`}>
+                          {result.rating}
+                        </span>
+                      </div>
                       <div className="text-2xl md:text-2xl text-white">{result.time}</div>
                       <div className="text-xs text-white/60">
-                        {result.cycles} sleep cycles ({result.cycles * 1.5}h)
+                        {result.cycles} cycles ({result.cycles * 1.5}h)
                       </div>
-                      {index === 1 && (
-                        <div className="text-xs text-blue-400 mt-0.5">
-                          ⭐ Recommended
-                        </div>
-                      )}
+                      <div className="text-xs text-white/50">
+                        {result.description}
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -312,26 +371,32 @@ export function SleepCalculator() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
                 {sleepResults.map((result, index) => (
                   <div
                     key={index}
                     className={`p-2.5 md:p-3 rounded-lg border-2 transition-all hover:shadow-lg ${
-                      index === 1
+                      result.rating === 'Ideal'
+                        ? 'bg-green-600/20 border-green-500'
+                        : result.rating === 'Good'
                         ? 'bg-blue-600/20 border-blue-500'
                         : 'bg-white/5 border-white/10 hover:border-blue-500/50'
                     }`}
                   >
-                    <div className="text-center space-y-0.5">
+                    <div className="text-center space-y-1">
+                      <div className="flex items-center justify-center gap-1">
+                        <span className="text-lg">{result.ratingEmoji}</span>
+                        <span className={`text-xs ${result.ratingColor}`}>
+                          {result.rating}
+                        </span>
+                      </div>
                       <div className="text-2xl md:text-2xl text-white">{result.time}</div>
                       <div className="text-xs text-white/60">
-                        {result.cycles} sleep cycles ({result.cycles * 1.5}h)
+                        {result.cycles} cycles ({result.cycles * 1.5}h)
                       </div>
-                      {index === 1 && (
-                        <div className="text-xs text-blue-400 mt-0.5">
-                          ⭐ Recommended
-                        </div>
-                      )}
+                      <div className="text-xs text-white/50">
+                        {result.description}
+                      </div>
                     </div>
                   </div>
                 ))}
