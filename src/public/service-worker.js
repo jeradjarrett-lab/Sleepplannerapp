@@ -3,14 +3,14 @@
  * Provides offline functionality and aggressive caching for fast repeat visits
  */
 
-const CACHE_VERSION = 'v1.0.0';
+const CACHE_VERSION = 'v1.1.0';
 const CACHE_NAME = `eyelovesleep-${CACHE_VERSION}`;
 
 // Resources to cache immediately on install
+// Note: Build assets will be cached on-demand due to dynamic hashed filenames
 const PRECACHE_URLS = [
   '/',
   '/index.html',
-  '/styles/globals.css',
 ];
 
 // Cache strategies
@@ -36,8 +36,14 @@ const CACHE_STRATEGIES = {
 
     try {
       const networkResponse = await fetch(request);
-      const cache = await caches.open(CACHE_NAME);
-      cache.put(request, networkResponse.clone());
+      
+      // Only cache successful responses
+      if (networkResponse && networkResponse.status === 200) {
+        const cache = await caches.open(CACHE_NAME);
+        // Clone the response before caching
+        cache.put(request, networkResponse.clone());
+      }
+      
       return networkResponse;
     } catch (error) {
       throw error;
