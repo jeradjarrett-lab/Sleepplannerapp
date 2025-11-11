@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Plane, Sun, Moon, Coffee, ArrowRight, MapPin, Calendar as CalendarIcon, Clock, AlertCircle, Lightbulb, Bed, Eye, EyeOff } from 'lucide-react';
 import { AdPlacement } from './AdPlacement';
 import { Calendar } from './ui/calendar';
@@ -9,102 +8,8 @@ import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { TimeDial } from './TimeDial';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { format } from 'date-fns@4.1.0';
-
-interface Timezone {
-  label: string;
-  value: string;
-  offset: number;
-  city: string;
-}
-
-const timezones: Timezone[] = [
-  // Pacific & Americas
-  { label: 'UTC-12:00 Baker Island', value: 'Etc/GMT+12', offset: -12, city: 'Baker Island' },
-  { label: 'UTC-11:00 Samoa (Pago Pago)', value: 'Pacific/Samoa', offset: -11, city: 'Pago Pago' },
-  { label: 'UTC-10:00 Hawaii (Honolulu)', value: 'Pacific/Honolulu', offset: -10, city: 'Honolulu' },
-  { label: 'UTC-09:30 Marquesas Islands', value: 'Pacific/Marquesas', offset: -9.5, city: 'Marquesas' },
-  { label: 'UTC-09:00 Alaska (Anchorage)', value: 'America/Anchorage', offset: -9, city: 'Anchorage' },
-  { label: 'UTC-08:00 Los Angeles', value: 'America/Los_Angeles', offset: -8, city: 'Los Angeles' },
-  { label: 'UTC-08:00 Vancouver', value: 'America/Vancouver', offset: -8, city: 'Vancouver' },
-  { label: 'UTC-08:00 Seattle', value: 'America/Los_Angeles', offset: -8, city: 'Seattle' },
-  { label: 'UTC-07:00 Denver', value: 'America/Denver', offset: -7, city: 'Denver' },
-  { label: 'UTC-07:00 Phoenix', value: 'America/Phoenix', offset: -7, city: 'Phoenix' },
-  { label: 'UTC-07:00 Calgary', value: 'America/Edmonton', offset: -7, city: 'Calgary' },
-  { label: 'UTC-06:00 Chicago', value: 'America/Chicago', offset: -6, city: 'Chicago' },
-  { label: 'UTC-06:00 Mexico City', value: 'America/Mexico_City', offset: -6, city: 'Mexico City' },
-  { label: 'UTC-05:00 New York', value: 'America/New_York', offset: -5, city: 'New York' },
-  { label: 'UTC-05:00 Toronto', value: 'America/Toronto', offset: -5, city: 'Toronto' },
-  { label: 'UTC-05:00 Lima', value: 'America/Lima', offset: -5, city: 'Lima' },
-  { label: 'UTC-05:00 Bogotá', value: 'America/Bogota', offset: -5, city: 'Bogotá' },
-  { label: 'UTC-04:00 Santiago', value: 'America/Santiago', offset: -4, city: 'Santiago' },
-  { label: 'UTC-04:00 Caracas', value: 'America/Caracas', offset: -4, city: 'Caracas' },
-  { label: 'UTC-03:30 Newfoundland', value: 'America/St_Johns', offset: -3.5, city: 'St. Johns' },
-  { label: 'UTC-03:00 Buenos Aires', value: 'America/Argentina/Buenos_Aires', offset: -3, city: 'Buenos Aires' },
-  { label: 'UTC-03:00 São Paulo', value: 'America/Sao_Paulo', offset: -3, city: 'São Paulo' },
-  { label: 'UTC-02:00 South Georgia', value: 'Atlantic/South_Georgia', offset: -2, city: 'South Georgia' },
-  { label: 'UTC-01:00 Azores', value: 'Atlantic/Azores', offset: -1, city: 'Azores' },
-  { label: 'UTC-01:00 Cape Verde', value: 'Atlantic/Cape_Verde', offset: -1, city: 'Cape Verde' },
-  
-  // Europe & Africa
-  { label: 'UTC+00:00 London', value: 'Europe/London', offset: 0, city: 'London' },
-  { label: 'UTC+00:00 Lisbon', value: 'Europe/Lisbon', offset: 0, city: 'Lisbon' },
-  { label: 'UTC+00:00 Dublin', value: 'Europe/Dublin', offset: 0, city: 'Dublin' },
-  { label: 'UTC+00:00 Reykjavik', value: 'Atlantic/Reykjavik', offset: 0, city: 'Reykjavik' },
-  { label: 'UTC+01:00 Paris', value: 'Europe/Paris', offset: 1, city: 'Paris' },
-  { label: 'UTC+01:00 Berlin', value: 'Europe/Berlin', offset: 1, city: 'Berlin' },
-  { label: 'UTC+01:00 Rome', value: 'Europe/Rome', offset: 1, city: 'Rome' },
-  { label: 'UTC+01:00 Madrid', value: 'Europe/Madrid', offset: 1, city: 'Madrid' },
-  { label: 'UTC+01:00 Amsterdam', value: 'Europe/Amsterdam', offset: 1, city: 'Amsterdam' },
-  { label: 'UTC+01:00 Brussels', value: 'Europe/Brussels', offset: 1, city: 'Brussels' },
-  { label: 'UTC+01:00 Lagos', value: 'Africa/Lagos', offset: 1, city: 'Lagos' },
-  { label: 'UTC+02:00 Cairo', value: 'Africa/Cairo', offset: 2, city: 'Cairo' },
-  { label: 'UTC+02:00 Athens', value: 'Europe/Athens', offset: 2, city: 'Athens' },
-  { label: 'UTC+02:00 Istanbul', value: 'Europe/Istanbul', offset: 2, city: 'Istanbul' },
-  { label: 'UTC+02:00 Jerusalem', value: 'Asia/Jerusalem', offset: 2, city: 'Jerusalem' },
-  { label: 'UTC+02:00 Johannesburg', value: 'Africa/Johannesburg', offset: 2, city: 'Johannesburg' },
-  { label: 'UTC+03:00 Moscow', value: 'Europe/Moscow', offset: 3, city: 'Moscow' },
-  { label: 'UTC+03:00 Nairobi', value: 'Africa/Nairobi', offset: 3, city: 'Nairobi' },
-  { label: 'UTC+03:00 Riyadh', value: 'Asia/Riyadh', offset: 3, city: 'Riyadh' },
-  { label: 'UTC+03:30 Tehran', value: 'Asia/Tehran', offset: 3.5, city: 'Tehran' },
-  
-  // Middle East & Asia
-  { label: 'UTC+04:00 Dubai', value: 'Asia/Dubai', offset: 4, city: 'Dubai' },
-  { label: 'UTC+04:00 Abu Dhabi', value: 'Asia/Dubai', offset: 4, city: 'Abu Dhabi' },
-  { label: 'UTC+04:30 Kabul', value: 'Asia/Kabul', offset: 4.5, city: 'Kabul' },
-  { label: 'UTC+05:00 Karachi', value: 'Asia/Karachi', offset: 5, city: 'Karachi' },
-  { label: 'UTC+05:00 Tashkent', value: 'Asia/Tashkent', offset: 5, city: 'Tashkent' },
-  { label: 'UTC+05:30 Mumbai', value: 'Asia/Kolkata', offset: 5.5, city: 'Mumbai' },
-  { label: 'UTC+05:30 Delhi', value: 'Asia/Kolkata', offset: 5.5, city: 'Delhi' },
-  { label: 'UTC+05:30 Colombo', value: 'Asia/Colombo', offset: 5.5, city: 'Colombo' },
-  { label: 'UTC+05:45 Kathmandu', value: 'Asia/Kathmandu', offset: 5.75, city: 'Kathmandu' },
-  { label: 'UTC+06:00 Dhaka', value: 'Asia/Dhaka', offset: 6, city: 'Dhaka' },
-  { label: 'UTC+06:30 Yangon', value: 'Asia/Yangon', offset: 6.5, city: 'Yangon' },
-  { label: 'UTC+07:00 Bangkok', value: 'Asia/Bangkok', offset: 7, city: 'Bangkok' },
-  { label: 'UTC+07:00 Jakarta', value: 'Asia/Jakarta', offset: 7, city: 'Jakarta' },
-  { label: 'UTC+07:00 Hanoi', value: 'Asia/Ho_Chi_Minh', offset: 7, city: 'Hanoi' },
-  { label: 'UTC+08:00 Singapore', value: 'Asia/Singapore', offset: 8, city: 'Singapore' },
-  { label: 'UTC+08:00 Hong Kong', value: 'Asia/Hong_Kong', offset: 8, city: 'Hong Kong' },
-  { label: 'UTC+08:00 Beijing', value: 'Asia/Shanghai', offset: 8, city: 'Beijing' },
-  { label: 'UTC+08:00 Shanghai', value: 'Asia/Shanghai', offset: 8, city: 'Shanghai' },
-  { label: 'UTC+08:00 Manila', value: 'Asia/Manila', offset: 8, city: 'Manila' },
-  { label: 'UTC+08:00 Kuala Lumpur', value: 'Asia/Kuala_Lumpur', offset: 8, city: 'Kuala Lumpur' },
-  { label: 'UTC+08:00 Perth', value: 'Australia/Perth', offset: 8, city: 'Perth' },
-  { label: 'UTC+08:45 Eucla', value: 'Australia/Eucla', offset: 8.75, city: 'Eucla' },
-  { label: 'UTC+09:00 Tokyo', value: 'Asia/Tokyo', offset: 9, city: 'Tokyo' },
-  { label: 'UTC+09:00 Seoul', value: 'Asia/Seoul', offset: 9, city: 'Seoul' },
-  { label: 'UTC+09:30 Adelaide', value: 'Australia/Adelaide', offset: 9.5, city: 'Adelaide' },
-  { label: 'UTC+10:00 Sydney', value: 'Australia/Sydney', offset: 10, city: 'Sydney' },
-  { label: 'UTC+10:00 Melbourne', value: 'Australia/Melbourne', offset: 10, city: 'Melbourne' },
-  { label: 'UTC+10:00 Brisbane', value: 'Australia/Brisbane', offset: 10, city: 'Brisbane' },
-  { label: 'UTC+10:30 Lord Howe Island', value: 'Australia/Lord_Howe', offset: 10.5, city: 'Lord Howe' },
-  { label: 'UTC+11:00 Noumea', value: 'Pacific/Noumea', offset: 11, city: 'Noumea' },
-  { label: 'UTC+11:00 Solomon Islands', value: 'Pacific/Guadalcanal', offset: 11, city: 'Solomon Islands' },
-  { label: 'UTC+12:00 Auckland', value: 'Pacific/Auckland', offset: 12, city: 'Auckland' },
-  { label: 'UTC+12:00 Fiji', value: 'Pacific/Fiji', offset: 12, city: 'Fiji' },
-  { label: 'UTC+12:45 Chatham Islands', value: 'Pacific/Chatham', offset: 12.75, city: 'Chatham Islands' },
-  { label: 'UTC+13:00 Tonga', value: 'Pacific/Tongatapu', offset: 13, city: 'Tonga' },
-  { label: 'UTC+14:00 Kiribati', value: 'Pacific/Kiritimati', offset: 14, city: 'Kiribati' },
-];
+import { TimeZoneMap } from './TimeZoneMap';
+import { TimezoneCombobox, allTimezones } from './TimezoneCombobox';
 
 export function JetLagCalculator() {
   const [fromTimezone, setFromTimezone] = useState('');
@@ -205,8 +110,8 @@ export function JetLagCalculator() {
     }
   };
 
-  const fromTz = timezones.find(tz => tz.value === fromTimezone);
-  const toTz = timezones.find(tz => tz.value === toTimezone);
+  const fromTz = allTimezones.find(tz => tz.value === fromTimezone);
+  const toTz = allTimezones.find(tz => tz.value === toTimezone);
   const timeDiff = toTz && fromTz ? toTz.offset - fromTz.offset : 0;
   const isEastward = timeDiff > 0;
   const hoursDiff = Math.abs(timeDiff);
@@ -365,23 +270,12 @@ export function JetLagCalculator() {
                 <h3 className="text-white">Departing From</h3>
               </div>
               
-              <div className="space-y-2">
-                <label className="text-sm text-white/70">
-                  Location
-                </label>
-                <Select value={fromTimezone} onValueChange={setFromTimezone}>
-                  <SelectTrigger className="h-12 bg-white/10 border-white/20 text-white">
-                    <SelectValue placeholder="Select your departure timezone" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[#1e293b] border-white/20 max-h-[300px]">
-                    {timezones.map((tz) => (
-                      <SelectItem key={tz.value + tz.city} value={tz.value} className="text-white focus:bg-white/10 focus:text-white">
-                        {tz.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <TimezoneCombobox
+                value={fromTimezone}
+                onChange={setFromTimezone}
+                placeholder="Search or select departure timezone..."
+                label="Location"
+              />
 
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm text-white/70">
@@ -438,23 +332,12 @@ export function JetLagCalculator() {
                 <h3 className="text-white">Traveling To</h3>
               </div>
               
-              <div className="space-y-2">
-                <label className="text-sm text-white/70">
-                  Location
-                </label>
-                <Select value={toTimezone} onValueChange={setToTimezone}>
-                  <SelectTrigger className="h-10 bg-white/10 border-white/20 text-white">
-                    <SelectValue placeholder="Select your destination timezone" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-[#1e293b] border-white/20 max-h-[300px]">
-                    {timezones.map((tz) => (
-                      <SelectItem key={tz.value + tz.city} value={tz.value} className="text-white focus:bg-white/10 focus:text-white">
-                        {tz.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+              <TimezoneCombobox
+                value={toTimezone}
+                onChange={setToTimezone}
+                placeholder="Search or select destination timezone..."
+                label="Location"
+              />
 
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm text-white/70">
@@ -515,6 +398,18 @@ export function JetLagCalculator() {
               )}
             </div>
           </div>
+
+          {/* Interactive Map */}
+          {(fromTimezone || toTimezone) && (
+            <div className="pt-2">
+              <TimeZoneMap
+                fromCity={fromTz?.city || ''}
+                toCity={toTz?.city || ''}
+                fromOffset={fromTz?.offset || 0}
+                toOffset={toTz?.offset || 0}
+              />
+            </div>
+          )}
 
           <Button 
             onClick={handleCalculate}

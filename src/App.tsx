@@ -1,9 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { SleepCalculator } from "./components/SleepCalculator";
 import { JetLagCalculator } from "./components/JetLagCalculator";
 import { SleepRecommendations } from "./components/SleepRecommendations";
-import { AdminPage } from "./components/AdminPage";
-import { AdminDebugPanel } from "./components/AdminDebugPanel";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { FAQSection } from "./components/FAQSection";
@@ -11,141 +9,46 @@ import { HowToSection } from "./components/HowToSection";
 import { QuickAnswers } from "./components/QuickAnswers";
 import { ComparisonTable } from "./components/ComparisonTable";
 import { Moon, Plane, User } from "lucide-react";
-import { ConfigProvider, useConfig } from "./utils/ConfigContext";
 import { Toaster } from "./components/ui/sonner";
 
-function AppContent() {
+export default function App() {
   const [activeSection, setActiveSection] = useState<
-    "sleep" | "recommendations" | "jetlag" | "admin" | "admin-debug"
+    "sleep" | "recommendations" | "jetlag"
   >("sleep");
-  
-  // Track previous section to detect when returning from admin
-  const previousSectionRef = useRef<string>(activeSection);
-  
-  // Get config from context
-  const { config, loading: configLoading, refetch } = useConfig();
-  const seoConfig = config?.seo || null;
 
-  // Check if we should show admin page based on URL
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash === "#admin") {
-      setActiveSection("admin");
-    } else if (hash === "#admin-debug") {
-      setActiveSection("admin-debug");
-    } else if (hash === "") {
-      // Reset to sleep calculator when hash is cleared
-      setActiveSection("sleep");
-    }
 
-    // Listen for hash changes
-    const handleHashChange = () => {
-      const hash = window.location.hash;
-      const wasPreviouslyAdmin = previousSectionRef.current === "admin";
-      
-      if (hash === "#admin") {
-        previousSectionRef.current = "admin";
-        setActiveSection("admin");
-      } else if (hash === "#admin-debug") {
-        previousSectionRef.current = "admin-debug";
-        setActiveSection("admin-debug");
-      } else if (hash === "") {
-        // Reset to sleep calculator when returning from admin
-        setActiveSection("sleep");
-        previousSectionRef.current = "sleep";
-        
-        // Refetch config when returning from admin (in case it was changed)
-        if (wasPreviouslyAdmin) {
-          console.log('🔄 Returning from admin, refetching config...');
-          refetch();
-        }
-      }
-    };
-
-    window.addEventListener("hashchange", handleHashChange);
-    return () =>
-      window.removeEventListener(
-        "hashchange",
-        handleHashChange,
-      );
-  }, [refetch]);
-
-  // Inject custom scripts from admin config
-  useEffect(() => {
-    if (!config || !config.customScripts) return;
-    
-    const enabledScripts = config.customScripts.filter(
-      (s) => s.enabled,
-    );
-
-    // Clean up existing custom scripts
-    const existingScripts = document.querySelectorAll(
-      "[data-custom-script]",
-    );
-    existingScripts.forEach((script) => script.remove());
-
-    // Inject enabled scripts
-    enabledScripts.forEach((script) => {
-      const container = document.createElement("div");
-      container.setAttribute("data-custom-script", script.id);
-      container.innerHTML = script.code;
-
-      if (script.placement === "head") {
-        document.head.appendChild(container);
-      } else {
-        document.body.appendChild(container);
-      }
-    });
-  }, [config, activeSection]); // Re-run when config or section changes
 
   // SEO optimization - Update meta tags based on active section
   useEffect(() => {
-    // Skip SEO updates for admin page
-    if (activeSection === "admin") {
-      const siteName = seoConfig?.siteName || "EyeLoveSleep";
-      document.title = `Admin Panel - ${siteName}`;
-      return;
-    }
-
-    // Use admin config if available, otherwise use defaults
-    const siteName = seoConfig?.siteName || "EyeLoveSleep";
+    const siteName = "EyeLoveSleep";
     const defaultSeoData = {
       sleep: {
-        title: seoConfig?.pages.sleepCalculator.title || "EyeLoveSleep - Sleep Calculator",
-        description: seoConfig?.pages.sleepCalculator.description ||
+        title: "EyeLoveSleep - Sleep Calculator",
+        description:
           "Free sleep calculator to find your ideal bedtime or wake time based on 90-minute sleep cycles. Optimize your sleep schedule for better rest and energy.",
-        keywords: seoConfig?.pages.sleepCalculator.keywords ||
+        keywords:
           "sleep calculator, bedtime calculator, wake time calculator, sleep cycles, REM sleep, best time to sleep",
         url: "https://eyelovesleep.app",
       },
       recommendations: {
-        title: seoConfig?.pages.sleepRecommendations.title || "EyeLoveSleep - Sleep Recommendations by Age",
-        description: seoConfig?.pages.sleepRecommendations.description ||
+        title: "EyeLoveSleep - Sleep Recommendations by Age",
+        description:
           "Discover recommended sleep hours for all ages from newborns to seniors. Evidence-based sleep guidelines from the National Sleep Foundation.",
-        keywords: seoConfig?.pages.sleepRecommendations.keywords ||
+        keywords:
           "sleep recommendations, sleep by age, how much sleep, baby sleep, teen sleep, adult sleep hours",
         url: "https://eyelovesleep.app/sleep-by-age",
       },
       jetlag: {
-        title: seoConfig?.pages.jetLagCalculator.title || "EyeLoveSleep - Jet Lag Calculator",
-        description: seoConfig?.pages.jetLagCalculator.description ||
+        title: "EyeLoveSleep - Jet Lag Calculator",
+        description:
           "Calculate the best sleep schedule to beat jet lag. Get personalized day-by-day plans to adjust to new time zones faster.",
-        keywords: seoConfig?.pages.jetLagCalculator.keywords ||
+        keywords:
           "jet lag calculator, beat jet lag, time zone adjustment, travel sleep tips, jet lag recovery",
         url: "https://eyelovesleep.app/jet-lag",
       },
     };
 
-    const data = defaultSeoData[activeSection as keyof typeof defaultSeoData];
-
-    // Safety check
-    if (!data) {
-      console.log('⚠️ SEO: No data for section', activeSection);
-      return;
-    }
-
-    // Update document title
-    console.log('📝 SEO: Setting title to', data.title);
+    const data = defaultSeoData[activeSection];
     document.title = data.title;
 
     // Update or create meta tags
@@ -352,39 +255,7 @@ function AppContent() {
       script.text = JSON.stringify(schema);
       document.head.appendChild(script);
     });
-  }, [activeSection, seoConfig]);
-
-  // Show admin debug panel if active
-  if (activeSection === "admin-debug") {
-    return (
-      <>
-        <AdminDebugPanel />
-        <Toaster position="top-right" theme="dark" />
-      </>
-    );
-  }
-
-  // Show admin page if active
-  if (activeSection === "admin") {
-    return (
-      <>
-        <AdminPage />
-        <Toaster position="top-right" theme="dark" />
-      </>
-    );
-  }
-
-  // Show loading state while config is loading (only for main app, not admin)
-  if (configLoading && !config) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] dark flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-          <p className="text-white/60">Loading...</p>
-        </div>
-      </div>
-    );
-  }
+  }, [activeSection]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] dark">
@@ -483,14 +354,5 @@ function AppContent() {
       {/* Toast notifications */}
       <Toaster position="top-right" theme="dark" />
     </div>
-  );
-}
-
-// Main app with ConfigProvider wrapper
-export default function App() {
-  return (
-    <ConfigProvider>
-      <AppContent />
-    </ConfigProvider>
   );
 }
