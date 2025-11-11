@@ -4,6 +4,13 @@ import { Moon, Plane, User } from "lucide-react";
 import { updateCriticalSeo, updateNonCriticalSeo, updateStructuredData, seoData } from "./utils/seo-manager";
 import { addResourceHints } from "./utils/resource-hints";
 import { initPerformanceMonitoring } from "./utils/performance-monitor";
+import { initCacheManager } from "./utils/cache-manager";
+import { registerServiceWorker } from "./utils/service-worker-registration";
+
+// Import cache debug tools in development
+if (import.meta.env?.DEV || process.env.NODE_ENV === 'development') {
+  import('./utils/cache-debug');
+}
 
 // Lazy load heavy components for better initial load performance
 const SleepCalculator = lazy(() => import("./components/SleepCalculator").then(m => ({ default: m.SleepCalculator })));
@@ -28,10 +35,14 @@ export default function App() {
     "sleep" | "recommendations" | "jetlag"
   >("sleep");
 
-  // Add resource hints for faster external resource loading
+  // Initialize performance optimizations and caching
   useEffect(() => {
     addResourceHints();
     initPerformanceMonitoring();
+    initCacheManager();
+    
+    // Register service worker for offline support and faster repeat visits
+    registerServiceWorker();
   }, []);
 
   // Defer ShareThis script to improve initial load performance
