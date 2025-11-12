@@ -105,7 +105,7 @@ export function FAQSection({ section }: FAQSectionProps) {
   };
 
   return (
-    <section className="mt-12 md:mt-16">
+    <section id="faq" className="mt-12 md:mt-16 scroll-mt-24">
       <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl">
         <h2 className="text-2xl md:text-3xl text-white mb-6 text-center">
           Frequently Asked Questions

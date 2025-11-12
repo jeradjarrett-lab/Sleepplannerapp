@@ -95,7 +95,7 @@ export function HowToSection({ section }: HowToSectionProps) {
   const howTo = howToData[section];
 
   return (
-    <section className="mt-8 md:mt-12">
+    <section id="how-to" className="mt-8 md:mt-12 scroll-mt-24">
       <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 backdrop-blur-sm border border-blue-400/20 rounded-2xl p-6 md:p-8 shadow-2xl">
         <div
           itemScope

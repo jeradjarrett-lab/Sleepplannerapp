@@ -5,7 +5,7 @@ interface ComparisonTableProps {
 export function ComparisonTable({ section }: ComparisonTableProps) {
   if (section === 'sleep') {
     return (
-      <section className="mt-8 md:mt-12">
+      <section id="comparison" className="mt-8 md:mt-12 scroll-mt-24">
         <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl overflow-x-auto">
           <h2 className="text-2xl md:text-3xl text-white mb-6">
             Sleep Cycles Comparison
@@ -60,7 +60,7 @@ export function ComparisonTable({ section }: ComparisonTableProps) {
 
   if (section === 'caffeine') {
     return (
-      <section className="mt-8 md:mt-12">
+      <section id="comparison" className="mt-8 md:mt-12 scroll-mt-24">
         <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl overflow-x-auto">
           <h2 className="text-2xl md:text-3xl text-white mb-6">
             Caffeine Metabolism Timeline
@@ -125,7 +125,7 @@ export function ComparisonTable({ section }: ComparisonTableProps) {
 
   if (section === 'jetlag') {
     return (
-      <section className="mt-8 md:mt-12">
+      <section id="comparison" className="mt-8 md:mt-12 scroll-mt-24">
         <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl overflow-x-auto">
           <h2 className="text-2xl md:text-3xl text-white mb-6">
             Jet Lag Recovery Times by Time Zones

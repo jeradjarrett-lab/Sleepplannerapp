@@ -9,7 +9,7 @@ export function SEOContent({ section }: SEOContentProps) {
     return (
       <article className="mt-12 md:mt-16 space-y-8">
         {/* Main Educational Content */}
-        <section className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl">
+        <section id="seo-content" className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl scroll-mt-24">
           <div className="flex items-start gap-3 mb-6">
             <BookOpen className="w-8 h-8 text-blue-400 flex-shrink-0 mt-1" />
             <div>
@@ -26,7 +26,7 @@ export function SEOContent({ section }: SEOContentProps) {
                   The <strong className="text-blue-200">sleep cycle calculator</strong> uses scientific research to help you time your sleep perfectly. When you wake up at the end of a complete cycle during light sleep, you experience minimal sleep inertia—that groggy, disoriented feeling that can last up to an hour. By contrast, waking during deep sleep leaves you feeling exhausted, regardless of total sleep duration.
                 </p>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="sleep-stages" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   The Four Stages of Sleep
                 </h3>
                 
@@ -60,7 +60,7 @@ export function SEOContent({ section }: SEOContentProps) {
                   </div>
                 </div>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="sleep-cycles" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   Why 90-Minute Cycles Matter
                 </h3>
                 
@@ -72,7 +72,7 @@ export function SEOContent({ section }: SEOContentProps) {
                   Most adults need <strong className="text-blue-200">5-6 complete sleep cycles</strong> per night, translating to 7.5-9 hours of total sleep. However, quality matters more than quantity. Six complete cycles (9 hours) where you wake naturally at the end is far superior to 10 hours of interrupted or poorly-timed sleep.
                 </p>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="sleep-inertia" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   The Sleep Inertia Problem
                 </h3>
                 
@@ -84,7 +84,7 @@ export function SEOContent({ section }: SEOContentProps) {
                   By using our <strong className="text-blue-200">bedtime calculator</strong> to wake at the end of a cycle, you can minimize or eliminate sleep inertia entirely. This is why some people feel refreshed after 7.5 hours but exhausted after 8 hours—they're waking at different points in their sleep cycle.
                 </p>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="optimizing-schedule" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   Optimizing Your Sleep Schedule
                 </h3>
                 
@@ -109,7 +109,7 @@ export function SEOContent({ section }: SEOContentProps) {
         </section>
         
         {/* Benefits Section */}
-        <section className="bg-gradient-to-br from-purple-500/10 to-blue-500/10 backdrop-blur-sm border border-purple-400/20 rounded-2xl p-6 md:p-8 shadow-2xl">
+        <section id="benefits" className="bg-gradient-to-br from-purple-500/10 to-blue-500/10 backdrop-blur-sm border border-purple-400/20 rounded-2xl p-6 md:p-8 shadow-2xl scroll-mt-24">
           <div className="flex items-start gap-3 mb-6">
             <TrendingUp className="w-8 h-8 text-purple-400 flex-shrink-0 mt-1" />
             <div>

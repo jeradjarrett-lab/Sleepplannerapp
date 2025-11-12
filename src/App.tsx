@@ -34,11 +34,13 @@ const HowToSection = lazy(() => import("./components/HowToSection").then(m => ({
 const QuickAnswers = lazy(() => import("./components/QuickAnswers").then(m => ({ default: m.QuickAnswers })));
 const ComparisonTable = lazy(() => import("./components/ComparisonTable").then(m => ({ default: m.ComparisonTable })));
 const SEOContent = lazy(() => import("./components/SEOContent").then(m => ({ default: m.SEOContent })));
+const ScienceBackedContent = lazy(() => import("./components/ScienceBackedContent").then(m => ({ default: m.ScienceBackedContent })));
 const BreadcrumbNav = lazy(() => import("./components/BreadcrumbNav").then(m => ({ default: m.BreadcrumbNav })));
 const RelatedLinks = lazy(() => import("./components/RelatedLinks").then(m => ({ default: m.RelatedLinks })));
 const CTASection = lazy(() => import("./components/CTASection").then(m => ({ default: m.CTASection })));
 const Toaster = lazy(() => import("./components/ui/sonner").then(m => ({ default: m.Toaster })));
 const ScrollToTop = lazy(() => import("./components/ScrollToTop").then(m => ({ default: m.ScrollToTop })));
+const ScrollNav = lazy(() => import("./components/ScrollNav").then(m => ({ default: m.ScrollNav })));
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<
@@ -230,6 +232,11 @@ export default function App() {
           </div>
         </nav>
 
+        {/* Scroll Navigation Menu */}
+        <Suspense fallback={null}>
+          <ScrollNav section={activeSection} />
+        </Suspense>
+
         {/* Calculator Sections - Primary Content with Lazy Loading */}
         <Suspense fallback={<LoadingSpinner />}>
           {activeSection === "sleep" && <SleepCalculator />}
@@ -247,6 +254,9 @@ export default function App() {
 
             {/* Educational SEO Content */}
             <SEOContent section={activeSection} />
+
+            {/* Science-Backed Research Content */}
+            <ScienceBackedContent section={activeSection} />
 
             {/* How-To Section for Featured Snippets */}
             <HowToSection section={activeSection} />

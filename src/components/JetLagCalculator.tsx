@@ -242,7 +242,7 @@ export function JetLagCalculator() {
   const sleepSchedule = showPlan ? calculateSleepSchedule() : [];
 
   return (
-    <div className="space-y-1 md:space-y-2">
+    <div id="calculator" className="space-y-1 md:space-y-2 scroll-mt-24">
       {/* Hero Section - Content First, Ads After */}
       <div className="text-center space-y-1 md:space-y-2 px-4">
         <div className="relative inline-block">

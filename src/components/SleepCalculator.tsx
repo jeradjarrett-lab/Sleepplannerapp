@@ -403,7 +403,7 @@ export function SleepCalculator() {
   const filteredSleepResults = parsedAge !== null ? recommendedSleepResults : sleepResults;
 
   return (
-    <div className="space-y-1 md:space-y-2">
+    <div id="calculator" className="space-y-1 md:space-y-2 scroll-mt-24">
       {/* Hero Section - Content First, Ads After */}
       <header className="text-center space-y-1 px-4">
         <div className="relative inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-blue-500/20 rounded-full mb-1">

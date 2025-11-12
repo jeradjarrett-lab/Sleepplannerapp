@@ -7,7 +7,7 @@ interface QuickAnswersProps {
 export function QuickAnswers({ section }: QuickAnswersProps) {
   if (section === 'sleep') {
     return (
-      <div className="mb-8 md:mb-12 bg-blue-500/10 backdrop-blur-sm border border-blue-400/30 rounded-xl p-6 md:p-8">
+      <div id="quick-answers" className="mb-8 md:mb-12 bg-blue-500/10 backdrop-blur-sm border border-blue-400/30 rounded-xl p-6 md:p-8 scroll-mt-24">
         <div className="flex items-start gap-3 mb-4">
           <Info className="w-6 h-6 text-blue-400 flex-shrink-0 mt-1" />
           <div>
@@ -51,7 +51,7 @@ export function QuickAnswers({ section }: QuickAnswersProps) {
 
   if (section === 'caffeine') {
     return (
-      <div className="mb-8 md:mb-12 bg-amber-500/10 backdrop-blur-sm border border-amber-400/30 rounded-xl p-6 md:p-8">
+      <div id="quick-answers" className="mb-8 md:mb-12 bg-amber-500/10 backdrop-blur-sm border border-amber-400/30 rounded-xl p-6 md:p-8 scroll-mt-24">
         <div className="flex items-start gap-3 mb-4">
           <Info className="w-6 h-6 text-amber-400 flex-shrink-0 mt-1" />
           <div className="w-full">
@@ -102,7 +102,7 @@ export function QuickAnswers({ section }: QuickAnswersProps) {
 
   if (section === 'jetlag') {
     return (
-      <div className="mb-8 md:mb-12 bg-amber-500/10 backdrop-blur-sm border border-amber-400/30 rounded-xl p-6 md:p-8">
+      <div id="quick-answers" className="mb-8 md:mb-12 bg-amber-500/10 backdrop-blur-sm border border-amber-400/30 rounded-xl p-6 md:p-8 scroll-mt-24">
         <div className="flex items-start gap-3 mb-4">
           <Info className="w-6 h-6 text-amber-400 flex-shrink-0 mt-1" />
           <div>
