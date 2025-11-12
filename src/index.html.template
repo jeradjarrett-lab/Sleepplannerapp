@@ -7,8 +7,12 @@
   <!-- Critical resource hints for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
   <link rel="dns-prefetch" href="https://platform-api.sharethis.com">
+  
+  <!-- Google AdSense script -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0855352021512673"
+     crossorigin="anonymous"></script>
   
   <!-- Preload critical font -->
   <link rel="preload" as="font" type="font/woff2" 

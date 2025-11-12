@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Card } from './ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs';
 import { Moon, Sun, AlertCircle, Lightbulb, RefreshCw } from 'lucide-react';
-import { AdPlacement } from './AdPlacement';
+import { AmpAdTop } from './AmpAdTop';
+import { AmpAdMiddle } from './AmpAdMiddle';
 import { TimeDial } from './TimeDial';
 import { motion } from 'motion/react';
 import { Button } from './ui/button';
@@ -231,9 +232,8 @@ export function SleepCalculator() {
 
   return (
     <div className="space-y-1 md:space-y-2">
-      {/* Top Ad - Leaderboard (max 90px height) */}
-      <AdPlacement size="leaderboard" maxHeight={90} className="hidden md:block" />
-      <AdPlacement size="mobile" maxHeight={90} className="md:hidden" />
+      {/* Top Ad - AMP Leaderboard (728x90) */}
+      <AmpAdTop />
 
       {/* Hero Section */}
       <header className="text-center space-y-1 px-4">
@@ -406,14 +406,14 @@ export function SleepCalculator() {
         </Tabs>
       </Card>
 
-      {/* Middle Ad Placement */}
-      <AdPlacement size="medium" />
+      {/* Middle Ad Placement - AMP Responsive */}
+      <AmpAdMiddle />
 
       {/* Sleep Tips Section */}
       <SleepTips />
 
       {/* Bottom Ad Placement */}
-      <AdPlacement size="medium" />
+      <AmpAdMiddle />
     </div>
   );
 }

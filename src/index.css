@@ -496,10 +496,6 @@
     visibility: hidden;
   }
 
-  .visible {
-    visibility: visible;
-  }
-
   .sr-only {
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
@@ -3731,18 +3727,6 @@
   @media (width >= 48rem) {
     .md\:mb-12 {
       margin-bottom: calc(var(--spacing) * 12);
-    }
-  }
-
-  @media (width >= 48rem) {
-    .md\:block {
-      display: block;
-    }
-  }
-
-  @media (width >= 48rem) {
-    .md\:hidden {
-      display: none;
     }
   }
 

@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Card } from './ui/card';
 import { Input } from './ui/input';
 import { User, Info, Baby, Users, GraduationCap, Briefcase, Heart, Moon, Sun, Clock, Settings, ChevronDown } from 'lucide-react';
-import { AdPlacement } from './AdPlacement';
+import { AmpAdTop } from './AmpAdTop';
+import { AmpAdMiddle } from './AmpAdMiddle';
 import { TimeDial } from './TimeDial';
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from './ui/collapsible';
 import { Button } from './ui/button';
@@ -555,9 +556,8 @@ export function SleepRecommendations() {
 
   return (
     <div className="space-y-1 md:space-y-2">
-      {/* Top Ad - Leaderboard (max 90px height) */}
-      <AdPlacement size="leaderboard" maxHeight={90} className="hidden md:block" />
-      <AdPlacement size="mobile" maxHeight={90} className="md:hidden" />
+      {/* Top Ad - AMP Leaderboard (728x90) */}
+      <AmpAdTop />
 
       {/* Hero Section */}
       <div className="text-center space-y-1 md:space-y-2 px-4">
@@ -854,8 +854,8 @@ export function SleepRecommendations() {
         </div>
       </Card>
 
-      {/* Ad Placement */}
-      <AdPlacement size="medium" />
+      {/* Ad Placement - AMP Responsive */}
+      <AmpAdMiddle />
 
       {/* All Age Groups */}
       <div className="space-y-4">
@@ -900,7 +900,7 @@ export function SleepRecommendations() {
       </div>
 
       {/* Bottom Ad Placement */}
-      <AdPlacement size="medium" />
+      <AmpAdMiddle />
 
       {/* Info Section */}
       <Card className="bg-white/10 backdrop-blur-sm border-white/20 p-4 md:p-6">

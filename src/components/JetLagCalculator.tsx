@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Plane, Sun, Moon, Coffee, ArrowRight, MapPin, Calendar as CalendarIcon, Clock, AlertCircle, Lightbulb, Bed, Eye, EyeOff } from 'lucide-react';
-import { AdPlacement } from './AdPlacement';
+import { AmpAdTop } from './AmpAdTop';
+import { AmpAdMiddle } from './AmpAdMiddle';
 import { Calendar } from './ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { TimeDial } from './TimeDial';
@@ -244,9 +245,8 @@ export function JetLagCalculator() {
 
   return (
     <div className="space-y-1 md:space-y-2">
-      {/* Top Ad - Leaderboard (max 90px height) */}
-      <AdPlacement size="leaderboard" maxHeight={90} className="hidden md:block" />
-      <AdPlacement size="mobile" maxHeight={90} className="md:hidden" />
+      {/* Top Ad - AMP Leaderboard (728x90) */}
+      <AmpAdTop />
 
       {/* Hero Section */}
       <div className="text-center space-y-1 md:space-y-2 px-4">
@@ -752,8 +752,8 @@ export function JetLagCalculator() {
         )}
       </Card>
 
-      {/* Middle Ad Placement */}
-      <AdPlacement size="medium" />
+      {/* Middle Ad Placement - AMP Responsive */}
+      <AmpAdMiddle />
 
       {/* Info Section */}
       <Card className="bg-white/10 backdrop-blur-sm border-white/20 p-4 md:p-6">
@@ -777,7 +777,7 @@ export function JetLagCalculator() {
       </Card>
 
       {/* Bottom Ad Placement */}
-      <AdPlacement size="medium" />
+      <AmpAdMiddle />
     </div>
   );
 }
