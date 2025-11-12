@@ -2,6 +2,33 @@
   publish = "dist"
   command = "npm run build"
 
+# Build optimizations
+[build.environment]
+  NODE_VERSION = "18"
+  NPM_FLAGS = "--legacy-peer-deps"
+
+# Plugin for better compression and optimization
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
+
+# Asset optimization
+[build.processing]
+  skip_processing = false
+
+[build.processing.css]
+  bundle = true
+  minify = true
+
+[build.processing.js]
+  bundle = true
+  minify = true
+
+[build.processing.html]
+  pretty_urls = true
+
+[build.processing.images]
+  compress = true
+
 # Cache headers for better performance
 [[headers]]
   for = "/assets/*"
@@ -81,6 +108,8 @@
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    Content-Security-Policy = "upgrade-insecure-requests"
 
 [[headers]]
   for = "/"
@@ -90,6 +119,9 @@
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    Content-Security-Policy = "upgrade-insecure-requests"
+    Link = "</assets/main.css>; rel=preload; as=style, </assets/main.js>; rel=preload; as=script"
 
 # Redirect rules
 [[redirects]]

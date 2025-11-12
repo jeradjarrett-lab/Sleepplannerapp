@@ -8,10 +8,10 @@ interface FAQ {
 }
 
 interface FAQSectionProps {
-  section: 'sleep' | 'recommendations' | 'jetlag';
+  section: 'sleep' | 'caffeine' | 'jetlag';
 }
 
-const faqData: Record<'sleep' | 'recommendations' | 'jetlag', FAQ[]> = {
+const faqData: Record<'sleep' | 'caffeine' | 'jetlag', FAQ[]> = {
   sleep: [
     {
       question: 'How does a sleep calculator work?',
@@ -38,30 +38,30 @@ const faqData: Record<'sleep' | 'recommendations' | 'jetlag', FAQ[]> = {
       answer: 'Yes, age affects both sleep cycle duration and sleep needs. Infants have shorter 50-60 minute cycles, while adults average 90 minutes. Additionally, sleep requirements decrease with age: newborns need 14-17 hours, teenagers need 8-10 hours, and adults need 7-9 hours of sleep per night.'
     }
   ],
-  recommendations: [
+  caffeine: [
     {
-      question: 'How much sleep does a newborn need?',
-      answer: 'Newborns (0-3 months) need 14-17 hours of sleep per day, with a range of 11-19 hours being acceptable. Their sleep is distributed throughout day and night in short periods, typically 2-4 hours at a time, as they haven\'t yet developed a circadian rhythm.'
+      question: 'How does caffeine affect sleep?',
+      answer: 'Caffeine blocks adenosine receptors in the brain, which prevents the buildup of sleep pressure. This can delay sleep onset, reduce total sleep time, decrease sleep quality, and particularly reduce deep slow-wave sleep. Even when consumed 6 hours before bedtime, caffeine can significantly disrupt sleep architecture.'
     },
     {
-      question: 'What is the recommended sleep for teenagers?',
-      answer: 'Teenagers (14-17 years) need 8-10 hours of sleep per night. This age group often experiences delayed sleep phase, feeling naturally more awake at night. Despite this, maintaining consistent sleep schedules is crucial for their physical development, learning, and mental health.'
+      question: 'What is caffeine half-life?',
+      answer: 'Caffeine half-life is approximately 5 hours in healthy adults, meaning it takes 5 hours for your body to eliminate half of the caffeine consumed. After 10 hours, you still have 25% remaining, and after 15 hours, about 12.5% remains. This varies based on genetics, age, medications, pregnancy, and smoking status.'
     },
     {
-      question: 'Do adults really need 8 hours of sleep?',
-      answer: 'Adults (18-64 years) need 7-9 hours of sleep per night. While 8 hours is often cited, the ideal amount varies by individual. The key is to wake up feeling refreshed and maintain alertness throughout the day. Consistently getting less than 7 hours is linked to health risks.'
+      question: 'How much caffeine is too much?',
+      answer: 'For most healthy adults, up to 400mg of caffeine per day (about 4 cups of coffee) is considered safe. However, for optimal sleep, you should avoid caffeine at least 6-8 hours before bedtime. Pregnant women should limit intake to 200mg, and teenagers should stay under 100mg daily.'
     },
     {
-      question: 'How does sleep need change with age?',
-      answer: 'Sleep needs decrease with age: newborns need 14-17 hours, infants need 12-15 hours, toddlers need 11-14 hours, preschoolers need 10-13 hours, school-age children need 9-11 hours, teenagers need 8-10 hours, and adults need 7-9 hours. Seniors (65+) still need 7-8 hours but often experience more fragmented sleep.'
+      question: 'When should I stop drinking coffee for better sleep?',
+      answer: 'To optimize sleep quality, stop consuming caffeine at least 6-8 hours before your target bedtime. If you plan to sleep at 10 PM, your last caffeinated beverage should be no later than 2-4 PM. Individual sensitivity varies, so some people may need to cut off even earlier.'
     },
     {
-      question: 'What happens if children don\'t get enough sleep?',
-      answer: 'Insufficient sleep in children can lead to behavioral problems, difficulty concentrating, poor academic performance, weakened immune system, increased risk of obesity, and mood disturbances. Children who consistently get adequate sleep show better learning, memory consolidation, emotional regulation, and physical development.'
+      question: 'Does caffeine tolerance prevent sleep problems?',
+      answer: 'No, caffeine tolerance only reduces the stimulant effects you feel consciously. Even if you don\'t feel wired or jittery, caffeine still disrupts your sleep architecture by blocking adenosine receptors and reducing deep sleep stages. Regular caffeine users often underestimate its impact on their sleep quality.'
     },
     {
-      question: 'Can you catch up on lost sleep on weekends?',
-      answer: 'While weekend sleep-ins can help reduce sleep debt temporarily, they can\'t fully compensate for chronic sleep deprivation. Irregular sleep schedules disrupt your circadian rhythm, potentially causing "social jet lag." The best approach is maintaining consistent sleep and wake times throughout the week.'
+      question: 'Are there alternatives to caffeine for energy?',
+      answer: 'Yes! Natural alternatives include: getting adequate sleep (7-9 hours), staying hydrated, exercising regularly, taking short power naps (10-20 minutes), eating balanced meals, getting sunlight exposure in the morning, and using strategic rest breaks. These provide sustainable energy without sleep disruption.'
     }
   ],
   jetlag: [

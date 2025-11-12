@@ -1,7 +1,7 @@
 import { Info, Clock, Moon, Target } from 'lucide-react';
 
 interface QuickAnswersProps {
-  section: 'sleep' | 'recommendations' | 'jetlag';
+  section: 'sleep' | 'caffeine' | 'jetlag';
 }
 
 export function QuickAnswers({ section }: QuickAnswersProps) {
@@ -49,60 +49,50 @@ export function QuickAnswers({ section }: QuickAnswersProps) {
     );
   }
 
-  if (section === 'recommendations') {
+  if (section === 'caffeine') {
     return (
-      <div className="mb-8 md:mb-12 bg-purple-500/10 backdrop-blur-sm border border-purple-400/30 rounded-xl p-6 md:p-8">
+      <div className="mb-8 md:mb-12 bg-amber-500/10 backdrop-blur-sm border border-amber-400/30 rounded-xl p-6 md:p-8">
         <div className="flex items-start gap-3 mb-4">
-          <Info className="w-6 h-6 text-purple-400 flex-shrink-0 mt-1" />
+          <Info className="w-6 h-6 text-amber-400 flex-shrink-0 mt-1" />
           <div className="w-full">
             <h2 className="text-xl md:text-2xl text-white mb-4">
-              Sleep Needs by Age (Quick Reference)
+              Caffeine Content Guide (Quick Reference)
             </h2>
             
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              <div className="bg-white/5 rounded-lg p-4 border border-purple-400/20">
-                <div className="text-purple-300 text-sm mb-1">Newborns (0-3 months)</div>
-                <div className="text-white text-xl">14-17 hours</div>
+              <div className="bg-white/5 rounded-lg p-4 border border-amber-400/20">
+                <div className="text-amber-300 text-sm mb-1">Coffee (8 oz)</div>
+                <div className="text-white text-xl">95mg</div>
               </div>
               
-              <div className="bg-white/5 rounded-lg p-4 border border-purple-400/20">
-                <div className="text-purple-300 text-sm mb-1">Infants (4-11 months)</div>
-                <div className="text-white text-xl">12-15 hours</div>
+              <div className="bg-white/5 rounded-lg p-4 border border-amber-400/20">
+                <div className="text-amber-300 text-sm mb-1">Espresso (1 shot)</div>
+                <div className="text-white text-xl">63mg</div>
               </div>
               
-              <div className="bg-white/5 rounded-lg p-4 border border-purple-400/20">
-                <div className="text-purple-300 text-sm mb-1">Toddlers (1-2 years)</div>
-                <div className="text-white text-xl">11-14 hours</div>
+              <div className="bg-white/5 rounded-lg p-4 border border-amber-400/20">
+                <div className="text-amber-300 text-sm mb-1">Energy Drink (8 oz)</div>
+                <div className="text-white text-xl">80mg</div>
               </div>
               
-              <div className="bg-white/5 rounded-lg p-4 border border-purple-400/20">
-                <div className="text-purple-300 text-sm mb-1">Preschoolers (3-5 years)</div>
-                <div className="text-white text-xl">10-13 hours</div>
+              <div className="bg-white/5 rounded-lg p-4 border border-amber-400/20">
+                <div className="text-amber-300 text-sm mb-1">Black Tea (8 oz)</div>
+                <div className="text-white text-xl">47mg</div>
               </div>
               
-              <div className="bg-white/5 rounded-lg p-4 border border-purple-400/20">
-                <div className="text-purple-300 text-sm mb-1">School Age (6-13 years)</div>
-                <div className="text-white text-xl">9-11 hours</div>
+              <div className="bg-white/5 rounded-lg p-4 border border-amber-400/20">
+                <div className="text-amber-300 text-sm mb-1">Green Tea (8 oz)</div>
+                <div className="text-white text-xl">28mg</div>
               </div>
               
-              <div className="bg-white/5 rounded-lg p-4 border border-purple-400/20">
-                <div className="text-purple-300 text-sm mb-1">Teens (14-17 years)</div>
-                <div className="text-white text-xl">8-10 hours</div>
-              </div>
-              
-              <div className="bg-white/5 rounded-lg p-4 border border-purple-400/20">
-                <div className="text-purple-300 text-sm mb-1">Adults (18-64 years)</div>
-                <div className="text-white text-xl">7-9 hours</div>
-              </div>
-              
-              <div className="bg-white/5 rounded-lg p-4 border border-purple-400/20">
-                <div className="text-purple-300 text-sm mb-1">Seniors (65+ years)</div>
-                <div className="text-white text-xl">7-8 hours</div>
+              <div className="bg-white/5 rounded-lg p-4 border border-amber-400/20">
+                <div className="text-amber-300 text-sm mb-1">Soda/Cola (12 oz)</div>
+                <div className="text-white text-xl">34mg</div>
               </div>
             </div>
             
-            <p className="text-purple-100/70 text-sm mt-4 italic">
-              Source: National Sleep Foundation recommendations
+            <p className="text-amber-100/70 text-sm mt-4 italic">
+              Caffeine half-life: ~5 hours | Daily limit for adults: 400mg
             </p>
           </div>
         </div>

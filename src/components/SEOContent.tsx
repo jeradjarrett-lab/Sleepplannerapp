@@ -1,7 +1,7 @@
 import { BookOpen, Brain, Moon, Globe, Award, TrendingUp } from 'lucide-react';
 
 interface SEOContentProps {
-  section: 'sleep' | 'recommendations' | 'jetlag';
+  section: 'sleep' | 'caffeine' | 'jetlag';
 }
 
 export function SEOContent({ section }: SEOContentProps) {
@@ -159,84 +159,76 @@ export function SEOContent({ section }: SEOContentProps) {
     );
   }
 
-  if (section === 'recommendations') {
+  if (section === 'caffeine') {
     return (
       <article className="mt-12 md:mt-16 space-y-8">
         <section className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl">
           <div className="flex items-start gap-3 mb-6">
-            <BookOpen className="w-8 h-8 text-purple-400 flex-shrink-0 mt-1" />
+            <BookOpen className="w-8 h-8 text-amber-400 flex-shrink-0 mt-1" />
             <div>
               <h2 className="text-2xl md:text-3xl text-white mb-4">
-                Sleep Requirements by Age: Evidence-Based Guidelines
+                Caffeine and Sleep: Science-Based Guide
               </h2>
               
-              <div className="space-y-4 text-purple-100/90 leading-relaxed">
+              <div className="space-y-4 text-amber-100/90 leading-relaxed">
                 <p>
-                  <strong className="text-purple-200">Sleep needs</strong> change dramatically throughout life. The National Sleep Foundation, in collaboration with leading sleep experts, has established comprehensive guidelines based on decades of research. Understanding these age-specific requirements is essential for optimal health, cognitive development, and overall wellbeing.
+                  <strong className="text-amber-200">Caffeine</strong> is the world's most widely consumed psychoactive substance, with over 90% of adults consuming it daily. While caffeine provides benefits like increased alertness and improved performance, understanding its effects on sleep is crucial for maintaining healthy sleep patterns and overall wellbeing.
                 </p>
                 
                 <h3 className="text-xl text-white mt-6 mb-3">
-                  Why Sleep Needs Change With Age
+                  How Caffeine Affects Your Sleep
                 </h3>
                 
                 <p>
-                  As we age, our <strong className="text-purple-200">circadian rhythm</strong>, sleep architecture, and biological needs evolve. Newborns spend about 50% of their sleep in REM (compared to 20-25% in adults) because brain development requires extensive neural processing. Teenagers experience a natural shift in their circadian rhythm, becoming "night owls" due to hormonal changes. Older adults often sleep lighter and wake more frequently due to changes in sleep regulation hormones like melatonin.
+                  Caffeine works by blocking <strong className="text-amber-200">adenosine receptors</strong> in the brain. Adenosine is a neurotransmitter that builds up throughout the day, creating sleep pressure and making you feel tired. When caffeine blocks these receptors, it prevents the natural sleep drive from building, keeping you alert. However, this mechanism continues to affect your sleep even hours after consumption, disrupting sleep architecture and reducing overall sleep quality.
                 </p>
                 
                 <h3 className="text-xl text-white mt-6 mb-3">
-                  Infant and Child Sleep: Critical for Development
+                  Understanding Caffeine Half-Life
                 </h3>
                 
                 <p>
-                  <strong className="text-purple-200">Newborns (0-3 months)</strong> need 14-17 hours of sleep distributed throughout the day and night. Their sleep cycles are shorter (50-60 minutes) and they haven't yet developed a circadian rhythm, which is why they wake frequently for feeding. This high sleep requirement supports rapid brain development—infants form over 1 million neural connections per second during the first few years of life.
+                  The <strong className="text-amber-200">half-life of caffeine</strong> is approximately 5 hours in healthy adults, meaning it takes 5 hours for your body to eliminate half of the caffeine you consumed. If you drink 200mg of caffeine at 2 PM, you'll still have about 100mg in your system at 7 PM, 50mg at midnight, and 25mg at 5 AM. This extended presence in your system is why afternoon coffee can disrupt nighttime sleep.
                 </p>
                 
                 <p>
-                  <strong className="text-purple-200">Infants (4-11 months)</strong> need 12-15 hours, including naps. By this age, circadian rhythms begin to develop, and sleep becomes more consolidated at night. This is when parents can start establishing healthy sleep routines and habits that will benefit the child for years to come.
-                </p>
-                
-                <p>
-                  <strong className="text-purple-200">Toddlers (1-2 years)</strong> require 11-14 hours. As they transition from two naps to one, maintaining consistency becomes crucial. Sleep deprivation in toddlers manifests as hyperactivity, tantrums, and difficulty focusing—often misinterpreted as behavioral issues rather than insufficient sleep.
-                </p>
-                
-                <p>
-                  <strong className="text-purple-200">Preschoolers (3-5 years)</strong> need 10-13 hours. Many children drop their nap during this period. Adequate sleep at this age is associated with better emotional regulation, improved learning capacity, and reduced risk of childhood obesity.
+                  Individual caffeine metabolism varies significantly based on genetics (particularly the CYP1A2 gene), age, medications, and lifestyle factors. Smokers metabolize caffeine about 50% faster than non-smokers, while pregnant women may take twice as long to eliminate it. Understanding your personal metabolism is key to optimizing caffeine timing.
                 </p>
                 
                 <h3 className="text-xl text-white mt-6 mb-3">
-                  School-Age Children and Teenagers
+                  Caffeine's Impact on Sleep Stages
                 </h3>
                 
                 <p>
-                  <strong className="text-purple-200">School-age children (6-13 years)</strong> need 9-11 hours of sleep. Studies consistently show that children who get adequate sleep perform better academically, have better attendance, show improved athletic performance, and experience fewer behavioral problems. Unfortunately, early school start times and increasing homework loads often compromise sleep during these critical years.
+                  Research shows that caffeine consumed even <strong className="text-amber-200">6 hours before bedtime</strong> can significantly reduce total sleep time and sleep efficiency. It particularly affects deep sleep (slow-wave sleep), which is crucial for physical restoration and memory consolidation. Studies have found that 400mg of caffeine taken 6 hours before bed reduces sleep by more than 1 hour.
                 </p>
                 
                 <p>
-                  <strong className="text-purple-200">Teenagers (14-17 years)</strong> need 8-10 hours, but fewer than 15% get this amount on school nights. The teenage brain undergoes a <strong className="text-purple-200">delayed sleep phase shift</strong>—their natural bedtime shifts later (around 11 PM or midnight), while schools typically start at 7-8 AM. This biological-social mismatch results in chronic sleep deprivation, contributing to poor academic performance, increased risk of accidents, mental health issues, and obesity.
+                  Even when you fall asleep normally after consuming caffeine, your sleep architecture is disrupted. You spend less time in restorative deep sleep stages and may experience more frequent awakenings during the night, even if you don't fully remember them in the morning.
                 </p>
                 
                 <h3 className="text-xl text-white mt-6 mb-3">
-                  Adult Sleep Requirements
+                  Caffeine Tolerance and Sleep
                 </h3>
                 
                 <p>
-                  <strong className="text-purple-200">Adults (18-64 years)</strong> need 7-9 hours of sleep per night. While individual needs vary, consistently getting less than 7 hours is associated with numerous health risks: increased risk of cardiovascular disease, diabetes, obesity, weakened immune function, cognitive impairment, and mental health disorders. The "sleep debt" accumulated from chronic sleep deprivation cannot be fully repaid with weekend catch-up sleep.
+                  A common misconception is that <strong className="text-amber-200">caffeine tolerance</strong> prevents sleep disruption. While regular caffeine consumers may not feel as jittery or wired, objective sleep studies show that caffeine still impairs sleep quality regardless of tolerance. Your body adapts to the stimulant effects you consciously notice, but the adenosine-blocking mechanism continues to disrupt sleep architecture.
                 </p>
                 
                 <p>
-                  <strong className="text-purple-200">Older adults (65+ years)</strong> need 7-8 hours. While the total amount needed decreases slightly, sleep quality often declines due to medical conditions, medications, changes in circadian rhythm, and decreased production of sleep-promoting hormones. Older adults should focus on sleep quality through proper sleep hygiene, regular exercise, and managing health conditions that interfere with sleep.
+                  Regular caffeine users often underestimate its impact because they've forgotten what truly refreshing, uninterrupted sleep feels like. Many people who eliminate or reduce caffeine report dramatic improvements in sleep quality within 1-2 weeks, even if they didn't think caffeine was affecting them.
                 </p>
                 
                 <h3 className="text-xl text-white mt-6 mb-3">
-                  Consequences of Insufficient Sleep
+                  Optimal Caffeine Timing for Better Sleep
                 </h3>
                 
                 <p>
-                  Chronic sleep deprivation affects every system in the body. <strong className="text-purple-200">Short-term effects</strong> include impaired attention, memory, decision-making, and increased accident risk. One night of poor sleep can impair cognitive function as much as being legally intoxicated.
+                  For most people, the best strategy is to avoid caffeine at least <strong className="text-amber-200">8-10 hours before bedtime</strong>. If you plan to sleep at 10 PM, have your last caffeinated beverage no later than noon or 2 PM. This allows enough time for your body to metabolize most of the caffeine, reducing its impact on sleep quality.
                 </p>
                 
                 <p>
-                  <strong className="text-purple-200">Long-term consequences</strong> are even more serious: increased risk of obesity (sleep deprivation affects hormones that regulate hunger), type 2 diabetes, cardiovascular disease, hypertension, stroke, depression, anxiety, and reduced life expectancy. In children, chronic sleep deprivation can permanently affect brain development and academic potential.
+                  Consider front-loading your caffeine consumption to the morning hours when adenosine levels are naturally highest. This provides energy when you need it most while minimizing evening sleep disruption. Switching to decaffeinated options after lunch can help maintain the ritual and taste of coffee without the sleep penalty.
                 </p>
                 
                 <div className="mt-6 p-5 bg-green-500/10 border-2 border-green-400/30 rounded-xl">
@@ -245,7 +237,7 @@ export function SEOContent({ section }: SEOContentProps) {
                     <div>
                       <h4 className="text-green-200 mb-2">Key Takeaway</h4>
                       <p className="text-green-100/90 text-sm">
-                        Sleep is not a luxury—it's a biological necessity. Prioritizing adequate sleep for yourself and your children is one of the most important health decisions you can make. Use our age-based recommendations as a starting point, but also pay attention to how you feel: if you wake up refreshed, maintain energy throughout the day, and don't rely on caffeine to function, you're likely getting enough sleep.
+                        Caffeine is a powerful tool for alertness, but timing is everything. By understanding caffeine metabolism and strategically planning your intake, you can enjoy the benefits of caffeine without sacrificing sleep quality. Use our calculator to track your caffeine consumption and discover your optimal cutoff time for the best possible sleep.
                       </p>
                     </div>
                   </div>

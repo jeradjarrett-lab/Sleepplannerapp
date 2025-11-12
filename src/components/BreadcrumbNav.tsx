@@ -1,14 +1,14 @@
 import { ChevronRight, Home } from 'lucide-react';
 
 interface BreadcrumbNavProps {
-  section: 'sleep' | 'recommendations' | 'jetlag';
-  onNavigate?: (section: 'sleep' | 'recommendations' | 'jetlag') => void;
+  section: 'sleep' | 'caffeine' | 'jetlag';
+  onNavigate?: (section: 'sleep' | 'caffeine' | 'jetlag') => void;
 }
 
 export function BreadcrumbNav({ section, onNavigate }: BreadcrumbNavProps) {
   const breadcrumbLabels = {
     sleep: 'Sleep Calculator',
-    recommendations: 'Sleep by Age',
+    caffeine: 'Caffeine & Sleep',
     jetlag: 'Jet Lag Calculator',
   };
 
@@ -55,7 +55,7 @@ export function BreadcrumbNav({ section, onNavigate }: BreadcrumbNavProps) {
           <meta itemProp="position" content="2" />
           <link 
             itemProp="item" 
-            href={`https://eyelovesleep.app${section === 'sleep' ? '' : section === 'recommendations' ? '/sleep-by-age' : '/jet-lag'}`} 
+            href={`https://eyelovesleep.app${section === 'sleep' ? '' : section === 'caffeine' ? '/caffeine-sleep' : '/jet-lag'}`} 
           />
         </li>
       </ol>

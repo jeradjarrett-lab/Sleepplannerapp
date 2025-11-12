@@ -1,5 +1,5 @@
 interface ComparisonTableProps {
-  section: 'sleep' | 'recommendations' | 'jetlag';
+  section: 'sleep' | 'caffeine' | 'jetlag';
 }
 
 export function ComparisonTable({ section }: ComparisonTableProps) {
@@ -58,85 +58,65 @@ export function ComparisonTable({ section }: ComparisonTableProps) {
     );
   }
 
-  if (section === 'recommendations') {
+  if (section === 'caffeine') {
     return (
       <section className="mt-8 md:mt-12">
         <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl overflow-x-auto">
           <h2 className="text-2xl md:text-3xl text-white mb-6">
-            Detailed Sleep Requirements by Age Group
+            Caffeine Metabolism Timeline
           </h2>
           
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse" itemScope itemType="https://schema.org/Table">
               <thead>
                 <tr className="border-b border-white/20">
-                  <th className="py-3 px-4 text-purple-200">Age Group</th>
-                  <th className="py-3 px-4 text-purple-200">Recommended Hours</th>
-                  <th className="py-3 px-4 text-purple-200">May Be Appropriate</th>
-                  <th className="py-3 px-4 text-purple-200">Not Recommended</th>
+                  <th className="py-3 px-4 text-amber-200">Time After Consumption</th>
+                  <th className="py-3 px-4 text-amber-200">Caffeine Remaining (from 200mg)</th>
+                  <th className="py-3 px-4 text-amber-200">Effect on Sleep</th>
                 </tr>
               </thead>
               <tbody>
                 <tr className="border-b border-white/10 hover:bg-white/5">
-                  <td className="py-3 px-4 text-white">Newborns (0-3 mo)</td>
-                  <td className="py-3 px-4 text-green-400">14-17 hours</td>
-                  <td className="py-3 px-4 text-blue-100/70">11-13, 18-19 hours</td>
-                  <td className="py-3 px-4 text-red-400/70">&lt;11, &gt;19 hours</td>
+                  <td className="py-3 px-4 text-white">0 hours (Consumption)</td>
+                  <td className="py-3 px-4 text-red-400">200mg (100%)</td>
+                  <td className="py-3 px-4 text-red-400/70">Severe sleep disruption</td>
                 </tr>
                 <tr className="border-b border-white/10 hover:bg-white/5">
-                  <td className="py-3 px-4 text-white">Infants (4-11 mo)</td>
-                  <td className="py-3 px-4 text-green-400">12-15 hours</td>
-                  <td className="py-3 px-4 text-blue-100/70">10-11, 16-18 hours</td>
-                  <td className="py-3 px-4 text-red-400/70">&lt;10, &gt;18 hours</td>
+                  <td className="py-3 px-4 text-white">1 hour</td>
+                  <td className="py-3 px-4 text-orange-400">~175mg (87%)</td>
+                  <td className="py-3 px-4 text-orange-400/70">Severe sleep disruption</td>
                 </tr>
                 <tr className="border-b border-white/10 hover:bg-white/5">
-                  <td className="py-3 px-4 text-white">Toddlers (1-2 yr)</td>
-                  <td className="py-3 px-4 text-green-400">11-14 hours</td>
-                  <td className="py-3 px-4 text-blue-100/70">9-10, 15-16 hours</td>
-                  <td className="py-3 px-4 text-red-400/70">&lt;9, &gt;16 hours</td>
+                  <td className="py-3 px-4 text-white">3 hours</td>
+                  <td className="py-3 px-4 text-orange-400">~140mg (70%)</td>
+                  <td className="py-3 px-4 text-orange-400/70">Significant sleep disruption</td>
                 </tr>
                 <tr className="border-b border-white/10 hover:bg-white/5">
-                  <td className="py-3 px-4 text-white">Preschoolers (3-5 yr)</td>
-                  <td className="py-3 px-4 text-green-400">10-13 hours</td>
-                  <td className="py-3 px-4 text-blue-100/70">8-9, 14 hours</td>
-                  <td className="py-3 px-4 text-red-400/70">&lt;8, &gt;14 hours</td>
+                  <td className="py-3 px-4 text-white">5 hours (Half-life)</td>
+                  <td className="py-3 px-4 text-yellow-400">100mg (50%)</td>
+                  <td className="py-3 px-4 text-yellow-400/70">Moderate sleep disruption</td>
                 </tr>
                 <tr className="border-b border-white/10 hover:bg-white/5">
-                  <td className="py-3 px-4 text-white">School Age (6-13 yr)</td>
-                  <td className="py-3 px-4 text-green-400">9-11 hours</td>
-                  <td className="py-3 px-4 text-blue-100/70">7-8, 12 hours</td>
-                  <td className="py-3 px-4 text-red-400/70">&lt;7, &gt;12 hours</td>
+                  <td className="py-3 px-4 text-white">8 hours</td>
+                  <td className="py-3 px-4 text-blue-400">~57mg (28%)</td>
+                  <td className="py-3 px-4 text-blue-400/70">Mild sleep disruption</td>
                 </tr>
                 <tr className="border-b border-white/10 hover:bg-white/5">
-                  <td className="py-3 px-4 text-white">Teenagers (14-17 yr)</td>
-                  <td className="py-3 px-4 text-green-400">8-10 hours</td>
-                  <td className="py-3 px-4 text-blue-100/70">7, 11 hours</td>
-                  <td className="py-3 px-4 text-red-400/70">&lt;7, &gt;11 hours</td>
-                </tr>
-                <tr className="border-b border-white/10 hover:bg-white/5">
-                  <td className="py-3 px-4 text-white">Young Adults (18-25 yr)</td>
-                  <td className="py-3 px-4 text-green-400">7-9 hours</td>
-                  <td className="py-3 px-4 text-blue-100/70">6, 10-11 hours</td>
-                  <td className="py-3 px-4 text-red-400/70">&lt;6, &gt;11 hours</td>
-                </tr>
-                <tr className="border-b border-white/10 hover:bg-white/5">
-                  <td className="py-3 px-4 text-white">Adults (26-64 yr)</td>
-                  <td className="py-3 px-4 text-green-400">7-9 hours</td>
-                  <td className="py-3 px-4 text-blue-100/70">6, 10 hours</td>
-                  <td className="py-3 px-4 text-red-400/70">&lt;6, &gt;10 hours</td>
+                  <td className="py-3 px-4 text-white">10 hours</td>
+                  <td className="py-3 px-4 text-green-400">~50mg (25%)</td>
+                  <td className="py-3 px-4 text-green-400/70">Minimal sleep disruption</td>
                 </tr>
                 <tr className="hover:bg-white/5">
-                  <td className="py-3 px-4 text-white">Older Adults (65+ yr)</td>
-                  <td className="py-3 px-4 text-green-400">7-8 hours</td>
-                  <td className="py-3 px-4 text-blue-100/70">5-6, 9 hours</td>
-                  <td className="py-3 px-4 text-red-400/70">&lt;5, &gt;9 hours</td>
+                  <td className="py-3 px-4 text-white">12-15 hours</td>
+                  <td className="py-3 px-4 text-green-400">~25-13mg (12-6%)</td>
+                  <td className="py-3 px-4 text-green-400/70">Negligible impact</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <p className="text-purple-100/60 text-sm mt-4 italic">
-            Source: National Sleep Foundation's sleep duration recommendations (2015)
+          <p className="text-amber-100/60 text-sm mt-4 italic">
+            Based on average caffeine half-life of 5 hours in healthy adults
           </p>
         </div>
       </section>

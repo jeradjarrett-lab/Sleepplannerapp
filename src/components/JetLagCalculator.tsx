@@ -2,8 +2,6 @@ import { useState } from 'react';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Plane, Sun, Moon, Coffee, ArrowRight, MapPin, Calendar as CalendarIcon, Clock, AlertCircle, Lightbulb, Bed, Eye, EyeOff } from 'lucide-react';
-import { AmpAdTop } from './AmpAdTop';
-import { AmpAdMiddle } from './AmpAdMiddle';
 import { Calendar } from './ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { TimeDial } from './TimeDial';
@@ -245,10 +243,7 @@ export function JetLagCalculator() {
 
   return (
     <div className="space-y-1 md:space-y-2">
-      {/* Top Ad - AMP Leaderboard (728x90) */}
-      <AmpAdTop />
-
-      {/* Hero Section */}
+      {/* Hero Section - Content First, Ads After */}
       <div className="text-center space-y-1 md:space-y-2 px-4">
         <div className="relative inline-block">
           <motion.div 
@@ -752,10 +747,7 @@ export function JetLagCalculator() {
         )}
       </Card>
 
-      {/* Middle Ad Placement - AMP Responsive */}
-      <AmpAdMiddle />
-
-      {/* Info Section */}
+      {/* Info Section - Substantial Content Before Ads */}
       <Card className="bg-white/10 backdrop-blur-sm border-white/20 p-4 md:p-6">
         <div className="space-y-3 md:space-y-4 text-white/90">
           <h3 className="text-white text-lg md:text-xl">Understanding Jet Lag & Recovery Time</h3>
@@ -775,9 +767,6 @@ export function JetLagCalculator() {
           </p>
         </div>
       </Card>
-
-      {/* Bottom Ad Placement */}
-      <AmpAdMiddle />
     </div>
   );
 }

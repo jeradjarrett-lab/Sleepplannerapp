@@ -1,6 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from "react";
 import { Header } from "./components/Header";
-import { Moon, Plane, User } from "lucide-react";
+import { Moon, Plane, Coffee } from "lucide-react";
 import { updateCriticalSeo, updateNonCriticalSeo, updateStructuredData, seoData } from "./utils/seo-manager";
 import { addResourceHints } from "./utils/resource-hints";
 import { initPerformanceMonitoring } from "./utils/performance-monitor";
@@ -25,7 +25,7 @@ if (typeof window !== 'undefined') {
 // Lazy load heavy components for better initial load performance
 const SleepCalculator = lazy(() => import("./components/SleepCalculator").then(m => ({ default: m.SleepCalculator })));
 const JetLagCalculator = lazy(() => import("./components/JetLagCalculator").then(m => ({ default: m.JetLagCalculator })));
-const SleepRecommendations = lazy(() => import("./components/SleepRecommendations").then(m => ({ default: m.SleepRecommendations })));
+const CaffeineSleepCalculator = lazy(() => import("./components/CaffeineSleepCalculator").then(m => ({ default: m.CaffeineSleepCalculator })));
 
 // Lazy load below-the-fold components
 const Footer = lazy(() => import("./components/Footer").then(m => ({ default: m.Footer })));
@@ -36,13 +36,13 @@ const ComparisonTable = lazy(() => import("./components/ComparisonTable").then(m
 const SEOContent = lazy(() => import("./components/SEOContent").then(m => ({ default: m.SEOContent })));
 const BreadcrumbNav = lazy(() => import("./components/BreadcrumbNav").then(m => ({ default: m.BreadcrumbNav })));
 const RelatedLinks = lazy(() => import("./components/RelatedLinks").then(m => ({ default: m.RelatedLinks })));
-const Testimonials = lazy(() => import("./components/Testimonials").then(m => ({ default: m.Testimonials })));
 const CTASection = lazy(() => import("./components/CTASection").then(m => ({ default: m.CTASection })));
 const Toaster = lazy(() => import("./components/ui/sonner").then(m => ({ default: m.Toaster })));
+const ScrollToTop = lazy(() => import("./components/ScrollToTop").then(m => ({ default: m.ScrollToTop })));
 
 export default function App() {
   const [activeSection, setActiveSection] = useState<
-    "sleep" | "recommendations" | "jetlag"
+    "sleep" | "caffeine" | "jetlag"
   >("sleep");
 
   // Initialize performance optimizations and caching
@@ -195,22 +195,22 @@ export default function App() {
             </button>
             <button
               onClick={() =>
-                setActiveSection("recommendations")
+                setActiveSection("caffeine")
               }
               className={`flex items-center gap-1 sm:gap-1.5 md:gap-2 px-2 sm:px-3 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-full transition-all whitespace-nowrap flex-1 sm:flex-initial justify-center ${
-                activeSection === "recommendations"
+                activeSection === "caffeine"
                   ? "bg-white text-[#0f172a] shadow-lg"
                   : "text-white/70 hover:text-white hover:bg-white/5"
               }`}
-              aria-label="Sleep Recommendations by Age"
+              aria-label="Caffeine & Sleep Calculator"
               aria-current={
-                activeSection === "recommendations"
+                activeSection === "caffeine"
                   ? "page"
                   : undefined
               }
             >
-              <User className="w-3.5 sm:w-4 md:w-5 h-3.5 sm:h-4 md:h-5 flex-shrink-0" />
-              <span className="text-[10px] sm:text-xs md:text-sm lg:text-base">Sleep by Age</span>
+              <Coffee className="w-3.5 sm:w-4 md:w-5 h-3.5 sm:h-4 md:h-5 flex-shrink-0" />
+              <span className="text-[10px] sm:text-xs md:text-sm lg:text-base">Caffeine & Sleep</span>
             </button>
             <button
               onClick={() => setActiveSection("jetlag")}
@@ -233,8 +233,8 @@ export default function App() {
         {/* Calculator Sections - Primary Content with Lazy Loading */}
         <Suspense fallback={<LoadingSpinner />}>
           {activeSection === "sleep" && <SleepCalculator />}
-          {activeSection === "recommendations" && (
-            <SleepRecommendations />
+          {activeSection === "caffeine" && (
+            <CaffeineSleepCalculator />
           )}
           {activeSection === "jetlag" && <JetLagCalculator />}
         </Suspense>
@@ -257,9 +257,6 @@ export default function App() {
             {/* FAQ Section for Featured Snippets */}
             <FAQSection section={activeSection} />
 
-            {/* Testimonials for Social Proof & SEO */}
-            <Testimonials section={activeSection} />
-
             {/* Call-to-Action Section */}
             <CTASection section={activeSection} onNavigate={setActiveSection} />
 
@@ -271,6 +268,11 @@ export default function App() {
 
       <Suspense fallback={null}>
         <Footer />
+      </Suspense>
+
+      {/* Scroll to top button */}
+      <Suspense fallback={null}>
+        <ScrollToTop />
       </Suspense>
 
       {/* Toast notifications */}

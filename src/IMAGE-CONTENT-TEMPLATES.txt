@@ -1,0 +1,333 @@
+╔══════════════════════════════════════════════════════════════════════════╗
+║                  OPEN GRAPH IMAGE CONTENT TEMPLATES                      ║
+║                    Copy these into your designs                          ║
+╚══════════════════════════════════════════════════════════════════════════╝
+
+All images: 1200 × 630 pixels
+Background: Dark gradient #0f172a to #1e293b
+Text color: White #f8fafc
+Accent: Blue #4f86f7
+
+═══════════════════════════════════════════════════════════════════════════
+
+IMAGE 1: og-image.png (General/Homepage)
+─────────────────────────────────────────────────────────────────────────
+
+Layout:
+┌────────────────────────────────────────────────────────────────────────┐
+│                                                                        │
+│                                                                        │
+│                          🌙                                            │
+│                     EyeLoveSleep                                       │
+│                                                                        │
+│             Sleep Calculator & Jet Lag Tool                            │
+│                                                                        │
+│        Calculate optimal bedtimes based on 90-minute cycles           │
+│                                                                        │
+│                                                                        │
+└────────────────────────────────────────────────────────────────────────┘
+
+Text to use:
+─────────────
+Main title (80px, Bold): EyeLoveSleep
+Subtitle (48px, Medium): Sleep Calculator & Jet Lag Tool
+Body (32px, Regular): Calculate optimal bedtimes based on 90-minute cycles
+
+Icon: 🌙 Moon (120px, centered above title)
+Or use: Moon icon from Lucide/Feather icon set
+
+═══════════════════════════════════════════════════════════════════════════
+
+IMAGE 2: og-sleep-calculator.png (Sleep Calculator)
+─────────────────────────────────────────────────────────────────────────
+
+Layout:
+┌────────────────────────────────────────────────────────────────────────┐
+│                                                                        │
+│        🌙  Sleep Calculator                                            │
+│                                                                        │
+│        Calculate Your Optimal                                          │
+│        Bedtime & Wake Time                                             │
+│                                                                        │
+│        Based on 90-minute sleep cycles                                 │
+│        Wake up refreshed every morning                                 │
+│                                                                        │
+└────────────────────────────────────────────────────────────────────────┘
+
+Text to use:
+─────────────
+Header (64px, Bold): 🌙 Sleep Calculator
+Main (72px, Bold): Calculate Your Optimal
+Sub (72px, Bold): Bedtime & Wake Time
+Body 1 (32px, Regular): Based on 90-minute sleep cycles
+Body 2 (32px, Regular): Wake up refreshed every morning
+
+Icon: Moon or clock icon
+Colors: Title in blue (#4f86f7), rest in white
+
+═══════════════════════════════════════════════════════════════════════════
+
+IMAGE 3: og-sleep-by-age.png (Sleep Recommendations)
+─────────────────────────────────────────────────────────────────────────
+
+Layout:
+┌────────────────────────────────────────────────────────────────────────┐
+│                                                                        │
+│        Sleep Recommendations by Age                                    │
+│                                                                        │
+│        👶 Newborns: 14-17 hours                                        │
+│        🧒 Children: 9-11 hours                                         │
+│        👨 Adults: 7-9 hours                                            │
+│        👴 Seniors: 7-8 hours                                           │
+│                                                                        │
+│        National Sleep Foundation Guidelines                            │
+│                                                                        │
+└────────────────────────────────────────────────────────────────────────┘
+
+Text to use:
+─────────────
+Title (64px, Bold): Sleep Recommendations by Age
+Line 1 (36px, Medium): 👶 Newborns: 14-17 hours
+Line 2 (36px, Medium): 🧒 Children: 9-11 hours
+Line 3 (36px, Medium): 👨 Adults: 7-9 hours
+Line 4 (36px, Medium): 👴 Seniors: 7-8 hours
+Footer (28px, Regular): National Sleep Foundation Guidelines
+
+Colors: Emojis natural, text in white
+Layout: Left-aligned or centered
+
+═══════════════════════════════════════════════════════════════════════════
+
+IMAGE 4: og-jet-lag-calculator.png (Jet Lag Calculator)
+─────────────────────────────────────────────────────────────────────────
+
+Layout:
+┌────────────────────────────────────────────────────────────────────────┐
+│                                                                        │
+│         ✈️  Jet Lag Calculator                                         │
+│                                                                        │
+│         Beat Jet Lag Fast                                              │
+│                                                                        │
+│         Get personalized timezone adjustment plans                     │
+│         for your next international flight                             │
+│                                                                        │
+│         Free • Fast • Science-Based                                    │
+│                                                                        │
+└────────────────────────────────────────────────────────────────────────┘
+
+Text to use:
+─────────────
+Header (64px, Bold): ✈️ Jet Lag Calculator
+Main (80px, Bold): Beat Jet Lag Fast
+Body 1 (36px, Regular): Get personalized timezone adjustment plans
+Body 2 (36px, Regular): for your next international flight
+Footer (32px, Medium): Free • Fast • Science-Based
+
+Icon: Airplane or globe icon
+Colors: Title in blue (#4f86f7), rest in white
+
+═══════════════════════════════════════════════════════════════════════════
+
+ALTERNATIVE LAYOUTS
+─────────────────────────────────────────────────────────────────────────
+
+If you want a split layout:
+
+Left Side (40%):                Right Side (60%):
+┌──────────────┐               ┌──────────────────────────┐
+│              │               │  EyeLoveSleep            │
+│              │               │                          │
+│      🌙      │               │  Sleep Calculator        │
+│              │               │                          │
+│   (large     │               │  Calculate optimal       │
+│    icon)     │               │  bedtimes based on       │
+│              │               │  90-minute sleep cycles  │
+│              │               │                          │
+└──────────────┘               └──────────────────────────┘
+
+Or minimalist:
+
+Top Corner Logo              Center Content
+┌────────────────────────────────────────────────────────────┐
+│ EyeLoveSleep                                               │
+│                                                            │
+│                   Sleep Calculator                         │
+│                                                            │
+│           Calculate Your Optimal Bedtime                   │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════
+
+BRAND GUIDELINES
+─────────────────────────────────────────────────────────────────────────
+
+Colors:
+  Background: Linear gradient
+    - Start: #0f172a (Dark blue/slate)
+    - Middle: #1e293b (Slightly lighter)
+    - End: #0f172a (Back to dark)
+  
+  Primary text: #f8fafc (White)
+  Accent: #4f86f7 (Bright blue)
+  Secondary: #60a5fa (Light blue)
+
+Typography:
+  Font family: Inter (or Helvetica/Arial as fallback)
+  Title weight: 700 (Bold)
+  Subtitle weight: 500 (Medium)
+  Body weight: 400 (Regular)
+  
+  Title size: 64-80px
+  Subtitle size: 40-56px
+  Body size: 28-36px
+
+Spacing:
+  Padding: 80px from edges
+  Line height: 1.2-1.4 for titles
+  Line height: 1.5-1.6 for body text
+  Gap between elements: 20-40px
+
+Icons:
+  Size: 100-150px
+  Style: Simple, clean, outline or filled
+  Color: #4f86f7 (blue) or white
+  Sources: Lucide, Feather, Heroicons, or emojis
+
+═══════════════════════════════════════════════════════════════════════════
+
+TIPS FOR CANVA
+─────────────────────────────────────────────────────────────────────────
+
+1. Create custom size: 1200 × 630 px
+
+2. Add background:
+   - Click "Background color"
+   - Select gradient
+   - Use dark blue colors (#0f172a)
+   - Set angle to 135°
+
+3. Add text:
+   - Click "Text" → "Add a heading"
+   - Use preset or choose font size
+   - Font: Inter or Montserrat (similar)
+   - Color: White
+
+4. Add icon/emoji:
+   - Search "moon" in elements
+   - Or use emoji: 🌙
+   - Resize to ~120px
+   - Position above title
+
+5. Align elements:
+   - Use center alignment for symmetry
+   - Keep text within safe area (80px from edges)
+   - Maintain consistent spacing
+
+6. Download:
+   - Click "Share" → "Download"
+   - Format: PNG
+   - Quality: Standard (not high - keeps file small)
+   - Download
+
+7. Optimize:
+   - Upload to TinyPNG.com
+   - Compress image
+   - Download optimized version
+   - Should be < 300 KB
+
+═══════════════════════════════════════════════════════════════════════════
+
+COPY-PASTE TEXT FOR EACH IMAGE
+─────────────────────────────────────────────────────────────────────────
+
+Image 1 (og-image.png):
+─────────────────────────
+🌙
+EyeLoveSleep
+Sleep Calculator & Jet Lag Tool
+Calculate optimal bedtimes based on 90-minute cycles
+
+Image 2 (og-sleep-calculator.png):
+───────────────────────────────────
+🌙 Sleep Calculator
+Calculate Your Optimal
+Bedtime & Wake Time
+Based on 90-minute sleep cycles
+Wake up refreshed every morning
+
+Image 3 (og-sleep-by-age.png):
+───────────────────────────────
+Sleep Recommendations by Age
+👶 Newborns: 14-17 hours
+🧒 Children: 9-11 hours
+👨 Adults: 7-9 hours
+👴 Seniors: 7-8 hours
+National Sleep Foundation Guidelines
+
+Image 4 (og-jet-lag-calculator.png):
+─────────────────────────────────────
+✈️ Jet Lag Calculator
+Beat Jet Lag Fast
+Get personalized timezone adjustment plans
+for your next international flight
+Free • Fast • Science-Based
+
+═══════════════════════════════════════════════════════════════════════════
+
+FILENAME CHECKLIST
+─────────────────────────────────────────────────────────────────────────
+
+After creating, save with EXACT filenames:
+
+  ✓ og-image.png                (not og_image.png or ogimage.png)
+  ✓ og-sleep-calculator.png     (not sleep-calculator.png)
+  ✓ og-sleep-by-age.png         (not sleep-by-age.png)
+  ✓ og-jet-lag-calculator.png   (not jetlag-calculator.png)
+
+All lowercase, use hyphens (-), not underscores (_)
+
+═══════════════════════════════════════════════════════════════════════════
+
+QUICK CANVA STEPS (5 minutes per image)
+─────────────────────────────────────────────────────────────────────────
+
+1. Go to Canva.com
+2. Click "Create a design" → "Custom size" → 1200 × 630
+3. Click "Background" → Select dark blue gradient
+4. Click "Text" → Add title text
+5. Change font to Inter, size to 70-80px, color to white
+6. Add emoji or icon (search "moon" or "airplane")
+7. Arrange elements nicely
+8. Download as PNG
+9. Repeat for other 3 images (use templates to speed up)
+
+Total time: 15-20 minutes for all 4 images
+
+═══════════════════════════════════════════════════════════════════════════
+
+RESULT PREVIEW
+─────────────────────────────────────────────────────────────────────────
+
+When someone shares your link on Facebook, they'll see:
+
+  ┌────────────────────────────────────────────────┐
+  │                                                │
+  │         [Your Beautiful Image]                 │
+  │          (1200×630 pixels)                     │
+  │                                                │
+  ├────────────────────────────────────────────────┤
+  │  EyeLoveSleep                                  │
+  │  Sleep Calculator - Calculate Best Bedtime     │
+  │  Calculate optimal bedtimes and wake times...  │
+  │  🔗 eyelovesleep.app                           │
+  └────────────────────────────────────────────────┘
+
+Professional, engaging, and clickable! ✨
+
+═══════════════════════════════════════════════════════════════════════════
+
+Need help? Check:
+  📖 /QUICK-START-SOCIAL-SHARING.md
+  📖 /OG-IMAGE-GUIDE.md
+  📖 /SOCIAL-MEDIA-SHARING.md

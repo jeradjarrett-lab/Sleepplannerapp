@@ -6,10 +6,10 @@ interface HowToStep {
 }
 
 interface HowToSectionProps {
-  section: 'sleep' | 'recommendations' | 'jetlag';
+  section: 'sleep' | 'caffeine' | 'jetlag';
 }
 
-const howToData: Record<'sleep' | 'recommendations' | 'jetlag', { title: string; steps: HowToStep[] }> = {
+const howToData: Record<'sleep' | 'caffeine' | 'jetlag', { title: string; steps: HowToStep[] }> = {
   sleep: {
     title: 'How to Use the Sleep Calculator',
     steps: [
@@ -35,28 +35,28 @@ const howToData: Record<'sleep' | 'recommendations' | 'jetlag', { title: string;
       }
     ]
   },
-  recommendations: {
-    title: 'How to Determine Your Sleep Needs',
+  caffeine: {
+    title: 'How to Use the Caffeine & Sleep Calculator',
     steps: [
       {
-        name: 'Enter Your Age',
-        text: 'Input your age or the age of the person you\'re checking sleep recommendations for. The calculator works for all ages from newborns to seniors.'
+        name: 'Track Your Caffeine',
+        text: 'Add each caffeinated beverage or food you consume throughout the day. Use the quick-add buttons for common sources or enter custom amounts.'
       },
       {
-        name: 'Review Age-Based Guidelines',
-        text: 'See the recommended sleep hours for your age group based on National Sleep Foundation guidelines. This includes a minimum, maximum, and optimal range.'
+        name: 'Record Consumption Times',
+        text: 'Enter the time you consumed each caffeinated item. Accurate timing is crucial for calculating how caffeine affects your sleep.'
       },
       {
-        name: 'Check the Suggested Schedule',
-        text: 'View a personalized daily sleep schedule including bedtime, wake time, and nap times (for children and infants who need them).'
+        name: 'Review Caffeine Levels',
+        text: 'See your total caffeine intake and estimated caffeine levels at different times of day, including your typical bedtime at 10 PM.'
       },
       {
-        name: 'Customize Your Times',
-        text: 'Adjust the bedtime, wake time, or total sleep hours using the interactive dials to fit your lifestyle while staying within recommended ranges.'
+        name: 'Choose Optimal Bedtime',
+        text: 'Review the recommended bedtimes based on caffeine half-life. Select a time when your caffeine level will be below 25mg for best sleep quality.'
       },
       {
-        name: 'Implement Consistently',
-        text: 'Try to maintain consistent sleep and wake times every day, including weekends, to optimize your circadian rhythm and sleep quality.'
+        name: 'Plan Your Cutoff Time',
+        text: 'Use the recommendations to determine your personal caffeine cutoff time. Most people should avoid caffeine 6-8 hours before their target bedtime.'
       }
     ]
   },

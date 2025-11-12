@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Card } from './ui/card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/tabs';
-import { Moon, Sun, AlertCircle, Lightbulb, RefreshCw } from 'lucide-react';
-import { AmpAdTop } from './AmpAdTop';
-import { AmpAdMiddle } from './AmpAdMiddle';
+import { Moon, Sun, AlertCircle, Lightbulb, RefreshCw, Clock, Coffee, User } from 'lucide-react';
 import { TimeDial } from './TimeDial';
 import { motion } from 'motion/react';
 import { Button } from './ui/button';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
 
 interface SleepCycle {
   time: string;
@@ -94,12 +94,12 @@ function SleepTips() {
   };
 
   return (
-    <Card className="bg-white/5 backdrop-blur-sm border border-white/10 p-3 md:p-4">
-      <aside className="space-y-3">
+    <Card className="bg-white/5 backdrop-blur-sm border border-white/10 p-4 md:p-6">
+      <aside className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Lightbulb className="w-5 h-5 text-yellow-400" />
-            <h2 className="text-white text-base md:text-lg">Science-Based Sleep Tips</h2>
+            <Lightbulb className="w-6 h-6 text-yellow-400" />
+            <h2 className="text-white text-lg md:text-xl">Essential Sleep Hygiene Guide</h2>
           </div>
           <Button
             onClick={handleRefresh}
@@ -111,19 +111,101 @@ function SleepTips() {
           </Button>
         </div>
         
+        {/* Introductory Educational Content */}
+        <div className="p-4 bg-blue-500/10 border border-blue-400/20 rounded-lg">
+          <p className="text-sm md:text-base text-blue-100/90 leading-relaxed">
+            <strong className="text-blue-200">Sleep hygiene</strong> refers to the habits and environmental factors that contribute to quality sleep. Research shows that combining optimal sleep timing (using our calculator above) with proper sleep hygiene can improve sleep quality by up to 50%. Below are evidence-based practices recommended by sleep scientists and the National Sleep Foundation.
+          </p>
+        </div>
+        
         <div className="space-y-2">
+          <h3 className="text-white text-base md:text-lg flex items-center gap-2">
+            <Moon className="w-5 h-5 text-blue-400" />
+            Quick Tips for Better Sleep Tonight
+          </h3>
           {currentTips.map((tip, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-              className="flex items-start gap-2 p-2.5 rounded-lg bg-white/5 border border-white/10"
+              className="flex items-start gap-2 p-3 rounded-lg bg-white/5 border border-white/10"
             >
-              <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-1.5 flex-shrink-0" />
-              <p className="text-xs md:text-sm text-white/80">{tip}</p>
+              <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 flex-shrink-0" />
+              <p className="text-sm md:text-base text-white/80">{tip}</p>
             </motion.div>
           ))}
+        </div>
+        
+        {/* Comprehensive Sleep Hygiene Information */}
+        <div className="mt-6 space-y-4">
+          <h3 className="text-white text-base md:text-lg">Complete Sleep Optimization Strategies</h3>
+          
+          <div className="grid md:grid-cols-2 gap-3">
+            <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
+              <h4 className="text-blue-300 mb-2 flex items-center gap-2">
+                <Sun className="w-4 h-4" />
+                Environment Optimization
+              </h4>
+              <ul className="text-sm text-white/80 space-y-1.5 list-disc list-inside">
+                <li>Keep bedroom temperature between 60-67°F (15-19°C)</li>
+                <li>Use blackout curtains or eye masks to block light</li>
+                <li>Minimize noise with earplugs or white noise machines</li>
+                <li>Invest in a comfortable, supportive mattress</li>
+                <li>Use breathable, natural fiber bedding materials</li>
+              </ul>
+            </div>
+            
+            <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
+              <h4 className="text-purple-300 mb-2 flex items-center gap-2">
+                <Clock className="w-4 h-4" />
+                Timing & Routine
+              </h4>
+              <ul className="text-sm text-white/80 space-y-1.5 list-disc list-inside">
+                <li>Maintain consistent sleep/wake times daily</li>
+                <li>Avoid long naps (keep under 20-30 minutes)</li>
+                <li>Get 10-15 minutes of morning sunlight exposure</li>
+                <li>Avoid screens 1-2 hours before bedtime</li>
+                <li>Create a relaxing pre-sleep routine</li>
+              </ul>
+            </div>
+            
+            <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
+              <h4 className="text-green-300 mb-2">Diet & Substances</h4>
+              <ul className="text-sm text-white/80 space-y-1.5 list-disc list-inside">
+                <li>Avoid caffeine 6+ hours before bedtime</li>
+                <li>Limit alcohol (disrupts REM sleep)</li>
+                <li>Don't eat heavy meals within 3 hours of sleep</li>
+                <li>Stay hydrated but limit fluids before bed</li>
+                <li>Consider light snacks if hungry (not full meals)</li>
+              </ul>
+            </div>
+            
+            <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
+              <h4 className="text-amber-300 mb-2">Physical Activity</h4>
+              <ul className="text-sm text-white/80 space-y-1.5 list-disc list-inside">
+                <li>Exercise regularly (30+ minutes daily)</li>
+                <li>Avoid vigorous exercise 3 hours before bed</li>
+                <li>Try relaxation techniques (meditation, yoga)</li>
+                <li>Practice deep breathing exercises</li>
+                <li>Gentle stretching can promote relaxation</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="p-4 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-400/20 rounded-lg">
+            <h4 className="text-white mb-2">💡 Pro Tip: The 15-Minute Rule</h4>
+            <p className="text-sm text-white/80 leading-relaxed">
+              If you can't fall asleep within 15 minutes, get out of bed and do a quiet, non-stimulating activity in low light until you feel sleepy. This prevents your brain from associating your bed with wakefulness. Return to bed only when you feel drowsy, not just tired.
+            </p>
+          </div>
+          
+          <div className="p-4 bg-orange-500/10 border border-orange-400/20 rounded-lg">
+            <h4 className="text-orange-200 mb-2">When to See a Doctor</h4>
+            <p className="text-sm text-white/80 leading-relaxed">
+              Consult a healthcare provider if you experience persistent insomnia, loud snoring, gasping for air during sleep, excessive daytime sleepiness, difficulty staying awake while driving, or if sleep problems significantly impact your daily life. These could be signs of sleep disorders like sleep apnea, restless leg syndrome, or narcolepsy that require professional treatment.
+            </p>
+          </div>
         </div>
       </aside>
     </Card>
@@ -138,53 +220,100 @@ function formatTime12Hour(time24: string): string {
   return `${displayHours}:${minutes.toString().padStart(2, '0')} ${period}`;
 }
 
-// Get rating based on number of sleep cycles
-function getSleepCycleRating(cycles: number): { 
+// Age-based sleep recommendations based on National Sleep Foundation guidelines
+function getRecommendedSleepByAge(age: number | null): { 
+  minHours: number; 
+  maxHours: number; 
+  ageGroup: string;
+  minCycles: number;
+  maxCycles: number;
+} | null {
+  if (age === null || age < 0 || age > 120) return null;
+  
+  if (age <= 0.25) { // 0-3 months (newborns)
+    return { minHours: 14, maxHours: 17, ageGroup: 'Newborns (0-3 months)', minCycles: 9, maxCycles: 11 };
+  } else if (age < 1) { // 4-11 months (infants)
+    return { minHours: 12, maxHours: 15, ageGroup: 'Infants (4-11 months)', minCycles: 8, maxCycles: 10 };
+  } else if (age <= 2) { // 1-2 years (toddlers)
+    return { minHours: 11, maxHours: 14, ageGroup: 'Toddlers (1-2 years)', minCycles: 7, maxCycles: 9 };
+  } else if (age <= 5) { // 3-5 years (preschoolers)
+    return { minHours: 10, maxHours: 13, ageGroup: 'Preschoolers (3-5 years)', minCycles: 7, maxCycles: 9 };
+  } else if (age <= 13) { // 6-13 years (school-age)
+    return { minHours: 9, maxHours: 11, ageGroup: 'School-age (6-13 years)', minCycles: 6, maxCycles: 7 };
+  } else if (age <= 17) { // 14-17 years (teens)
+    return { minHours: 8, maxHours: 10, ageGroup: 'Teens (14-17 years)', minCycles: 5, maxCycles: 7 };
+  } else if (age <= 25) { // 18-25 years (young adults)
+    return { minHours: 7, maxHours: 9, ageGroup: 'Young Adults (18-25 years)', minCycles: 5, maxCycles: 6 };
+  } else if (age <= 64) { // 26-64 years (adults)
+    return { minHours: 7, maxHours: 9, ageGroup: 'Adults (26-64 years)', minCycles: 5, maxCycles: 6 };
+  } else { // 65+ years (older adults)
+    return { minHours: 7, maxHours: 8, ageGroup: 'Older Adults (65+ years)', minCycles: 5, maxCycles: 5 };
+  }
+}
+
+// Get rating based on number of sleep cycles and optional age
+function getSleepCycleRating(cycles: number, age: number | null = null): { 
   rating: 'Poor' | 'Fair' | 'Good' | 'Ideal'; 
   ratingColor: string; 
   ratingEmoji: string;
   description: string;
+  isRecommendedForAge?: boolean;
 } {
+  let isRecommendedForAge = false;
+  
+  // If age is provided, check if this cycle count is recommended for their age
+  if (age !== null) {
+    const ageRec = getRecommendedSleepByAge(age);
+    if (ageRec) {
+      isRecommendedForAge = cycles >= ageRec.minCycles && cycles <= ageRec.maxCycles;
+    }
+  }
+  
   switch(cycles) {
     case 4:
       return {
         rating: 'Fair',
         ratingColor: 'text-orange-400',
         ratingEmoji: '😴',
-        description: 'Minimum recommended'
+        description: 'Minimum recommended',
+        isRecommendedForAge
       };
     case 5:
       return {
         rating: 'Good',
         ratingColor: 'text-blue-400',
         ratingEmoji: '😊',
-        description: 'Good for most adults'
+        description: 'Good for most adults',
+        isRecommendedForAge
       };
     case 6:
       return {
         rating: 'Ideal',
         ratingColor: 'text-green-400',
         ratingEmoji: '⭐',
-        description: 'Optimal sleep duration'
+        description: 'Optimal sleep duration',
+        isRecommendedForAge
       };
     case 7:
       return {
         rating: 'Good',
         ratingColor: 'text-blue-400',
         ratingEmoji: '😌',
-        description: 'Extended rest'
+        description: 'Extended rest',
+        isRecommendedForAge
       };
     default:
       return {
         rating: 'Poor',
         ratingColor: 'text-red-400',
         ratingEmoji: '😫',
-        description: 'Not recommended'
+        description: 'Not recommended',
+        isRecommendedForAge: false
       };
   }
 }
 
-function generateSleepTimes(baseTime: string, mode: 'wake' | 'sleep'): SleepCycle[] {
+function generateSleepTimes(baseTime: string, mode: 'wake' | 'sleep', age: number | null = null): SleepCycle[] {
   const [hours, minutes] = baseTime.split(':').map(Number);
   const baseMinutes = hours * 60 + minutes;
   const sleepCycleDuration = 90; // minutes
@@ -192,7 +321,21 @@ function generateSleepTimes(baseTime: string, mode: 'wake' | 'sleep'): SleepCycl
   
   const results: SleepCycle[] = [];
   
-  for (let cycles = 4; cycles <= 7; cycles++) {
+  // Determine cycle range based on age
+  let minCycles = 4;
+  let maxCycles = 7;
+  
+  // If age is provided, expand range to ensure we show up to 4 recommended times
+  if (age !== null) {
+    const ageRec = getRecommendedSleepByAge(age);
+    if (ageRec) {
+      // Expand range to show at least 4 options around the recommended cycles
+      minCycles = Math.max(3, ageRec.minCycles - 1);
+      maxCycles = Math.min(11, ageRec.maxCycles + 1);
+    }
+  }
+  
+  for (let cycles = minCycles; cycles <= maxCycles; cycles++) {
     const totalSleepMinutes = cycles * sleepCycleDuration;
     let targetMinutes: number;
     
@@ -211,7 +354,7 @@ function generateSleepTimes(baseTime: string, mode: 'wake' | 'sleep'): SleepCycl
     const period = targetHours >= 12 ? 'PM' : 'AM';
     const displayHours = targetHours === 0 ? 12 : targetHours > 12 ? targetHours - 12 : targetHours;
     
-    const ratingInfo = getSleepCycleRating(cycles);
+    const ratingInfo = getSleepCycleRating(cycles, age);
     
     results.push({
       time: `${displayHours}:${targetMins.toString().padStart(2, '0')} ${period}`,
@@ -226,16 +369,42 @@ function generateSleepTimes(baseTime: string, mode: 'wake' | 'sleep'): SleepCycl
 export function SleepCalculator() {
   const [wakeTime, setWakeTime] = useState('07:00');
   const [bedTime, setBedTime] = useState('22:00');
+  const [age, setAge] = useState<string>('');
 
-  const wakeResults = generateSleepTimes(wakeTime, 'wake');
-  const sleepResults = generateSleepTimes(bedTime, 'sleep');
+  // Parse age as number or null if not provided
+  const parsedAge = age.trim() !== '' && !isNaN(Number(age)) ? Number(age) : null;
+  const ageRecommendation = getRecommendedSleepByAge(parsedAge);
+
+  const wakeResults = generateSleepTimes(wakeTime, 'wake', parsedAge);
+  const sleepResults = generateSleepTimes(bedTime, 'sleep', parsedAge);
+
+  // When age is provided, separate recommended vs optional times
+  let recommendedWakeResults: SleepCycle[] = [];
+  let optionalWakeResults: SleepCycle[] = [];
+  let recommendedSleepResults: SleepCycle[] = [];
+  let optionalSleepResults: SleepCycle[] = [];
+
+  if (parsedAge !== null && ageRecommendation) {
+    // Split into recommended (within age range) and optional (outside but close)
+    recommendedWakeResults = wakeResults.filter(r => r.isRecommendedForAge);
+    optionalWakeResults = wakeResults.filter(r => !r.isRecommendedForAge);
+    
+    recommendedSleepResults = sleepResults.filter(r => r.isRecommendedForAge);
+    optionalSleepResults = sleepResults.filter(r => !r.isRecommendedForAge);
+    
+    // Ensure we show up to 4 recommended times (already handled in generateSleepTimes)
+    // Limit optional to 2 extra options
+    optionalWakeResults = optionalWakeResults.slice(0, 2);
+    optionalSleepResults = optionalSleepResults.slice(0, 2);
+  }
+  
+  // Final display results
+  const filteredWakeResults = parsedAge !== null ? recommendedWakeResults : wakeResults;
+  const filteredSleepResults = parsedAge !== null ? recommendedSleepResults : sleepResults;
 
   return (
     <div className="space-y-1 md:space-y-2">
-      {/* Top Ad - AMP Leaderboard (728x90) */}
-      <AmpAdTop />
-
-      {/* Hero Section */}
+      {/* Hero Section - Content First, Ads After */}
       <header className="text-center space-y-1 px-4">
         <div className="relative inline-flex items-center justify-center w-12 h-12 md:w-14 md:h-14 bg-blue-500/20 rounded-full mb-1">
           {/* Animated Moon Icon */}
@@ -304,6 +473,46 @@ export function SleepCalculator() {
             </TabsTrigger>
           </TabsList>
 
+          {/* Optional Age Input */}
+          <div className="mb-3 p-3 bg-white/5 rounded-lg border border-white/10">
+            <div className="space-y-2">
+              <Label htmlFor="age-input" className="text-white/90 text-sm flex items-center gap-2">
+                <User className="w-4 h-4 text-blue-400" />
+                Your Age (Optional) - Get personalized recommendations
+              </Label>
+              <Input
+                id="age-input"
+                type="number"
+                min="0"
+                max="120"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+                placeholder="Enter your age for personalized advice"
+                className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:border-blue-400"
+              />
+              {parsedAge !== null && ageRecommendation && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-3 bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-400/30 rounded-lg"
+                >
+                  <p className="text-sm text-white/90">
+                    <strong className="text-blue-300">{ageRecommendation.ageGroup}:</strong> Based on National Sleep Foundation guidelines, 
+                    you need <strong className="text-white">{ageRecommendation.minHours}-{ageRecommendation.maxHours} hours</strong> of sleep 
+                    per night ({ageRecommendation.minCycles}-{ageRecommendation.maxCycles} sleep cycles). 
+                    We'll show you up to 4 recommended sleep times that match your age-specific needs, plus a few optional alternatives.
+                  </p>
+                </motion.div>
+              )}
+              {age.trim() !== '' && parsedAge === null && (
+                <p className="text-sm text-orange-300">Please enter a valid age (0-120 years)</p>
+              )}
+              {age.trim() === '' && (
+                <p className="text-xs text-white/50">Leave blank to see all standard sleep cycle options</p>
+              )}
+            </div>
+          </div>
+
           <TabsContent value="wake" className="space-y-2">
             <TimeDial
               value={wakeTime}
@@ -317,16 +526,39 @@ export function SleepCalculator() {
                 <AlertCircle className="w-3 h-3 md:w-4 md:h-4 mt-0.5 flex-shrink-0" />
                 <p>
                   If you want to wake up at <strong className="text-white">{formatTime12Hour(wakeTime)}</strong>, 
-                  you should go to bed at one of these times:
+                  you should go to bed at one of these times{parsedAge !== null && ageRecommendation ? (
+                    <span className="text-blue-300"> (personalized for age {parsedAge})</span>
+                  ) : ''}:
                 </p>
               </div>
 
+              {filteredWakeResults.length === 0 && parsedAge !== null && (
+                <div className="p-4 bg-orange-500/20 border border-orange-400/30 rounded-lg text-center">
+                  <p className="text-sm text-orange-200">
+                    No standard sleep cycles match your age recommendations. 
+                    Consider consulting a sleep specialist for personalized advice.
+                  </p>
+                </div>
+              )}
+
+              {/* Recommended Times */}
+              {parsedAge !== null && filteredWakeResults.length > 0 && (
+                <div className="mb-2">
+                  <h3 className="text-sm text-blue-300 mb-2 flex items-center gap-2">
+                    <span className="text-lg">✨</span>
+                    Recommended for Your Age ({filteredWakeResults.length} option{filteredWakeResults.length !== 1 ? 's' : ''})
+                  </h3>
+                </div>
+              )}
+              
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
-                {wakeResults.map((result, index) => (
+                {filteredWakeResults.map((result, index) => (
                   <div
                     key={index}
                     className={`p-2.5 md:p-3 rounded-lg border-2 transition-all hover:shadow-lg ${
-                      result.rating === 'Ideal'
+                      parsedAge !== null && result.isRecommendedForAge
+                        ? 'bg-purple-600/20 border-purple-400 ring-2 ring-purple-400/50'
+                        : result.rating === 'Ideal'
                         ? 'bg-green-600/20 border-green-500'
                         : result.rating === 'Good'
                         ? 'bg-blue-600/20 border-blue-500'
@@ -340,6 +572,11 @@ export function SleepCalculator() {
                           {result.rating}
                         </span>
                       </div>
+                      {parsedAge !== null && result.isRecommendedForAge && (
+                        <div className="text-xs text-purple-300 flex items-center justify-center gap-1">
+                          ✨ Perfect for you
+                        </div>
+                      )}
                       <div className="text-2xl md:text-2xl text-white">{result.time}</div>
                       <div className="text-xs text-white/60">
                         {result.cycles} cycles ({result.cycles * 1.5}h)
@@ -351,6 +588,39 @@ export function SleepCalculator() {
                   </div>
                 ))}
               </div>
+
+              {/* Optional Times (when age is provided) */}
+              {parsedAge !== null && optionalWakeResults.length > 0 && (
+                <div className="mt-4 pt-4 border-t border-white/10">
+                  <h3 className="text-sm text-white/60 mb-2">
+                    Other Options (outside recommended range)
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+                    {optionalWakeResults.map((result, index) => (
+                      <div
+                        key={`optional-${index}`}
+                        className="p-2.5 md:p-3 rounded-lg border border-white/20 bg-white/5 transition-all hover:border-white/40 opacity-75"
+                      >
+                        <div className="text-center space-y-1">
+                          <div className="flex items-center justify-center gap-1">
+                            <span className="text-lg">{result.ratingEmoji}</span>
+                            <span className={`text-xs ${result.ratingColor}`}>
+                              {result.rating}
+                            </span>
+                          </div>
+                          <div className="text-2xl md:text-2xl text-white/80">{result.time}</div>
+                          <div className="text-xs text-white/50">
+                            {result.cycles} cycles ({result.cycles * 1.5}h)
+                          </div>
+                          <div className="text-xs text-white/40">
+                            {result.description}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </TabsContent>
 
@@ -367,16 +637,39 @@ export function SleepCalculator() {
                 <AlertCircle className="w-3 h-3 md:w-4 md:h-4 mt-0.5 flex-shrink-0" />
                 <p>
                   If you go to bed at <strong className="text-white">{formatTime12Hour(bedTime)}</strong>, 
-                  you should wake up at one of these times:
+                  you should wake up at one of these times{parsedAge !== null && ageRecommendation ? (
+                    <span className="text-blue-300"> (personalized for age {parsedAge})</span>
+                  ) : ''}:
                 </p>
               </div>
 
+              {filteredSleepResults.length === 0 && parsedAge !== null && (
+                <div className="p-4 bg-orange-500/20 border border-orange-400/30 rounded-lg text-center">
+                  <p className="text-sm text-orange-200">
+                    No standard sleep cycles match your age recommendations. 
+                    Consider consulting a sleep specialist for personalized advice.
+                  </p>
+                </div>
+              )}
+
+              {/* Recommended Times */}
+              {parsedAge !== null && filteredSleepResults.length > 0 && (
+                <div className="mb-2">
+                  <h3 className="text-sm text-blue-300 mb-2 flex items-center gap-2">
+                    <span className="text-lg">✨</span>
+                    Recommended for Your Age ({filteredSleepResults.length} option{filteredSleepResults.length !== 1 ? 's' : ''})
+                  </h3>
+                </div>
+              )}
+
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
-                {sleepResults.map((result, index) => (
+                {filteredSleepResults.map((result, index) => (
                   <div
                     key={index}
                     className={`p-2.5 md:p-3 rounded-lg border-2 transition-all hover:shadow-lg ${
-                      result.rating === 'Ideal'
+                      parsedAge !== null && result.isRecommendedForAge
+                        ? 'bg-purple-600/20 border-purple-400 ring-2 ring-purple-400/50'
+                        : result.rating === 'Ideal'
                         ? 'bg-green-600/20 border-green-500'
                         : result.rating === 'Good'
                         ? 'bg-blue-600/20 border-blue-500'
@@ -390,6 +683,11 @@ export function SleepCalculator() {
                           {result.rating}
                         </span>
                       </div>
+                      {parsedAge !== null && result.isRecommendedForAge && (
+                        <div className="text-xs text-purple-300 flex items-center justify-center gap-1">
+                          ✨ Perfect for you
+                        </div>
+                      )}
                       <div className="text-2xl md:text-2xl text-white">{result.time}</div>
                       <div className="text-xs text-white/60">
                         {result.cycles} cycles ({result.cycles * 1.5}h)
@@ -401,19 +699,46 @@ export function SleepCalculator() {
                   </div>
                 ))}
               </div>
+
+              {/* Optional Times (when age is provided) */}
+              {parsedAge !== null && optionalSleepResults.length > 0 && (
+                <div className="mt-4 pt-4 border-t border-white/10">
+                  <h3 className="text-sm text-white/60 mb-2">
+                    Other Options (outside recommended range)
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+                    {optionalSleepResults.map((result, index) => (
+                      <div
+                        key={`optional-${index}`}
+                        className="p-2.5 md:p-3 rounded-lg border border-white/20 bg-white/5 transition-all hover:border-white/40 opacity-75"
+                      >
+                        <div className="text-center space-y-1">
+                          <div className="flex items-center justify-center gap-1">
+                            <span className="text-lg">{result.ratingEmoji}</span>
+                            <span className={`text-xs ${result.ratingColor}`}>
+                              {result.rating}
+                            </span>
+                          </div>
+                          <div className="text-2xl md:text-2xl text-white/80">{result.time}</div>
+                          <div className="text-xs text-white/50">
+                            {result.cycles} cycles ({result.cycles * 1.5}h)
+                          </div>
+                          <div className="text-xs text-white/40">
+                            {result.description}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </TabsContent>
         </Tabs>
       </Card>
 
-      {/* Middle Ad Placement - AMP Responsive */}
-      <AmpAdMiddle />
-
-      {/* Sleep Tips Section */}
+      {/* Sleep Tips Section - Substantial Educational Content */}
       <SleepTips />
-
-      {/* Bottom Ad Placement */}
-      <AmpAdMiddle />
     </div>
   );
 }

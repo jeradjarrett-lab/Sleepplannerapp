@@ -5,15 +5,6 @@ export function Footer() {
         <p className="text-xs md:text-sm text-white/70">
           <strong>EyeLoveSleep</strong> — Free Sleep Calculator, Bedtime Calculator & Jet Lag Tool
         </p>
-        <nav className="flex flex-wrap items-center justify-center gap-3 md:gap-4 text-[10px] md:text-xs text-white/50" aria-label="Footer navigation">
-          <a href="#privacy" className="hover:text-white/80 transition-colors underline-offset-2 hover:underline">Privacy Policy</a>
-          <span className="hidden sm:inline" aria-hidden="true">|</span>
-          <a href="#terms" className="hover:text-white/80 transition-colors underline-offset-2 hover:underline">Terms of Service</a>
-          <span className="hidden sm:inline" aria-hidden="true">|</span>
-          <a href="#about" className="hover:text-white/80 transition-colors underline-offset-2 hover:underline">About Us</a>
-          <span className="hidden sm:inline" aria-hidden="true">|</span>
-          <a href="#contact" className="hover:text-white/80 transition-colors underline-offset-2 hover:underline">Contact</a>
-        </nav>
         <p className="text-[10px] md:text-xs text-white/40">
           © 2025 EyeLoveSleep. All rights reserved.
         </p>

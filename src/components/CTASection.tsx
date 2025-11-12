@@ -3,8 +3,8 @@ import { Button } from './ui/button';
 import { motion } from 'motion/react';
 
 interface CTASectionProps {
-  section: 'sleep' | 'recommendations' | 'jetlag';
-  onNavigate: (section: 'sleep' | 'recommendations' | 'jetlag') => void;
+  section: 'sleep' | 'caffeine' | 'jetlag';
+  onNavigate: (section: 'sleep' | 'caffeine' | 'jetlag') => void;
 }
 
 export function CTASection({ section, onNavigate }: CTASectionProps) {
@@ -15,11 +15,11 @@ export function CTASection({ section, onNavigate }: CTASectionProps) {
       buttonText: "Calculate My Bedtime",
       keywords: "sleep calculator, bedtime calculator, calculate sleep",
     },
-    recommendations: {
-      title: "Optimize Your Family's Sleep",
-      description: "Get personalized sleep recommendations for every age group. From newborns to seniors, ensure everyone gets the rest they need.",
-      buttonText: "Get Sleep Recommendations",
-      keywords: "sleep by age, sleep recommendations, family sleep",
+    caffeine: {
+      title: "Optimize Your Caffeine & Sleep",
+      description: "Track your caffeine intake and discover the perfect bedtime for quality sleep. Stop guessing when to have your last coffee.",
+      buttonText: "Calculate Caffeine Impact",
+      keywords: "caffeine calculator, coffee and sleep, caffeine bedtime",
     },
     jetlag: {
       title: "Beat Jet Lag on Your Next Trip",

@@ -1,20 +1,20 @@
-import { ArrowRight, Moon, User, Plane } from 'lucide-react';
+import { ArrowRight, Moon, Coffee, Plane } from 'lucide-react';
 import { Card } from './ui/card';
 
 interface RelatedLinksProps {
-  currentSection: 'sleep' | 'recommendations' | 'jetlag';
-  onNavigate: (section: 'sleep' | 'recommendations' | 'jetlag') => void;
+  currentSection: 'sleep' | 'caffeine' | 'jetlag';
+  onNavigate: (section: 'sleep' | 'caffeine' | 'jetlag') => void;
 }
 
 export function RelatedLinks({ currentSection, onNavigate }: RelatedLinksProps) {
   const links = {
     sleep: [
       {
-        section: 'recommendations' as const,
-        icon: User,
-        title: 'Sleep Recommendations by Age',
-        description: 'Find out exactly how much sleep you need based on your age group with NSF guidelines.',
-        keywords: 'sleep by age, sleep requirements, how much sleep',
+        section: 'caffeine' as const,
+        icon: Coffee,
+        title: 'Caffeine & Sleep Calculator',
+        description: 'Track your caffeine intake and discover how it affects your sleep quality and optimal bedtime.',
+        keywords: 'caffeine calculator, coffee and sleep, caffeine bedtime',
       },
       {
         section: 'jetlag' as const,
@@ -24,7 +24,7 @@ export function RelatedLinks({ currentSection, onNavigate }: RelatedLinksProps) 
         keywords: 'jet lag calculator, time zone adjustment, travel sleep',
       },
     ],
-    recommendations: [
+    caffeine: [
       {
         section: 'sleep' as const,
         icon: Moon,
@@ -49,11 +49,11 @@ export function RelatedLinks({ currentSection, onNavigate }: RelatedLinksProps) 
         keywords: 'sleep calculator, optimal bedtime, wake time calculator',
       },
       {
-        section: 'recommendations' as const,
-        icon: User,
-        title: 'Sleep by Age',
-        description: 'Learn how much sleep you should get based on your age and life stage.',
-        keywords: 'sleep recommendations, sleep by age, sleep hours',
+        section: 'caffeine' as const,
+        icon: Coffee,
+        title: 'Caffeine & Sleep',
+        description: 'Learn how caffeine impacts your sleep and when to have your last coffee of the day.',
+        keywords: 'caffeine and sleep, coffee sleep impact, caffeine cutoff',
       },
     ],
   };

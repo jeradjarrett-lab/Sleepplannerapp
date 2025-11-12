@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Sleep Calculator - Primary Page -->
+  <url>
+    <loc>https://eyelovesleep.com/</loc>
+    <lastmod>2025-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://eyelovesleep.com/og-sleep-calculator.png</image:loc>
+      <image:title>Sleep Calculator - Calculate Best Bedtime and Wake Time</image:title>
+      <image:caption>Free sleep calculator based on 90-minute sleep cycles. Calculate optimal bedtime and wake time to feel refreshed.</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- Caffeine & Sleep Calculator -->
+  <url>
+    <loc>https://eyelovesleep.com/caffeine-sleep</loc>
+    <lastmod>2025-11-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://eyelovesleep.com/og-caffeine-calculator.png</image:loc>
+      <image:title>Caffeine & Sleep Calculator - Track Coffee Impact on Sleep</image:title>
+      <image:caption>Track caffeine intake and discover optimal bedtime based on caffeine half-life and metabolism.</image:caption>
+    </image:image>
+  </url>
+  
+  <!-- Jet Lag Calculator -->
+  <url>
+    <loc>https://eyelovesleep.com/jet-lag</loc>
+    <lastmod>2025-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://eyelovesleep.com/og-jet-lag-calculator.png</image:loc>
+      <image:title>Jet Lag Calculator - Beat Jet Lag Fast with Adjustment Plans</image:title>
+      <image:caption>Advanced jet lag calculator with personalized adjustment plans for eastward and westward travel.</image:caption>
+    </image:image>
+  </url>
+  
+</urlset>

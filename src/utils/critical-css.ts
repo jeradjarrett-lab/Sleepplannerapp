@@ -101,7 +101,6 @@ export const enableContentVisibility = (): void => {
   const belowFoldSelectors = [
     '.faq-section',
     '.how-to-section',
-    '.testimonials',
     '.comparison-table',
     'footer'
   ];

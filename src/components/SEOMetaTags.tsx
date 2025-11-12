@@ -24,8 +24,8 @@ export function SEOMetaTags() {
       <link rel="manifest" href="/site.webmanifest" />
       
       {/* Alternative languages (add as needed) */}
-      <link rel="alternate" hrefLang="en" href="https://eyelovesleep.app" />
-      <link rel="alternate" hrefLang="x-default" href="https://eyelovesleep.app" />
+      <link rel="alternate" hrefLang="en" href="https://eyelovesleep.com" />
+      <link rel="alternate" hrefLang="x-default" href="https://eyelovesleep.com" />
     </>
   );
 }
@@ -37,7 +37,7 @@ export function SEOMetaTags() {
 export const sitemapData = {
   pages: [
     {
-      url: 'https://eyelovesleep.app',
+      url: 'https://eyelovesleep.com',
       title: 'Sleep Calculator - Calculate Best Bedtime & Wake Time',
       description: 'Free sleep calculator based on 90-minute sleep cycles',
       lastModified: new Date().toISOString(),
@@ -45,7 +45,7 @@ export const sitemapData = {
       priority: 1.0,
     },
     {
-      url: 'https://eyelovesleep.app/sleep-by-age',
+      url: 'https://eyelovesleep.com/sleep-by-age',
       title: 'Sleep Recommendations by Age - NSF Guidelines',
       description: 'Evidence-based sleep requirements for all ages',
       lastModified: new Date().toISOString(),
@@ -53,7 +53,7 @@ export const sitemapData = {
       priority: 0.9,
     },
     {
-      url: 'https://eyelovesleep.app/jet-lag',
+      url: 'https://eyelovesleep.com/jet-lag',
       title: 'Jet Lag Calculator - Beat Jet Lag Fast',
       description: 'Calculate jet lag recovery time and adjustment plans',
       lastModified: new Date().toISOString(),
@@ -99,15 +99,15 @@ export const robotsConfig = {
  */
 export const ogImageConfig = {
   sleep: {
-    url: 'https://eyelovesleep.app/og-sleep-calculator.png',
+    url: 'https://eyelovesleep.com/og-sleep-calculator.png',
     alt: 'EyeLoveSleep Sleep Calculator - Calculate optimal bedtime and wake time',
   },
   recommendations: {
-    url: 'https://eyelovesleep.app/og-sleep-by-age.png',
+    url: 'https://eyelovesleep.com/og-sleep-by-age.png',
     alt: 'Sleep Recommendations by Age - National Sleep Foundation Guidelines',
   },
   jetlag: {
-    url: 'https://eyelovesleep.app/og-jet-lag-calculator.png',
+    url: 'https://eyelovesleep.com/og-jet-lag-calculator.png',
     alt: 'Jet Lag Calculator - Beat jet lag with personalized adjustment plans',
   },
 };

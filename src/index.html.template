@@ -7,12 +7,7 @@
   <!-- Critical resource hints for performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
   <link rel="dns-prefetch" href="https://platform-api.sharethis.com">
-  
-  <!-- Google AdSense script -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-0855352021512673"
-     crossorigin="anonymous"></script>
   
   <!-- Preload critical font -->
   <link rel="preload" as="font" type="font/woff2" 
@@ -45,9 +40,189 @@
     .animate-spin{animation:spin 1s linear infinite}
   </style>
   
-  <title>EyeLoveSleep - Sleep Calculator & Jet Lag Tool</title>
-  <meta name="description" content="Calculate optimal bedtimes and wake times based on 90-minute sleep cycles. Features jet lag calculator, sleep recommendations, and science-backed sleep guidance.">
+  <!-- Basic SEO Meta Tags -->
+  <title>Sleep Calculator - Calculate Best Bedtime & Wake Time | 90-Minute Sleep Cycles | EyeLoveSleep</title>
+  <meta name="description" content="Free sleep calculator based on 90-minute sleep cycles. Calculate optimal bedtime and wake time to feel refreshed. Avoid sleep inertia with our science-based sleep cycle calculator. Get personalized sleep schedule recommendations instantly.">
+  <meta name="keywords" content="sleep calculator, bedtime calculator, wake time calculator, sleep cycles, 90 minute sleep cycle, REM sleep, best time to sleep, sleep schedule calculator, sleep cycle calculator, when to go to bed, optimal bedtime, sleep inertia, circadian rhythm calculator, sleep hygiene, deep sleep calculator, light sleep, wake up refreshed, caffeine sleep calculator, jet lag calculator">
+  <meta name="author" content="EyeLoveSleep">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="canonical" href="https://eyelovesleep.com">
   
+  <!-- Additional SEO tags -->
+  <meta name="language" content="English">
+  <meta name="revisit-after" content="7 days">
+  <meta name="rating" content="General">
+  <meta name="distribution" content="Global">
+  <meta name="coverage" content="Worldwide">
+  <meta name="target" content="all">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="format-detection" content="telephone=no">
+  
+  <!-- Open Graph Meta Tags for Facebook, LinkedIn, etc. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="EyeLoveSleep">
+  <meta property="og:title" content="Sleep Calculator - Calculate Best Bedtime & Wake Time | EyeLoveSleep">
+  <meta property="og:description" content="Free sleep calculator based on 90-minute sleep cycles. Calculate optimal bedtime and wake time to feel refreshed. Get personalized sleep schedule recommendations instantly.">
+  <meta property="og:url" content="https://eyelovesleep.com">
+  <meta property="og:image" content="https://eyelovesleep.com/og-sleep-calculator.png">
+  <meta property="og:image:secure_url" content="https://eyelovesleep.com/og-sleep-calculator.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:alt" content="Sleep Calculator - Calculate Best Bedtime & Wake Time | EyeLoveSleep">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="en_GB">
+  <meta property="og:locale:alternate" content="en_CA">
+  <meta property="og:locale:alternate" content="en_AU">
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@EyeLoveSleep">
+  <meta name="twitter:creator" content="@EyeLoveSleep">
+  <meta name="twitter:title" content="Sleep Calculator - Calculate Best Bedtime & Wake Time | EyeLoveSleep">
+  <meta name="twitter:description" content="Free sleep calculator based on 90-minute sleep cycles. Calculate optimal bedtime and wake time to feel refreshed. Get personalized sleep schedule recommendations instantly.">
+  <meta name="twitter:image" content="https://eyelovesleep.com/og-sleep-calculator.png">
+  <meta name="twitter:image:alt" content="Sleep Calculator - Calculate Best Bedtime & Wake Time | EyeLoveSleep">
+  <meta name="twitter:domain" content="eyelovesleep.com">
+  <meta name="twitter:url" content="https://eyelovesleep.com">
+  
+  <!-- Mobile App Meta Tags -->
+  <meta name="theme-color" content="#4f86f7">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="EyeLoveSleep">
+  <meta name="application-name" content="EyeLoveSleep">
+  <meta name="msapplication-TileColor" content="#4f86f7">
+  <meta name="msapplication-TileImage" content="/mstile-144x144.png">
+  
+  <!-- Structured Data (JSON-LD) for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "EyeLoveSleep",
+        "applicationCategory": "HealthApplication",
+        "operatingSystem": "Any",
+        "url": "https://eyelovesleep.com",
+        "description": "Free sleep calculator based on 90-minute sleep cycles. Calculate optimal bedtime and wake time to feel refreshed.",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "Sleep Cycle Calculator",
+          "Caffeine & Sleep Impact Calculator",
+          "Jet Lag Calculator",
+          "Personalized Sleep Recommendations",
+          "90-Minute Sleep Cycle Tracking"
+        ],
+        "browserRequirements": "Requires JavaScript. Requires HTML5.",
+        "softwareVersion": "2.0",
+        "datePublished": "2024-01-01",
+        "dateModified": "2025-01-15"
+      },
+      {
+        "@type": "Organization",
+        "name": "EyeLoveSleep",
+        "url": "https://eyelovesleep.com",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://eyelovesleep.com/logo.png",
+          "width": 512,
+          "height": 512
+        },
+        "description": "Providing free, science-based sleep calculators and tools to help people optimize their sleep quality.",
+        "sameAs": [
+          "https://twitter.com/EyeLoveSleep"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "name": "EyeLoveSleep",
+        "url": "https://eyelovesleep.com",
+        "description": "Free sleep calculator based on 90-minute sleep cycles",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://eyelovesleep.com/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "MedicalWebPage",
+        "name": "Sleep Calculator",
+        "url": "https://eyelovesleep.com",
+        "description": "Calculate optimal bedtime and wake time based on 90-minute sleep cycles",
+        "mainEntity": {
+          "@type": "MedicalCondition",
+          "name": "Sleep Quality",
+          "relevantSpecialty": {
+            "@type": "MedicalSpecialty",
+            "name": "Sleep Medicine"
+          }
+        },
+        "lastReviewed": "2025-01-15",
+        "reviewedBy": {
+          "@type": "Organization",
+          "name": "Sleep Health Experts"
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://eyelovesleep.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Sleep Calculator",
+            "item": "https://eyelovesleep.com"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is a sleep calculator?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A sleep calculator helps you determine the best time to go to bed or wake up based on 90-minute sleep cycles. It helps you wake up at the end of a sleep cycle, avoiding grogginess and sleep inertia."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long is a sleep cycle?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A typical sleep cycle lasts approximately 90 minutes. During this time, you go through different stages including light sleep, deep sleep, and REM sleep. Most adults need 4-6 complete sleep cycles per night."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why should I wake up between sleep cycles?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Waking up between sleep cycles, rather than in the middle of one, helps you feel more refreshed and alert. This is because you're waking during lighter sleep stages, avoiding sleep inertia (that groggy feeling)."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
   <!-- Error suppression - Run BEFORE any third-party scripts -->
   <script>
     (function() {
