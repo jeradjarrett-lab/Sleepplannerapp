@@ -17,6 +17,7 @@ export function ScrollNav({ section }: ScrollNavProps) {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [navItems, setNavItems] = useState<NavItem[]>([]);
   const [isVisible, setIsVisible] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   // Define navigation items based on section
   useEffect(() => {
@@ -86,39 +87,55 @@ export function ScrollNav({ section }: ScrollNavProps) {
 
   // Track scroll position and show/hide navigation
   useEffect(() => {
+    let ticking = false;
+    
     const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      
-      // Show navigation after scrolling down 200px
-      if (scrollPosition > 200 && !isVisible) {
-        setIsVisible(true);
-      } else if (scrollPosition <= 200 && isVisible) {
-        setIsVisible(false);
-      }
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollPosition = window.scrollY;
+          
+          // Show navigation after scrolling down 200px
+          if (scrollPosition > 200 && !isVisible) {
+            setIsVisible(true);
+          } else if (scrollPosition <= 200 && isVisible) {
+            setIsVisible(false);
+          }
 
-      // Find all section headings
-      const headings = navItems.map(item => {
-        const element = document.getElementById(item.id);
-        if (element) {
-          return {
-            id: item.id,
-            offsetTop: element.offsetTop,
-          };
-        }
-        return null;
-      }).filter(Boolean) as { id: string; offsetTop: number }[];
+          // Calculate scroll progress (avoid layout thrashing)
+          const docHeight = document.documentElement.scrollHeight;
+          const winHeight = document.documentElement.clientHeight;
+          const progress = Math.min(100, (scrollPosition / (docHeight - winHeight)) * 100);
+          setScrollProgress(progress);
 
-      // Find the current section
-      let currentId = '';
-      for (let i = headings.length - 1; i >= 0; i--) {
-        if (scrollPosition + 150 >= headings[i].offsetTop - 100) {
-          currentId = headings[i].id;
-          break;
-        }
-      }
+          // Batch all DOM reads together
+          const headings = navItems.map(item => {
+            const element = document.getElementById(item.id);
+            if (element) {
+              return {
+                id: item.id,
+                offsetTop: element.offsetTop,
+              };
+            }
+            return null;
+          }).filter(Boolean) as { id: string; offsetTop: number }[];
 
-      if (currentId && currentId !== activeId) {
-        setActiveId(currentId);
+          // Find the current section
+          let currentId = '';
+          for (let i = headings.length - 1; i >= 0; i--) {
+            if (scrollPosition + 150 >= headings[i].offsetTop - 100) {
+              currentId = headings[i].id;
+              break;
+            }
+          }
+
+          if (currentId && currentId !== activeId) {
+            setActiveId(currentId);
+          }
+          
+          ticking = false;
+        });
+        
+        ticking = true;
       }
     };
 
@@ -132,12 +149,15 @@ export function ScrollNav({ section }: ScrollNavProps) {
     const element = document.getElementById(id);
     if (element) {
       const offset = 80; // Account for fixed header
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      // Use requestAnimationFrame to batch layout reads/writes
+      requestAnimationFrame(() => {
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        });
       });
     }
   };
@@ -201,25 +221,11 @@ export function ScrollNav({ section }: ScrollNavProps) {
                   <div className="flex-1 h-1 bg-white/10 rounded-full overflow-hidden">
                     <motion.div
                       className="h-full bg-blue-400"
-                      style={{
-                        width: `${Math.min(
-                          100,
-                          ((window.scrollY || 0) /
-                            (document.documentElement.scrollHeight -
-                              document.documentElement.clientHeight)) *
-                            100
-                        )}%`,
-                      }}
                       initial={{ width: 0 }}
                       animate={{
-                        width: `${Math.min(
-                          100,
-                          ((window.scrollY || 0) /
-                            (document.documentElement.scrollHeight -
-                              document.documentElement.clientHeight)) *
-                            100
-                        )}%`,
+                        width: `${scrollProgress}%`,
                       }}
+                      transition={{ duration: 0.1 }}
                     />
                   </div>
                 </div>

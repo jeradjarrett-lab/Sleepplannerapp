@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { compression } from 'vite-plugin-compression2';
 import { htmlMinify } from './vite-plugin-html-minify';
+import { preloadAssets } from './vite-plugin-preload-assets';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -15,6 +16,8 @@ export default defineConfig({
         ],
       },
     }),
+    // Preload critical assets
+    preloadAssets(),
     // HTML minification
     htmlMinify(),
     // Gzip compression
