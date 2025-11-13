@@ -17,6 +17,7 @@ import { updateCriticalSeo, updateNonCriticalSeo, updateStructuredData } from ".
 const seoData = {
   title: "Free Jet Lag Calculator - Calculate Recovery Time & Time Zone Adjustment Plan | EyeLoveSleep",
   description: "Use our free jet lag calculator to beat jet lag fast with personalized adjustment plans. Our time zone calculator helps you calculate recovery time, get day-by-day sleep schedules, and adapt faster. Works for eastward and westward travel across all time zones. Free circadian rhythm adjustment calculator.",
+  socialDescription: "Beat jet lag faster! Get a personalized day-by-day adjustment plan for any time zone. Perfect for business and leisure travelers. ✈️🌍",
   keywords: "jet lag calculator, free jet lag calculator, beat jet lag calculator, time zone adjustment calculator, time zone calculator, jet lag remedy calculator, travel sleep calculator, jet lag recovery calculator, circadian rhythm calculator, jet lag prevention calculator, eastward travel calculator, westward travel calculator, international travel calculator, jet lag symptoms calculator, how to avoid jet lag calculator, jet lag treatment calculator, melatonin calculator, light therapy calculator",
   url: "https://eyelovesleep.com/jet-lag",
   canonical: "https://eyelovesleep.com/jet-lag",
@@ -40,20 +41,25 @@ export default function JetLagPage() {
         <meta name="keywords" content={seoData.keywords} />
         <link rel="canonical" href={seoData.canonical} />
         
-        {/* Open Graph */}
+        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content={seoData.title} />
-        <meta property="og:description" content={seoData.description} />
+        <meta property="og:site_name" content="EyeLoveSleep" />
+        <meta property="og:title" content="Free Jet Lag Calculator - Beat Jet Lag with Personalized Plan" />
+        <meta property="og:description" content={seoData.socialDescription} />
         <meta property="og:url" content={seoData.url} />
         <meta property="og:image" content={seoData.ogImage} />
+        <meta property="og:image:alt" content="Jet Lag Calculator with time zone map showing personalized adjustment plans for travelers" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="en_US" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={seoData.title} />
-        <meta name="twitter:description" content={seoData.description} />
+        <meta name="twitter:site" content="@EyeLoveSleep" />
+        <meta name="twitter:title" content="Free Jet Lag Calculator - Beat Jet Lag with Personalized Plan" />
+        <meta name="twitter:description" content={seoData.socialDescription} />
         <meta name="twitter:image" content={seoData.ogImage} />
+        <meta name="twitter:image:alt" content="Jet Lag Calculator with time zone map showing personalized adjustment plans for travelers" />
         
         {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

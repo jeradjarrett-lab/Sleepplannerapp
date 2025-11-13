@@ -12,6 +12,7 @@ import { updateCriticalSeo, updateNonCriticalSeo, updateStructuredData } from ".
 const seoData = {
   title: "Free Sleep Calculator - Bedtime & Wake Time Calculator Based on 90-Min Cycles | EyeLoveSleep",
   description: "Use our free sleep cycle calculator to find the perfect bedtime and wake time. Our sleep calculator uses 90-minute REM cycles to help you wake up refreshed. Calculate your optimal sleep schedule instantly with our science-backed sleep calculator tool.",
+  socialDescription: "Calculate your perfect bedtime and wake time based on 90-minute sleep cycles. Wake up refreshed, not groggy! ⏰💤",
   keywords: "sleep calculator, free sleep calculator, bedtime calculator, wake time calculator, sleep cycle calculator, 90 minute sleep cycle calculator, REM sleep calculator, best time to sleep calculator, sleep schedule calculator, when to go to bed calculator, optimal bedtime calculator, sleep inertia calculator, circadian rhythm calculator, sleep hygiene calculator, deep sleep calculator, light sleep calculator, wake up calculator, sleep time calculator, sleep cycle tool",
   url: "https://eyelovesleep.com",
   canonical: "https://eyelovesleep.com",
@@ -35,20 +36,25 @@ export default function SleepCalculatorPage() {
         <meta name="keywords" content={seoData.keywords} />
         <link rel="canonical" href={seoData.canonical} />
         
-        {/* Open Graph */}
+        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content={seoData.title} />
-        <meta property="og:description" content={seoData.description} />
+        <meta property="og:site_name" content="EyeLoveSleep" />
+        <meta property="og:title" content="Free Sleep Calculator - Calculate Perfect Bedtime & Wake Time" />
+        <meta property="og:description" content={seoData.socialDescription} />
         <meta property="og:url" content={seoData.url} />
         <meta property="og:image" content={seoData.ogImage} />
+        <meta property="og:image:alt" content="Sleep Calculator showing optimal bedtime and wake time based on 90-minute sleep cycles" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="en_US" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={seoData.title} />
-        <meta name="twitter:description" content={seoData.description} />
+        <meta name="twitter:site" content="@EyeLoveSleep" />
+        <meta name="twitter:title" content="Free Sleep Calculator - Calculate Perfect Bedtime & Wake Time" />
+        <meta name="twitter:description" content={seoData.socialDescription} />
         <meta name="twitter:image" content={seoData.ogImage} />
+        <meta name="twitter:image:alt" content="Sleep Calculator showing optimal bedtime and wake time based on 90-minute sleep cycles" />
         
         {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

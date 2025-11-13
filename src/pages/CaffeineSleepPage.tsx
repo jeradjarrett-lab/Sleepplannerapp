@@ -17,6 +17,7 @@ import { updateCriticalSeo, updateNonCriticalSeo, updateStructuredData } from ".
 const seoData = {
   title: "Free Caffeine Calculator - Calculate Coffee & Sleep Impact, Caffeine Half-Life Calculator | EyeLoveSleep",
   description: "Use our free caffeine and sleep calculator to track caffeine intake and discover when to stop drinking coffee. Our caffeine calculator uses half-life science to calculate how coffee, tea, and energy drinks affect sleep quality. Get personalized caffeine cutoff times with our science-based caffeine intake calculator.",
+  socialDescription: "Find out when to stop drinking coffee for better sleep! Track your caffeine intake and get your personalized cutoff time. ☕😴",
   keywords: "caffeine calculator, free caffeine calculator, caffeine and sleep calculator, caffeine half life calculator, coffee and sleep calculator, when to stop drinking coffee calculator, caffeine metabolism calculator, caffeine bedtime calculator, coffee sleep impact calculator, energy drink calculator, caffeine intake calculator, tea caffeine calculator, how caffeine affects sleep calculator, caffeine cutoff time calculator, sleep quality calculator, caffeine tracker, coffee calculator",
   url: "https://eyelovesleep.com/caffeine-sleep",
   canonical: "https://eyelovesleep.com/caffeine-sleep",
@@ -40,20 +41,25 @@ export default function CaffeineSleepPage() {
         <meta name="keywords" content={seoData.keywords} />
         <link rel="canonical" href={seoData.canonical} />
         
-        {/* Open Graph */}
+        {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content={seoData.title} />
-        <meta property="og:description" content={seoData.description} />
+        <meta property="og:site_name" content="EyeLoveSleep" />
+        <meta property="og:title" content="Free Caffeine Calculator - Calculate Coffee Impact on Your Sleep" />
+        <meta property="og:description" content={seoData.socialDescription} />
         <meta property="og:url" content={seoData.url} />
         <meta property="og:image" content={seoData.ogImage} />
+        <meta property="og:image:alt" content="Caffeine Calculator tracking coffee and caffeine intake with personalized sleep recommendations" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
+        <meta property="og:locale" content="en_US" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={seoData.title} />
-        <meta name="twitter:description" content={seoData.description} />
+        <meta name="twitter:site" content="@EyeLoveSleep" />
+        <meta name="twitter:title" content="Free Caffeine Calculator - Calculate Coffee Impact on Your Sleep" />
+        <meta name="twitter:description" content={seoData.socialDescription} />
         <meta name="twitter:image" content={seoData.ogImage} />
+        <meta name="twitter:image:alt" content="Caffeine Calculator tracking coffee and caffeine intake with personalized sleep recommendations" />
         
         {/* Preconnect for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
