@@ -1,6 +1,14 @@
 {
   "rewrites": [
     {
+      "source": "/caffeine-sleep",
+      "destination": "/caffeine-sleep.html"
+    },
+    {
+      "source": "/jet-lag",
+      "destination": "/jet-lag.html"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

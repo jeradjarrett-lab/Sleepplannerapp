@@ -130,7 +130,18 @@
     Content-Security-Policy = "upgrade-insecure-requests"
     Vary = "Accept-Encoding"
 
-# SPA fallback - All routes serve index.html and React Router handles routing
+# Serve specific HTML files for each route (better for SEO and crawlers)
+[[redirects]]
+  from = "/caffeine-sleep"
+  to = "/caffeine-sleep.html"
+  status = 200
+
+[[redirects]]
+  from = "/jet-lag"
+  to = "/jet-lag.html"
+  status = 200
+
+# SPA fallback - All other routes serve index.html and React Router handles routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
