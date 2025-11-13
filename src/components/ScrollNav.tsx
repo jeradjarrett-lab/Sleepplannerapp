@@ -253,18 +253,18 @@ export function ScrollNav({ section }: ScrollNavProps) {
         )}
       </AnimatePresence>
 
-      {/* Mobile Navigation - Fixed Bottom */}
+      {/* Mobile Navigation - Inline with Scroll to Top */}
       <AnimatePresence>
         {isVisible && (
           <motion.nav
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.3 }}
-            className="lg:hidden fixed bottom-20 left-4 right-4 z-30"
+            className="lg:hidden fixed bottom-20 left-4 z-30"
             aria-label="Table of contents mobile"
           >
-        <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-3 shadow-2xl">
+        <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-3 shadow-2xl max-w-[calc(100vw-6rem)]">
           <details className="group">
             <summary className="flex items-center justify-between cursor-pointer list-none">
               <div className="flex items-center gap-2">

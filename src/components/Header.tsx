@@ -1,16 +1,13 @@
 import { Moon } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
-interface HeaderProps {
-  onLogoClick?: () => void;
-}
-
-export function Header({ onLogoClick }: HeaderProps) {
+export default function Header() {
   return (
     <header className="bg-white/5 backdrop-blur-md border-b border-white/10 sticky top-0 z-50 shadow-lg" role="banner">
       <div className="max-w-7xl mx-auto px-4 py-2 md:py-3">
-        <nav className="flex items-center justify-between" role="navigation" aria-label="Main site navigation">
-          <button 
-            onClick={onLogoClick}
+        <div className="flex items-center justify-between">
+          <Link 
+            to="/"
             className="flex items-center gap-2 md:gap-3 group cursor-pointer transition-transform hover:scale-105"
             aria-label="EyeLoveSleep - Go to home page"
             title="EyeLoveSleep - Free Sleep Calculator & Jet Lag Tools"
@@ -19,11 +16,11 @@ export function Header({ onLogoClick }: HeaderProps) {
               <Moon className="w-5 h-5 md:w-6 md:h-6 text-white" aria-hidden="true" />
             </div>
             <span className="text-white text-lg md:text-xl lg:text-2xl group-hover:text-blue-300 transition-colors">EyeLoveSleep</span>
-          </button>
+          </Link>
           <p className="text-xs md:text-sm text-white/70 hidden sm:block">
             Free Sleep & Jet Lag Tools
           </p>
-        </nav>
+        </div>
       </div>
     </header>
   );
