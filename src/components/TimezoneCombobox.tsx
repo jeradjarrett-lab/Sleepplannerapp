@@ -332,7 +332,8 @@ export function TimezoneCombobox({ value, onChange, placeholder, label }: Timezo
           <Command className="bg-transparent">
             <CommandInput 
               placeholder="Search city, country, or timezone..." 
-              className="h-12 text-white placeholder:text-white/50"
+              className="h-12 text-white placeholder:text-white/70"
+              aria-label="Search timezones by city, country, or UTC offset"
             />
             <CommandList className="max-h-[300px] overflow-y-auto">
               <CommandEmpty className="py-6 text-center text-sm text-white/60">

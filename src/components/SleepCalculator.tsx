@@ -105,9 +105,10 @@ function SleepTips() {
             onClick={handleRefresh}
             variant="ghost"
             size="sm"
-            className="text-white/60 hover:text-white hover:bg-white/10"
+            className="text-white/80 hover:text-white hover:bg-white/10"
+            aria-label="Refresh sleep tips"
           >
-            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} aria-hidden="true" />
           </Button>
         </div>
         

@@ -1,6 +1,7 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense, useRef } from "react";
 import { Header } from "./components/Header";
 import { Moon, Plane, Coffee } from "lucide-react";
+import { motion } from "motion/react";
 import { updateCriticalSeo, updateNonCriticalSeo, updateStructuredData, seoData } from "./utils/seo-manager";
 import { addResourceHints } from "./utils/resource-hints";
 import { initPerformanceMonitoring } from "./utils/performance-monitor";
@@ -43,9 +44,30 @@ const ScrollToTop = lazy(() => import("./components/ScrollToTop").then(m => ({ d
 const ScrollNav = lazy(() => import("./components/ScrollNav").then(m => ({ default: m.ScrollNav })));
 
 export default function App() {
+  // Check for initial section from static page generation
+  const getInitialSection = (): "sleep" | "caffeine" | "jetlag" => {
+    // Check if set by static page generation script
+    if (typeof window !== 'undefined' && (window as any).__INITIAL_SECTION__) {
+      return (window as any).__INITIAL_SECTION__;
+    }
+    // Fallback: detect from URL pathname
+    if (typeof window !== 'undefined') {
+      const path = window.location.pathname;
+      if (path.includes('caffeine')) return 'caffeine';
+      if (path.includes('jet-lag')) return 'jetlag';
+    }
+    return 'sleep';
+  };
+  
   const [activeSection, setActiveSection] = useState<
     "sleep" | "caffeine" | "jetlag"
-  >("sleep");
+  >(getInitialSection());
+  
+  // Refs for navigation buttons to track position for sliding animation
+  const sleepRef = useRef<HTMLButtonElement>(null);
+  const caffeineRef = useRef<HTMLButtonElement>(null);
+  const jetlagRef = useRef<HTMLButtonElement>(null);
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
 
   // Initialize performance optimizations and caching
   useEffect(() => {
@@ -148,6 +170,35 @@ export default function App() {
     updateStructuredData(data, siteName, activeSection);
   }, [activeSection]);
 
+  // Update indicator position when active section changes
+  useEffect(() => {
+    const updateIndicator = () => {
+      let activeRef;
+      if (activeSection === "sleep") activeRef = sleepRef;
+      else if (activeSection === "caffeine") activeRef = caffeineRef;
+      else activeRef = jetlagRef;
+
+      if (activeRef?.current) {
+        const parent = activeRef.current.parentElement;
+        if (parent) {
+          const parentRect = parent.getBoundingClientRect();
+          const buttonRect = activeRef.current.getBoundingClientRect();
+          setIndicatorStyle({
+            left: buttonRect.left - parentRect.left,
+            width: buttonRect.width,
+          });
+        }
+      }
+    };
+
+    // Update immediately
+    updateIndicator();
+
+    // Update on resize
+    window.addEventListener("resize", updateIndicator);
+    return () => window.removeEventListener("resize", updateIndicator);
+  }, [activeSection]);
+
   const handleLogoClick = () => {
     setActiveSection("sleep");
   };
@@ -179,13 +230,33 @@ export default function App() {
           aria-label="Main navigation"
           className="flex justify-center mb-1 px-1 sm:px-2"
         >
-          <div className="inline-flex bg-white/10 backdrop-blur-sm rounded-full p-0.5 sm:p-1 md:p-1.5 gap-0.5 sm:gap-1.5 md:gap-2 w-full sm:w-auto max-w-full overflow-x-auto">
+          <div className="inline-flex relative bg-white/10 backdrop-blur-sm rounded-full p-0.5 sm:p-1 md:p-1.5 gap-0.5 sm:gap-1.5 md:gap-2 w-full sm:w-auto max-w-full overflow-x-auto">
+            {/* Animated sliding indicator */}
+            <motion.div
+              className="absolute bg-white rounded-full shadow-lg"
+              initial={false}
+              animate={{
+                left: indicatorStyle.left,
+                width: indicatorStyle.width,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 30,
+              }}
+              style={{
+                height: "calc(100% - 0.25rem)",
+                top: "0.125rem",
+              }}
+            />
+            
             <button
+              ref={sleepRef}
               onClick={() => setActiveSection("sleep")}
-              className={`flex items-center gap-1 sm:gap-1.5 md:gap-2 px-2 sm:px-3 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-full transition-all whitespace-nowrap flex-1 sm:flex-initial justify-center ${
+              className={`relative z-10 flex items-center gap-1 sm:gap-1.5 md:gap-2 px-2 sm:px-3 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-full transition-colors whitespace-nowrap flex-1 sm:flex-initial justify-center ${
                 activeSection === "sleep"
-                  ? "bg-white text-[#0f172a] shadow-lg"
-                  : "text-white/70 hover:text-white hover:bg-white/5"
+                  ? "text-[#0f172a]"
+                  : "text-white/70 hover:text-white"
               }`}
               aria-label="Sleep Calculator"
               aria-current={
@@ -196,30 +267,28 @@ export default function App() {
               <span className="text-[10px] sm:text-xs md:text-sm lg:text-base">Sleep Calculator</span>
             </button>
             <button
-              onClick={() =>
-                setActiveSection("caffeine")
-              }
-              className={`flex items-center gap-1 sm:gap-1.5 md:gap-2 px-2 sm:px-3 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-full transition-all whitespace-nowrap flex-1 sm:flex-initial justify-center ${
+              ref={caffeineRef}
+              onClick={() => setActiveSection("caffeine")}
+              className={`relative z-10 flex items-center gap-1 sm:gap-1.5 md:gap-2 px-2 sm:px-3 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-full transition-colors whitespace-nowrap flex-1 sm:flex-initial justify-center ${
                 activeSection === "caffeine"
-                  ? "bg-white text-[#0f172a] shadow-lg"
-                  : "text-white/70 hover:text-white hover:bg-white/5"
+                  ? "text-[#0f172a]"
+                  : "text-white/70 hover:text-white"
               }`}
               aria-label="Caffeine & Sleep Calculator"
               aria-current={
-                activeSection === "caffeine"
-                  ? "page"
-                  : undefined
+                activeSection === "caffeine" ? "page" : undefined
               }
             >
               <Coffee className="w-3.5 sm:w-4 md:w-5 h-3.5 sm:h-4 md:h-5 flex-shrink-0" />
               <span className="text-[10px] sm:text-xs md:text-sm lg:text-base">Caffeine & Sleep</span>
             </button>
             <button
+              ref={jetlagRef}
               onClick={() => setActiveSection("jetlag")}
-              className={`flex items-center gap-1 sm:gap-1.5 md:gap-2 px-2 sm:px-3 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-full transition-all whitespace-nowrap flex-1 sm:flex-initial justify-center ${
+              className={`relative z-10 flex items-center gap-1 sm:gap-1.5 md:gap-2 px-2 sm:px-3 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-full transition-colors whitespace-nowrap flex-1 sm:flex-initial justify-center ${
                 activeSection === "jetlag"
-                  ? "bg-white text-[#0f172a] shadow-lg"
-                  : "text-white/70 hover:text-white hover:bg-white/5"
+                  ? "text-[#0f172a]"
+                  : "text-white/70 hover:text-white"
               }`}
               aria-label="Jet Lag Calculator"
               aria-current={

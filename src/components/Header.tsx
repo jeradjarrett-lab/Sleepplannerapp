@@ -20,7 +20,7 @@ export function Header({ onLogoClick }: HeaderProps) {
             </div>
             <span className="text-white text-lg md:text-xl lg:text-2xl group-hover:text-blue-300 transition-colors">EyeLoveSleep</span>
           </button>
-          <p className="text-xs md:text-sm text-white/50 hidden sm:block">
+          <p className="text-xs md:text-sm text-white/70 hidden sm:block">
             Free Sleep & Jet Lag Tools
           </p>
         </nav>

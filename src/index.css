@@ -529,6 +529,10 @@
     position: relative;
   }
 
+  .static {
+    position: static;
+  }
+
   .sticky {
     position: sticky;
   }
@@ -1071,6 +1075,10 @@
 
   .touch-none {
     touch-action: none;
+  }
+
+  .resize {
+    resize: both;
   }
 
   .scroll-mt-24 {
@@ -3402,13 +3410,13 @@
     }
   }
 
-  .placeholder\:text-white\/50::placeholder {
-    color: #ffffff80;
+  .placeholder\:text-white\/70::placeholder {
+    color: #ffffffb3;
   }
 
   @supports (color: color-mix(in lab, red, red)) {
-    .placeholder\:text-white\/50::placeholder {
-      color: color-mix(in oklab, var(--color-white) 50%, transparent);
+    .placeholder\:text-white\/70::placeholder {
+      color: color-mix(in oklab, var(--color-white) 70%, transparent);
     }
   }
 
