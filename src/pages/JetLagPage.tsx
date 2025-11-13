@@ -44,7 +44,7 @@ export default function JetLagPage() {
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="EyeLoveSleep" />
-        <meta property="og:title" content="Free Jet Lag Calculator - Beat Jet Lag with Personalized Plan" />
+        <meta property="og:title" content="EyeLoveSleep Free Jet Lag Calculator" />
         <meta property="og:description" content={seoData.socialDescription} />
         <meta property="og:url" content={seoData.url} />
         <meta property="og:image" content={seoData.ogImage} />
@@ -56,7 +56,7 @@ export default function JetLagPage() {
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@EyeLoveSleep" />
-        <meta name="twitter:title" content="Free Jet Lag Calculator - Beat Jet Lag with Personalized Plan" />
+        <meta name="twitter:title" content="EyeLoveSleep Free Jet Lag Calculator" />
         <meta name="twitter:description" content={seoData.socialDescription} />
         <meta name="twitter:image" content={seoData.ogImage} />
         <meta name="twitter:image:alt" content="Jet Lag Calculator with time zone map showing personalized adjustment plans for travelers" />

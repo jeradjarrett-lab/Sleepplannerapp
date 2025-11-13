@@ -44,7 +44,7 @@ export default function CaffeineSleepPage() {
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="EyeLoveSleep" />
-        <meta property="og:title" content="Free Caffeine Calculator - Calculate Coffee Impact on Your Sleep" />
+        <meta property="og:title" content="EyeLoveSleep Free Caffeine & Sleep Calculator" />
         <meta property="og:description" content={seoData.socialDescription} />
         <meta property="og:url" content={seoData.url} />
         <meta property="og:image" content={seoData.ogImage} />
@@ -56,7 +56,7 @@ export default function CaffeineSleepPage() {
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@EyeLoveSleep" />
-        <meta name="twitter:title" content="Free Caffeine Calculator - Calculate Coffee Impact on Your Sleep" />
+        <meta name="twitter:title" content="EyeLoveSleep Free Caffeine & Sleep Calculator" />
         <meta name="twitter:description" content={seoData.socialDescription} />
         <meta name="twitter:image" content={seoData.ogImage} />
         <meta name="twitter:image:alt" content="Caffeine Calculator tracking coffee and caffeine intake with personalized sleep recommendations" />

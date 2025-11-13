@@ -39,7 +39,7 @@ export default function SleepCalculatorPage() {
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="EyeLoveSleep" />
-        <meta property="og:title" content="Free Sleep Calculator - Calculate Perfect Bedtime & Wake Time" />
+        <meta property="og:title" content="EyeLoveSleep Free Online Sleep Calculator" />
         <meta property="og:description" content={seoData.socialDescription} />
         <meta property="og:url" content={seoData.url} />
         <meta property="og:image" content={seoData.ogImage} />
@@ -51,7 +51,7 @@ export default function SleepCalculatorPage() {
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@EyeLoveSleep" />
-        <meta name="twitter:title" content="Free Sleep Calculator - Calculate Perfect Bedtime & Wake Time" />
+        <meta name="twitter:title" content="EyeLoveSleep Free Online Sleep Calculator" />
         <meta name="twitter:description" content={seoData.socialDescription} />
         <meta name="twitter:image" content={seoData.ogImage} />
         <meta name="twitter:image:alt" content="Sleep Calculator showing optimal bedtime and wake time based on 90-minute sleep cycles" />
