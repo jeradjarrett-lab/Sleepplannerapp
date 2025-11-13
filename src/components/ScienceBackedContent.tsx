@@ -110,7 +110,7 @@ export function ScienceBackedContent({ section }: ScienceBackedContentProps) {
                   </div>
                 </div>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="age-requirements" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   Age-Specific Sleep Requirements
                 </h3>
                 
@@ -170,7 +170,7 @@ export function ScienceBackedContent({ section }: ScienceBackedContentProps) {
         </section>
 
         {/* Common Sleep Problems & Solutions */}
-        <section className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl">
+        <section id="sleep-problems" className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl scroll-mt-24">
           <div className="flex items-start gap-3 mb-6">
             <Users className="w-8 h-8 text-blue-400 flex-shrink-0 mt-1" />
             <div className="flex-1">
@@ -270,7 +270,7 @@ export function ScienceBackedContent({ section }: ScienceBackedContentProps) {
                   <strong className="text-orange-200">Caffeine (1,3,7-trimethylxanthine)</strong> is the world's most widely consumed psychoactive substance, with an estimated 90% of adults consuming it daily. Understanding its pharmacokinetics—how your body absorbs, distributes, metabolizes, and excretes caffeine—is crucial for optimizing both its benefits and minimizing sleep disruption.
                 </p>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="pharmacokinetics" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   Pharmacokinetics of Caffeine
                 </h3>
                 
@@ -296,7 +296,7 @@ export function ScienceBackedContent({ section }: ScienceBackedContentProps) {
                   </div>
                 </div>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="research-studies" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   Key Research Studies on Caffeine and Sleep
                 </h3>
                 
@@ -358,7 +358,7 @@ export function ScienceBackedContent({ section }: ScienceBackedContentProps) {
                   </div>
                 </div>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="caffeine-content" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   Caffeine Content: Complete Reference Guide
                 </h3>
                 
@@ -449,7 +449,7 @@ export function ScienceBackedContent({ section }: ScienceBackedContentProps) {
                   </table>
                 </div>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="metabolism-factors" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   Factors Affecting Caffeine Metabolism
                 </h3>
                 
@@ -502,7 +502,7 @@ export function ScienceBackedContent({ section }: ScienceBackedContentProps) {
         </section>
 
         {/* Caffeine Benefits & Risks */}
-        <section className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl">
+        <section id="benefits-risks" className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl scroll-mt-24">
           <div className="flex items-start gap-3 mb-6">
             <Users className="w-8 h-8 text-amber-400 flex-shrink-0 mt-1" />
             <div className="flex-1">
@@ -609,7 +609,7 @@ export function ScienceBackedContent({ section }: ScienceBackedContentProps) {
                   The <strong className="text-cyan-200">circadian rhythm</strong> is one of the most fundamental biological processes in nearly all living organisms. In 2017, Jeffrey Hall, Michael Rosbash, and Michael Young were awarded the Nobel Prize in Physiology or Medicine for their discoveries of molecular mechanisms controlling circadian rhythms, highlighting the critical importance of this field.
                 </p>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="circadian-rhythm" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   The Master Clock: Suprachiasmatic Nucleus (SCN)
                 </h3>
                 
@@ -640,7 +640,7 @@ export function ScienceBackedContent({ section }: ScienceBackedContentProps) {
                   </div>
                 </div>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="research-studies" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   Landmark Research on Jet Lag
                 </h3>
                 
@@ -702,7 +702,7 @@ export function ScienceBackedContent({ section }: ScienceBackedContentProps) {
                   </div>
                 </div>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="phase-response" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   The Phase Response Curve (PRC)
                 </h3>
                 
@@ -728,7 +728,7 @@ export function ScienceBackedContent({ section }: ScienceBackedContentProps) {
                   </div>
                 </div>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="melatonin" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   Melatonin: The Darkness Hormone
                 </h3>
                 
@@ -760,7 +760,7 @@ export function ScienceBackedContent({ section }: ScienceBackedContentProps) {
                   </div>
                 </div>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="time-zone-rules" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   Time Zone Crossing Rules of Thumb
                 </h3>
                 

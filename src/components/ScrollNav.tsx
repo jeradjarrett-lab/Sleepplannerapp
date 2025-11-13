@@ -16,6 +16,7 @@ export function ScrollNav({ section }: ScrollNavProps) {
   const [activeId, setActiveId] = useState<string>('');
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [navItems, setNavItems] = useState<NavItem[]>([]);
+  const [isVisible, setIsVisible] = useState(false);
 
   // Define navigation items based on section
   useEffect(() => {
@@ -83,10 +84,17 @@ export function ScrollNav({ section }: ScrollNavProps) {
     setNavItems(items[section] || []);
   }, [section]);
 
-  // Track scroll position and update active section
+  // Track scroll position and show/hide navigation
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 150; // Offset for header
+      const scrollPosition = window.scrollY;
+      
+      // Show navigation after scrolling down 200px
+      if (scrollPosition > 200 && !isVisible) {
+        setIsVisible(true);
+      } else if (scrollPosition <= 200 && isVisible) {
+        setIsVisible(false);
+      }
 
       // Find all section headings
       const headings = navItems.map(item => {
@@ -103,7 +111,7 @@ export function ScrollNav({ section }: ScrollNavProps) {
       // Find the current section
       let currentId = '';
       for (let i = headings.length - 1; i >= 0; i--) {
-        if (scrollPosition >= headings[i].offsetTop - 100) {
+        if (scrollPosition + 150 >= headings[i].offsetTop - 100) {
           currentId = headings[i].id;
           break;
         }
@@ -114,11 +122,11 @@ export function ScrollNav({ section }: ScrollNavProps) {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll(); // Initial call
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [navItems, activeId]);
+  }, [navItems, activeId, isVisible]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -137,12 +145,14 @@ export function ScrollNav({ section }: ScrollNavProps) {
   return (
     <>
       {/* Desktop Navigation - Fixed Left Side */}
-      <nav
-        className="hidden lg:block fixed left-4 top-24 w-64 max-h-[calc(100vh-120px)] overflow-y-auto z-40"
-        aria-label="Table of contents"
-      >
-        <AnimatePresence mode="wait">
-          {!isCollapsed && (
+      <AnimatePresence>
+        {isVisible && (
+          <nav
+            className="hidden lg:block fixed left-4 top-24 w-64 max-h-[calc(100vh-120px)] overflow-y-auto z-40"
+            aria-label="Table of contents"
+          >
+            <AnimatePresence mode="wait">
+              {!isCollapsed && (
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -233,13 +243,21 @@ export function ScrollNav({ section }: ScrollNavProps) {
             </motion.button>
           )}
         </AnimatePresence>
-      </nav>
+          </nav>
+        )}
+      </AnimatePresence>
 
       {/* Mobile Navigation - Fixed Bottom */}
-      <nav
-        className="lg:hidden fixed bottom-4 left-4 right-4 z-40"
-        aria-label="Table of contents mobile"
-      >
+      <AnimatePresence>
+        {isVisible && (
+          <motion.nav
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3 }}
+            className="lg:hidden fixed bottom-20 left-4 right-4 z-30"
+            aria-label="Table of contents mobile"
+          >
         <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-3 shadow-2xl">
           <details className="group">
             <summary className="flex items-center justify-between cursor-pointer list-none">
@@ -273,8 +291,10 @@ export function ScrollNav({ section }: ScrollNavProps) {
               </ul>
             </div>
           </details>
-        </div>
-      </nav>
+            </div>
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </>
   );
 }

@@ -175,7 +175,7 @@ export function SEOContent({ section }: SEOContentProps) {
                   <strong className="text-amber-200">Caffeine</strong> is the world's most widely consumed psychoactive substance, with over 90% of adults consuming it daily. While caffeine provides benefits like increased alertness and improved performance, understanding its effects on sleep is crucial for maintaining healthy sleep patterns and overall wellbeing.
                 </p>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="caffeine-effects" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   How Caffeine Affects Your Sleep
                 </h3>
                 
@@ -183,7 +183,7 @@ export function SEOContent({ section }: SEOContentProps) {
                   Caffeine works by blocking <strong className="text-amber-200">adenosine receptors</strong> in the brain. Adenosine is a neurotransmitter that builds up throughout the day, creating sleep pressure and making you feel tired. When caffeine blocks these receptors, it prevents the natural sleep drive from building, keeping you alert. However, this mechanism continues to affect your sleep even hours after consumption, disrupting sleep architecture and reducing overall sleep quality.
                 </p>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="half-life" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   Understanding Caffeine Half-Life
                 </h3>
                 
@@ -195,7 +195,7 @@ export function SEOContent({ section }: SEOContentProps) {
                   Individual caffeine metabolism varies significantly based on genetics (particularly the CYP1A2 gene), age, medications, and lifestyle factors. Smokers metabolize caffeine about 50% faster than non-smokers, while pregnant women may take twice as long to eliminate it. Understanding your personal metabolism is key to optimizing caffeine timing.
                 </p>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="sleep-stages-impact" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   Caffeine's Impact on Sleep Stages
                 </h3>
                 
@@ -207,7 +207,7 @@ export function SEOContent({ section }: SEOContentProps) {
                   Even when you fall asleep normally after consuming caffeine, your sleep architecture is disrupted. You spend less time in restorative deep sleep stages and may experience more frequent awakenings during the night, even if you don't fully remember them in the morning.
                 </p>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="tolerance" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   Caffeine Tolerance and Sleep
                 </h3>
                 
@@ -219,7 +219,7 @@ export function SEOContent({ section }: SEOContentProps) {
                   Regular caffeine users often underestimate its impact because they've forgotten what truly refreshing, uninterrupted sleep feels like. Many people who eliminate or reduce caffeine report dramatic improvements in sleep quality within 1-2 weeks, even if they didn't think caffeine was affecting them.
                 </p>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="optimal-timing" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   Optimal Caffeine Timing for Better Sleep
                 </h3>
                 
@@ -266,7 +266,7 @@ export function SEOContent({ section }: SEOContentProps) {
                   <strong className="text-amber-200">Jet lag</strong>, medically known as desynchronosis, is a temporary sleep disorder that occurs when your internal circadian clock becomes misaligned with the local time at your destination. For the millions of people who travel across time zones each year, jet lag can significantly impact both the enjoyment and productivity of their trips.
                 </p>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="science" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   The Science of Jet Lag
                 </h3>
                 
@@ -278,7 +278,7 @@ export function SEOContent({ section }: SEOContentProps) {
                   When you travel across time zones, your internal clock remains synchronized to your home time zone while the external environment operates on a different schedule. This mismatch creates jet lag symptoms: <strong className="text-amber-200">fatigue, insomnia, difficulty concentrating, digestive issues, mood changes, and reduced physical performance</strong>. The severity depends on several factors: number of time zones crossed, direction of travel, individual differences, and timing of light exposure.
                 </p>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="direction-matters" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   Why Direction Matters: East vs. West
                 </h3>
                 
@@ -290,7 +290,7 @@ export function SEOContent({ section }: SEOContentProps) {
                   <strong className="text-amber-200">Eastward travel</strong> (e.g., Los Angeles to New York) requires you to advance your clock, going to bed and waking earlier than your body wants. This is physiologically more challenging. Research shows that circadian rhythm adjusts approximately 1 hour per day when traveling east, but 1.5 hours per day when traveling west.
                 </p>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="pre-travel" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   Pre-Travel Adjustment Strategies
                 </h3>
                 
@@ -309,7 +309,7 @@ export function SEOContent({ section }: SEOContentProps) {
                   </p>
                 </div>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="during-flight" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   During-Flight Strategies
                 </h3>
                 
@@ -321,7 +321,7 @@ export function SEOContent({ section }: SEOContentProps) {
                   <strong className="text-amber-200">Stay hydrated</strong>—airplane cabin air is extremely dry (10-20% humidity vs. 30-65% normally), which exacerbates fatigue. Drink water regularly and avoid excessive alcohol and caffeine, both of which can disrupt sleep quality and dehydrate you further.
                 </p>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="post-arrival" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   Post-Arrival Strategies
                 </h3>
                 
@@ -337,7 +337,7 @@ export function SEOContent({ section }: SEOContentProps) {
                   <strong className="text-amber-200">Melatonin supplementation</strong> can help, but timing is crucial. Take 0.5-5mg of melatonin 30 minutes before bedtime at your destination. Melatonin is most effective for eastward travel and for the first few nights after arrival. Consult with a healthcare provider before using supplements.
                 </p>
                 
-                <h3 className="text-xl text-white mt-6 mb-3">
+                <h3 id="additional-tips" className="text-xl text-white mt-6 mb-3 scroll-mt-24">
                   Additional Tips for Faster Recovery
                 </h3>
                 
