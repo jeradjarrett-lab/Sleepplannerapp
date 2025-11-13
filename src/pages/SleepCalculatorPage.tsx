@@ -7,6 +7,7 @@ import { SleepCalculator } from "../components/SleepCalculator";
 import { ScienceBackedContent } from "../components/ScienceBackedContent";
 import { ScrollNav } from "../components/ScrollNav";
 import { ScrollToTop } from "../components/ScrollToTop";
+import { ShareButtons } from "../components/ShareButtons";
 import { updateCriticalSeo, updateNonCriticalSeo, updateStructuredData } from "../utils/seo-manager";
 
 const seoData = {
@@ -82,6 +83,13 @@ export default function SleepCalculatorPage() {
 
               {/* Calculator Component */}
               <SleepCalculator />
+
+              {/* Share Buttons */}
+              <ShareButtons 
+                title="Free Sleep Calculator - Calculate Perfect Bedtime & Wake Time"
+                description="Calculate your optimal bedtime and wake time based on 90-minute sleep cycles. Wake up refreshed!"
+                url="https://eyelovesleep.com/"
+              />
 
               {/* Educational Content */}
               <ScienceBackedContent section="sleep" />

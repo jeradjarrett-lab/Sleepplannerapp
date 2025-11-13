@@ -12,6 +12,7 @@ import { ComparisonTable } from "../components/ComparisonTable";
 import { FAQSection } from "../components/FAQSection";
 import { ScrollNav } from "../components/ScrollNav";
 import { ScrollToTop } from "../components/ScrollToTop";
+import { ShareButtons } from "../components/ShareButtons";
 import { updateCriticalSeo, updateNonCriticalSeo, updateStructuredData } from "../utils/seo-manager";
 
 const seoData = {
@@ -90,6 +91,13 @@ export default function JetLagPage() {
               <section id="calculator">
                 <JetLagCalculator />
               </section>
+
+              {/* Share Buttons */}
+              <ShareButtons 
+                title="Free Jet Lag Calculator - Beat Jet Lag with Personalized Plan"
+                description="Beat jet lag faster! Get a personalized day-by-day adjustment plan for any time zone. Perfect for travelers."
+                url="https://eyelovesleep.com/jet-lag"
+              />
 
               {/* Quick Answers */}
               <QuickAnswers section="jetlag" />

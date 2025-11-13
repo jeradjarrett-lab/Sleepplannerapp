@@ -56,8 +56,79 @@ export default function App() {
       
       // Register service worker for offline support and caching
       registerServiceWorker();
+      
+      // Load analytics and share scripts after page is interactive (deferred for performance)
+      loadThirdPartyScripts();
     }
   }, []);
+
+  // Load third-party scripts (analytics & social sharing) after page is interactive
+  const loadThirdPartyScripts = () => {
+    // Use requestIdleCallback for optimal performance - loads when browser is idle
+    const loadScripts = () => {
+      // Load Histats Analytics
+      loadHistatsAnalytics();
+      
+      // Load ShareThis social sharing buttons
+      loadShareThisButtons();
+    };
+
+    // Load after 4 seconds when browser is idle (no performance impact)
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(() => {
+        setTimeout(loadScripts, 4000);
+      }, { timeout: 6000 });
+    } else {
+      // Fallback for older browsers
+      setTimeout(loadScripts, 5000);
+    }
+  };
+
+  // Histats Analytics - Performance optimized
+  const loadHistatsAnalytics = () => {
+    try {
+      // Initialize Histats variables
+      (window as any)._Hasync = (window as any)._Hasync || [];
+      (window as any)._Hasync.push(['Histats.start', '1,4990579,4,0,0,0,00010000']);
+      (window as any)._Hasync.push(['Histats.fasi', '1']);
+      (window as any)._Hasync.push(['Histats.track_hits', '']);
+      
+      // Create and load script asynchronously
+      const script = document.createElement('script');
+      script.src = '//s10.histats.com/js15_as.js';
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+      
+      if (import.meta.env?.DEV) {
+        console.log('✅ Histats Analytics loaded (deferred)');
+      }
+    } catch (error) {
+      if (import.meta.env?.DEV) {
+        console.warn('Histats Analytics failed to load:', error);
+      }
+    }
+  };
+
+  // ShareThis Social Sharing Buttons - Performance optimized
+  const loadShareThisButtons = () => {
+    try {
+      // Create and load ShareThis script asynchronously
+      const script = document.createElement('script');
+      script.src = 'https://platform-api.sharethis.com/js/sharethis.js#property=67345a6c3e563f00197169d2&product=inline-share-buttons&source=platform';
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+      
+      if (import.meta.env?.DEV) {
+        console.log('✅ ShareThis buttons loaded (deferred)');
+      }
+    } catch (error) {
+      if (import.meta.env?.DEV) {
+        console.warn('ShareThis buttons failed to load:', error);
+      }
+    }
+  };
 
   return (
     <HelmetProvider>

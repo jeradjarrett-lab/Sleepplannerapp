@@ -12,6 +12,7 @@ import { ComparisonTable } from "../components/ComparisonTable";
 import { FAQSection } from "../components/FAQSection";
 import { ScrollNav } from "../components/ScrollNav";
 import { ScrollToTop } from "../components/ScrollToTop";
+import { ShareButtons } from "../components/ShareButtons";
 import { updateCriticalSeo, updateNonCriticalSeo, updateStructuredData } from "../utils/seo-manager";
 
 const seoData = {
@@ -90,6 +91,13 @@ export default function CaffeineSleepPage() {
               <section id="calculator">
                 <CaffeineSleepCalculator />
               </section>
+
+              {/* Share Buttons */}
+              <ShareButtons 
+                title="Free Caffeine Calculator - Calculate Coffee Impact on Your Sleep"
+                description="Find out when to stop drinking coffee for better sleep! Track your caffeine intake and get your personalized cutoff time."
+                url="https://eyelovesleep.com/caffeine-sleep"
+              />
 
               {/* Quick Answers */}
               <QuickAnswers section="caffeine" />
