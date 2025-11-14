@@ -1,9 +1,10 @@
 /**
  * Service Worker for EyeLoveSleep
- * Provides offline functionality and aggressive caching for fast repeat visits
+ * Provides offline functionality and caching for fast repeat visits
+ * Updated to prevent JavaScript caching issues
  */
 
-const CACHE_VERSION = 'v1.2.0';
+const CACHE_VERSION = 'v1.3.0';
 const CACHE_NAME = `eyelovesleep-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `eyelovesleep-runtime-${CACHE_VERSION}`;
 const IMAGE_CACHE = `eyelovesleep-images-${CACHE_VERSION}`;
@@ -13,7 +14,6 @@ const MAX_RUNTIME_CACHE_SIZE = 50;
 const MAX_IMAGE_CACHE_SIZE = 30;
 
 // Resources to cache immediately on install
-// Note: Build assets will be cached on-demand due to dynamic hashed filenames
 const PRECACHE_URLS = [
   '/',
   '/index.html',
@@ -31,7 +31,7 @@ const limitCacheSize = async (cacheName, maxSize) => {
 
 // Cache strategies
 const CACHE_STRATEGIES = {
-  // Network first (for HTML)
+  // Network first (for HTML and JS)
   networkFirst: async (request) => {
     try {
       const networkResponse = await fetch(request);
@@ -45,7 +45,7 @@ const CACHE_STRATEGIES = {
     }
   },
 
-  // Cache first (for static assets)
+  // Cache first (for static assets like CSS, fonts, images)
   cacheFirst: async (request) => {
     const cachedResponse = await caches.match(request);
     if (cachedResponse) return cachedResponse;
@@ -55,7 +55,6 @@ const CACHE_STRATEGIES = {
       
       // Only cache successful responses
       if (networkResponse && networkResponse.status === 200) {
-        const url = new URL(request.url);
         const cacheName = request.destination === 'image' ? IMAGE_CACHE : RUNTIME_CACHE;
         const cache = await caches.open(cacheName);
         
@@ -137,11 +136,15 @@ self.addEventListener('fetch', (event) => {
   if (request.destination === 'document') {
     // HTML - network first (always fresh)
     strategy = CACHE_STRATEGIES.networkFirst;
+  } else if (request.destination === 'script' || url.pathname.match(/\.(js|jsx|ts|tsx)$/)) {
+    // JavaScript modules - network first (prevents stale code after updates)
+    // This ensures users always get the latest JavaScript code
+    strategy = CACHE_STRATEGIES.networkFirst;
   } else if (
-    request.destination.match(/script|style|font|image/) ||
-    url.pathname.match(/\.(js|css|woff2?|ttf|otf|eot|png|jpg|jpeg|gif|svg|webp|ico)$/)
+    request.destination.match(/style|font|image/) ||
+    url.pathname.match(/\.(css|woff2?|ttf|otf|eot|png|jpg|jpeg|gif|svg|webp|ico)$/)
   ) {
-    // Static assets - cache first (fast repeat visits)
+    // Static assets (non-JS) - cache first (fast repeat visits)
     strategy = CACHE_STRATEGIES.cacheFirst;
   } else if (
     url.hostname.includes('googlesyndication') ||

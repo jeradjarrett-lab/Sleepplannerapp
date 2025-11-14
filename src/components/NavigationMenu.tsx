@@ -1,11 +1,36 @@
 import { Moon, Coffee, Plane } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useEffect, useState } from 'react';
 
 interface NavigationMenuProps {
   currentPage: 'sleep' | 'caffeine' | 'jetlag';
 }
 
-export function NavigationMenu({ currentPage }: NavigationMenuProps) {
+export function NavigationMenu({ currentPage: propCurrentPage }: NavigationMenuProps) {
+  // Fallback: detect current page from URL if prop seems incorrect
+  const [currentPage, setCurrentPage] = useState<'sleep' | 'caffeine' | 'jetlag'>(propCurrentPage);
+
+  useEffect(() => {
+    // Auto-detect current page from URL as a fallback
+    const path = window.location.pathname;
+    let detectedPage: 'sleep' | 'caffeine' | 'jetlag' = 'sleep';
+    
+    if (path.includes('caffeine-sleep')) {
+      detectedPage = 'caffeine';
+    } else if (path.includes('jet-lag')) {
+      detectedPage = 'jetlag';
+    } else if (path === '/' || path.includes('index')) {
+      detectedPage = 'sleep';
+    }
+
+    // Use detected page if it differs from prop (indicates caching issue)
+    if (detectedPage !== propCurrentPage) {
+      console.warn(`Navigation menu prop mismatch: prop=${propCurrentPage}, detected=${detectedPage}. Using detected value.`);
+      setCurrentPage(detectedPage);
+    } else {
+      setCurrentPage(propCurrentPage);
+    }
+  }, [propCurrentPage]);
 
   const navItems = [
     {

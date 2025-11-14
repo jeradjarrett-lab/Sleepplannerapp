@@ -12,12 +12,32 @@ interface NavItem {
   level: number;
 }
 
-export function ScrollNav({ section }: ScrollNavProps) {
+export function ScrollNav({ section: propSection }: ScrollNavProps) {
   const [activeId, setActiveId] = useState<string>('');
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [navItems, setNavItems] = useState<NavItem[]>([]);
   const [isVisible, setIsVisible] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  
+  // Auto-detect section from URL as fallback
+  const [section, setSection] = useState<'sleep' | 'caffeine' | 'jetlag'>(propSection);
+
+  useEffect(() => {
+    const path = window.location.pathname;
+    let detectedSection: 'sleep' | 'caffeine' | 'jetlag' = 'sleep';
+    
+    if (path.includes('caffeine-sleep')) {
+      detectedSection = 'caffeine';
+    } else if (path.includes('jet-lag')) {
+      detectedSection = 'jetlag';
+    }
+    
+    if (detectedSection !== propSection) {
+      console.warn(`ScrollNav prop mismatch: prop=${propSection}, detected=${detectedSection}. Using detected value.`);
+    }
+    
+    setSection(detectedSection);
+  }, [propSection]);
 
   // Define navigation items based on section
   useEffect(() => {
