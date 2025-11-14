@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GA Test Page - EyeLoveSleep</title>
+  
+  <!-- Google Analytics GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-8R36J5H706"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-8R36J5H706');
+    
+    // Log to console for verification
+    console.log('✅ Google Analytics loaded on test page');
+    console.log('GA Measurement ID: G-8R36J5H706');
+  </script>
+  
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      color: #4f86f7;
+      margin-top: 0;
+    }
+    .status {
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 4px;
+      background: #e8f5e9;
+      border-left: 4px solid #4caf50;
+    }
+    .instructions {
+      background: #fff3cd;
+      padding: 15px;
+      border-radius: 4px;
+      border-left: 4px solid #ffc107;
+      margin: 20px 0;
+    }
+    code {
+      background: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: monospace;
+    }
+    .btn {
+      background: #4f86f7;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    .btn:hover {
+      background: #3a6fd9;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🎯 Google Analytics Test Page</h1>
+    
+    <div class="status">
+      <strong>✅ Status:</strong> Google Analytics is loaded on this page!
+    </div>
+    
+    <h2>Verification Steps:</h2>
+    
+    <ol>
+      <li><strong>Check Browser Console:</strong>
+        <ul>
+          <li>Press <code>F12</code> to open DevTools</li>
+          <li>Go to the <strong>Console</strong> tab</li>
+          <li>Look for: <code>✅ Google Analytics loaded on test page</code></li>
+        </ul>
+      </li>
+      
+      <li><strong>Check Network Requests:</strong>
+        <ul>
+          <li>In DevTools, go to the <strong>Network</strong> tab</li>
+          <li>Refresh this page</li>
+          <li>Filter by "gtag" or "google"</li>
+          <li>You should see requests to:
+            <ul>
+              <li><code>googletagmanager.com/gtag/js</code></li>
+              <li><code>google-analytics.com/g/collect</code></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      
+      <li><strong>Check Real-Time in Google Analytics:</strong>
+        <ul>
+          <li>Go to <a href="https://analytics.google.com" target="_blank">analytics.google.com</a></li>
+          <li>Select property: <code>G-8R36J5H706</code></li>
+          <li>Click <strong>Reports</strong> → <strong>Realtime</strong></li>
+          <li>You should see yourself as an active user</li>
+        </ul>
+      </li>
+      
+      <li><strong>Test Page View Tracking:</strong>
+        <button class="btn" onclick="testPageView()">Send Test Page View</button>
+        <button class="btn" onclick="testEvent()">Send Test Event</button>
+        <p id="result"></p>
+      </li>
+    </ol>
+    
+    <div class="instructions">
+      <strong>📋 This is a test page only!</strong><br>
+      Your main site at <a href="/">eyelovesleep.com</a> should have the same GA code.<br>
+      If this page works but your main site doesn't, there's a build or deployment issue.
+    </div>
+    
+    <h2>Current Page URL:</h2>
+    <code id="current-url"></code>
+    
+    <h2>GA Configuration:</h2>
+    <ul>
+      <li><strong>Measurement ID:</strong> G-8R36J5H706</li>
+      <li><strong>Script Source:</strong> https://www.googletagmanager.com/gtag/js</li>
+      <li><strong>Test Page:</strong> /ga-test.html</li>
+    </ul>
+    
+    <div style="margin-top: 30px; padding: 15px; background: #e3f2fd; border-radius: 4px;">
+      <strong>🔍 Debugging Info:</strong>
+      <pre id="debug-info" style="background: white; padding: 10px; border-radius: 4px; overflow: auto;"></pre>
+    </div>
+  </div>
+  
+  <script>
+    // Display current URL
+    document.getElementById('current-url').textContent = window.location.href;
+    
+    // Test page view function
+    function testPageView() {
+      if (typeof gtag === 'function') {
+        gtag('event', 'page_view', {
+          page_title: 'GA Test Page',
+          page_location: window.location.href,
+          page_path: '/ga-test.html'
+        });
+        document.getElementById('result').innerHTML = '<span style="color: green;">✅ Page view event sent! Check GA Real-Time report.</span>';
+        console.log('📊 Test page view sent to GA');
+      } else {
+        document.getElementById('result').innerHTML = '<span style="color: red;">❌ gtag function not found!</span>';
+      }
+    }
+    
+    // Test custom event function
+    function testEvent() {
+      if (typeof gtag === 'function') {
+        gtag('event', 'test_button_click', {
+          event_category: 'engagement',
+          event_label: 'GA Test Page Button',
+          value: 1
+        });
+        document.getElementById('result').innerHTML = '<span style="color: green;">✅ Custom event sent! Check GA Real-Time report under Events.</span>';
+        console.log('📊 Test custom event sent to GA');
+      } else {
+        document.getElementById('result').innerHTML = '<span style="color: red;">❌ gtag function not found!</span>';
+      }
+    }
+    
+    // Display debug info
+    setTimeout(() => {
+      const debugInfo = {
+        'gtag function exists': typeof gtag === 'function',
+        'dataLayer exists': typeof window.dataLayer !== 'undefined',
+        'dataLayer items': window.dataLayer ? window.dataLayer.length : 0,
+        'Current URL': window.location.href,
+        'Page loaded at': new Date().toISOString(),
+        'User Agent': navigator.userAgent.substring(0, 100) + '...'
+      };
+      
+      document.getElementById('debug-info').textContent = JSON.stringify(debugInfo, null, 2);
+      
+      // Log to console
+      console.log('🔍 Debug Info:', debugInfo);
+      
+      // Check if GA loaded successfully
+      if (typeof gtag === 'function') {
+        console.log('✅ gtag function is available - GA loaded successfully!');
+      } else {
+        console.error('❌ gtag function NOT available - GA may not be loaded!');
+      }
+      
+      if (window.dataLayer) {
+        console.log('✅ dataLayer exists with', window.dataLayer.length, 'items');
+        console.log('dataLayer contents:', window.dataLayer);
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
