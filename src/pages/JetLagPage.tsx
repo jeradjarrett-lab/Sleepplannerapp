@@ -13,13 +13,14 @@ import { FAQSection } from "../components/FAQSection";
 import { ScrollNav } from "../components/ScrollNav";
 import { ScrollToTop } from "../components/ScrollToTop";
 import { ShareButtons } from "../components/ShareButtons";
+import { StructuredData } from "../components/StructuredData";
 import { updateCriticalSeo, updateNonCriticalSeo, updateStructuredData } from "../utils/seo-manager";
 
 const seoData = {
-  title: "Free Jet Lag Calculator - Calculate Recovery Time & Time Zone Adjustment Plan | EyeLoveSleep",
-  description: "Use our free jet lag calculator to beat jet lag fast with personalized adjustment plans. Our time zone calculator helps you calculate recovery time, get day-by-day sleep schedules, and adapt faster. Works for eastward and westward travel across all time zones. Free circadian rhythm adjustment calculator.",
+  title: "Jet Lag Calculator | Beat Jet Lag Fast - Time Zone Adjustment Plan",
+  description: "Free jet lag calculator with personalized adjustment plans. Calculate recovery time for any timezone. Get day-by-day sleep schedules for eastward and westward travel. Beat jet lag faster with science-based recommendations.",
   socialDescription: "Beat jet lag faster! Get a personalized day-by-day adjustment plan for any time zone. Perfect for business and leisure travelers. ✈️🌍",
-  keywords: "jet lag calculator, free jet lag calculator, beat jet lag calculator, time zone adjustment calculator, time zone calculator, jet lag remedy calculator, travel sleep calculator, jet lag recovery calculator, circadian rhythm calculator, jet lag prevention calculator, eastward travel calculator, westward travel calculator, international travel calculator, jet lag symptoms calculator, how to avoid jet lag calculator, jet lag treatment calculator, melatonin calculator, light therapy calculator",
+  keywords: "jet lag calculator, beat jet lag, time zone adjustment, jet lag recovery, circadian rhythm, jet lag remedy, how long does jet lag last, eastward travel, westward travel, jet lag symptoms, melatonin for jet lag, light therapy jet lag",
   url: "https://eyelovesleep.com/jet-lag",
   canonical: "https://eyelovesleep.com/jet-lag",
   ogImage: "https://eyelovesleep.com/og-jet-lag-calculator.png",
@@ -41,6 +42,21 @@ export default function JetLagPage() {
         <meta name="description" content={seoData.description} />
         <meta name="keywords" content={seoData.keywords} />
         <link rel="canonical" href={seoData.canonical} />
+        
+        {/* Additional SEO */}
+        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+        <meta name="author" content="EyeLoveSleep" />
+        <meta name="language" content="English" />
+        
+        {/* Google Discovery */}
+        <meta property="article:published_time" content="2024-01-15T08:00:00+00:00" />
+        <meta property="article:modified_time" content={new Date().toISOString()} />
+        <meta property="article:author" content="EyeLoveSleep" />
+        <meta property="article:section" content="Travel & Health" />
+        <meta property="article:tag" content="jet lag calculator" />
+        <meta property="article:tag" content="beat jet lag" />
+        <meta property="article:tag" content="time zone adjustment" />
+        <meta name="news_keywords" content="jet lag calculator, beat jet lag, time zone adjustment, circadian rhythm" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
@@ -75,15 +91,15 @@ export default function JetLagPage() {
         <main className="flex-1">
           <div className="container mx-auto px-4 py-2 md:py-3 max-w-7xl">
             <div className="space-y-1 md:space-y-2">
-              {/* Hero Section */}
+              {/* Hero Section with enhanced SEO */}
               <div className="text-center space-y-2 md:space-y-3">
                 <h1 className="text-white">
-                  Free Jet Lag Calculator - Calculate Time Zone Recovery & Adjustment Plan
+                  Jet Lag Calculator: Beat Jet Lag Fast with Personalized Adjustment Plan
                 </h1>
                 <p className="text-white/80 max-w-2xl mx-auto">
-                  Use our free jet lag calculator to beat jet lag with a personalized adjustment plan. Calculate your recovery time 
-                  and get day-by-day recommendations for sleep, light exposure, and melatonin to 
-                  quickly adapt to your new time zone with our circadian rhythm calculator.
+                  Free jet lag calculator for any timezone. Calculate recovery time and get personalized 
+                  day-by-day sleep schedules, light exposure recommendations, and melatonin timing. 
+                  Beat jet lag faster for eastward and westward travel.
                 </p>
               </div>
 
@@ -121,6 +137,9 @@ export default function JetLagPage() {
         <Footer />
         <ScrollToTop />
       </div>
+      
+      {/* Structured Data for SEO */}
+      <StructuredData type="jetlag" />
     </>
   );
 }

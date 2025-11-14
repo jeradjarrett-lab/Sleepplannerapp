@@ -8,6 +8,7 @@ import { registerServiceWorker } from "./utils/service-worker-registration";
 import { initCriticalCSS } from "./utils/critical-css";
 import { initResourcePrioritization } from "./utils/resource-prioritization";
 import { initErrorSuppression } from "./utils/error-suppression";
+import { setupAutoIndexNow } from "./utils/indexnow";
 
 // Import cache debug tools in development
 if (import.meta.env?.DEV || process.env.NODE_ENV === 'development') {
@@ -56,6 +57,9 @@ export default function App() {
       
       // Register service worker for offline support and caching
       registerServiceWorker();
+      
+      // Setup IndexNow for instant search engine indexing
+      setupAutoIndexNow();
       
       // Load analytics and share scripts after page is interactive (deferred for performance)
       loadThirdPartyScripts();
