@@ -1,60 +1,49 @@
 import { Moon, Coffee, Plane } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 interface NavigationMenuProps {
   currentPage: 'sleep' | 'caffeine' | 'jetlag';
 }
 
 export function NavigationMenu({ currentPage: propCurrentPage }: NavigationMenuProps) {
-  // Fallback: detect current page from URL if prop seems incorrect
-  const [currentPage, setCurrentPage] = useState<'sleep' | 'caffeine' | 'jetlag'>(propCurrentPage);
-
-  useEffect(() => {
-    // Auto-detect current page from URL as a fallback
-    const path = window.location.pathname;
-    let detectedPage: 'sleep' | 'caffeine' | 'jetlag' = 'sleep';
+  const location = useLocation();
+  
+  // Auto-detect current page from React Router location
+  const getCurrentPage = (): 'sleep' | 'caffeine' | 'jetlag' => {
+    const path = location.pathname;
     
-    // Match both /caffeine-sleep and /caffeine-sleep.html
     if (path.includes('caffeine-sleep')) {
-      detectedPage = 'caffeine';
+      return 'caffeine';
     } else if (path.includes('jet-lag')) {
-      detectedPage = 'jetlag';
-    } else if (path === '/' || path.includes('index')) {
-      detectedPage = 'sleep';
+      return 'jetlag';
     }
-
-    console.log(`NavigationMenu - Path: ${path}, Prop: ${propCurrentPage}, Detected: ${detectedPage}`);
-
-    // Use detected page if it differs from prop (indicates caching issue)
-    if (detectedPage !== propCurrentPage) {
-      console.warn(`Navigation menu prop mismatch: prop=${propCurrentPage}, detected=${detectedPage}. Using detected value.`);
-      setCurrentPage(detectedPage);
-    } else {
-      setCurrentPage(propCurrentPage);
-    }
-  }, [propCurrentPage]);
+    return 'sleep';
+  };
+  
+  const currentPage = getCurrentPage();
 
   const navItems = [
     {
       id: 'sleep',
       label: 'Sleep Calculator',
       icon: Moon,
-      path: 'index.html',
+      path: '/',
       description: 'Calculate optimal bedtime'
     },
     {
       id: 'caffeine',
       label: 'Caffeine & Sleep',
       icon: Coffee,
-      path: 'caffeine-sleep.html',
+      path: '/caffeine-sleep',
       description: 'Track caffeine intake'
     },
     {
       id: 'jetlag',
       label: 'Jet Lag',
       icon: Plane,
-      path: 'jet-lag.html',
+      path: '/jet-lag',
       description: 'Beat time zone changes'
     }
   ];
@@ -72,25 +61,20 @@ export function NavigationMenu({ currentPage: propCurrentPage }: NavigationMenuP
             const isActive = currentPage === item.id;
             
             return (
-              <motion.a
-                key={item.id}
-                href={item.path}
-                onClick={(e) => {
-                  console.log(`Navigation click: ${item.label} -> ${item.path}`);
-                  // Let the browser handle the navigation normally
-                }}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className={`
-                  relative flex-1 md:flex-none
-                  px-3 py-2 md:px-6 md:py-3 rounded-lg
-                  transition-all duration-300 ease-out block
-                  ${isActive 
-                    ? 'text-white' 
-                    : 'text-white/60 hover:text-white/80'
-                  }
-                `}
-              >
+              <Link key={item.id} to={item.path}>
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`
+                    relative flex-1 md:flex-none
+                    px-3 py-2 md:px-6 md:py-3 rounded-lg
+                    transition-all duration-300 ease-out block
+                    ${isActive 
+                      ? 'text-white' 
+                      : 'text-white/60 hover:text-white/80'
+                    }
+                  `}
+                >
                 {/* Active indicator with sliding animation */}
                 {isActive && (
                   <motion.div
@@ -116,7 +100,8 @@ export function NavigationMenu({ currentPage: propCurrentPage }: NavigationMenuP
                     </span>
                   </div>
                 </div>
-              </motion.a>
+              </motion.div>
+              </Link>
             );
           })}
         </div>

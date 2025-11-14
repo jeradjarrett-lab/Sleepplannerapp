@@ -4,7 +4,7 @@
   
   <!-- Sleep Calculator - Primary Page -->
   <url>
-    <loc>https://eyelovesleep.com/index.html</loc>
+    <loc>https://eyelovesleep.com/</loc>
     <lastmod>2025-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -17,7 +17,7 @@
   
   <!-- Caffeine & Sleep Calculator -->
   <url>
-    <loc>https://eyelovesleep.com/caffeine-sleep.html</loc>
+    <loc>https://eyelovesleep.com/caffeine-sleep</loc>
     <lastmod>2025-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -30,7 +30,7 @@
   
   <!-- Jet Lag Calculator -->
   <url>
-    <loc>https://eyelovesleep.com/jet-lag.html</loc>
+    <loc>https://eyelovesleep.com/jet-lag</loc>
     <lastmod>2025-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
