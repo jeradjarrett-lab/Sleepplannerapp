@@ -1,3 +1,7 @@
+// NOTE: This file is NO LONGER USED in the multi-page setup
+// Each page has its own entry point: sleep-main.tsx, caffeine-main.tsx, jet-lag-main.tsx
+// This file is kept for backwards compatibility only
+
 import { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
