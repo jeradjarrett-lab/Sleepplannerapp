@@ -25,6 +25,9 @@ if (!rootElement) {
 // Create root and render jet lag page
 const root = createRoot(rootElement);
 
+// Log to console for debugging
+console.log('✈️ Loading Jet Lag Calculator Page');
+
 root.render(
   <StrictMode>
     <HelmetProvider>

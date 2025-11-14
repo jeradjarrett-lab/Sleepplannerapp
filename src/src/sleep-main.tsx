@@ -25,6 +25,9 @@ if (!rootElement) {
 // Create root and render sleep calculator page
 const root = createRoot(rootElement);
 
+// Log to console for debugging
+console.log('🌙 Loading Sleep Calculator Page');
+
 root.render(
   <StrictMode>
     <HelmetProvider>

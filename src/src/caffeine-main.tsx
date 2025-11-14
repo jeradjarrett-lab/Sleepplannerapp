@@ -25,6 +25,9 @@ if (!rootElement) {
 // Create root and render caffeine sleep page
 const root = createRoot(rootElement);
 
+// Log to console for debugging
+console.log('☕ Loading Caffeine & Sleep Calculator Page');
+
 root.render(
   <StrictMode>
     <HelmetProvider>

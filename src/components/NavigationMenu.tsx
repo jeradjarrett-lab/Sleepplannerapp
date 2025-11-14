@@ -23,6 +23,8 @@ export function NavigationMenu({ currentPage: propCurrentPage }: NavigationMenuP
       detectedPage = 'sleep';
     }
 
+    console.log(`NavigationMenu - Path: ${path}, Prop: ${propCurrentPage}, Detected: ${detectedPage}`);
+
     // Use detected page if it differs from prop (indicates caching issue)
     if (detectedPage !== propCurrentPage) {
       console.warn(`Navigation menu prop mismatch: prop=${propCurrentPage}, detected=${detectedPage}. Using detected value.`);
@@ -37,7 +39,7 @@ export function NavigationMenu({ currentPage: propCurrentPage }: NavigationMenuP
       id: 'sleep',
       label: 'Sleep Calculator',
       icon: Moon,
-      path: '/index.html',
+      path: '/',
       description: 'Calculate optimal bedtime'
     },
     {
@@ -72,6 +74,10 @@ export function NavigationMenu({ currentPage: propCurrentPage }: NavigationMenuP
               <motion.a
                 key={item.id}
                 href={item.path}
+                onClick={(e) => {
+                  console.log(`Navigation click: ${item.label} -> ${item.path}`);
+                  // Let the browser handle the navigation normally
+                }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className={`
