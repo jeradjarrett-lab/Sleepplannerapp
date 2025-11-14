@@ -15,6 +15,7 @@ export function NavigationMenu({ currentPage: propCurrentPage }: NavigationMenuP
     const path = window.location.pathname;
     let detectedPage: 'sleep' | 'caffeine' | 'jetlag' = 'sleep';
     
+    // Match both /caffeine-sleep and /caffeine-sleep.html
     if (path.includes('caffeine-sleep')) {
       detectedPage = 'caffeine';
     } else if (path.includes('jet-lag')) {
@@ -46,14 +47,14 @@ export function NavigationMenu({ currentPage: propCurrentPage }: NavigationMenuP
       id: 'caffeine',
       label: 'Caffeine & Sleep',
       icon: Coffee,
-      path: '/caffeine-sleep.html',
+      path: '/caffeine-sleep',
       description: 'Track caffeine intake'
     },
     {
       id: 'jetlag',
       label: 'Jet Lag',
       icon: Plane,
-      path: '/jet-lag.html',
+      path: '/jet-lag',
       description: 'Beat time zone changes'
     }
   ];
