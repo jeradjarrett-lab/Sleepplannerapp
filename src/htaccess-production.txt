@@ -1,53 +1,35 @@
-# EyeLoveSleep Production .htaccess
-# Copy this file to your server as ".htaccess" (with the dot at the beginning)
+# EyeLoveSleep - Single Page Application .htaccess
+# Copy this content to your server as ".htaccess" (with the dot at the beginning)
+# OR just upload the /public/.htaccess file from your dist folder
 
-# PHP Handler (if needed for your server)
-<FilesMatch \.php$>
-  SetHandler proxy:fcgi://eyelovesleepcom-php81
-</FilesMatch>
-
-# Enable URL Rewriting
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
   
-  # Redirect www to non-www (optional)
-  # RewriteCond %{HTTP_HOST} ^www\.eyelovesleep\.com [NC]
-  # RewriteRule ^(.*)$ https://eyelovesleep.com/$1 [R=301,L]
+  # Don't rewrite files that actually exist
+  RewriteCond %{REQUEST_FILENAME} !-f
   
-  # Force HTTPS (optional but recommended)
-  # RewriteCond %{HTTPS} off
-  # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-  
-  # Redirect index.html to root
-  RewriteCond %{THE_REQUEST} /index\.html [NC]
-  RewriteRule ^index\.html$ / [R=301,L]
-  
-  # Remove trailing slashes
+  # Don't rewrite directories that actually exist
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_URI} (.+)/$
-  RewriteRule ^ %1 [R=301,L]
   
-  # Skip rewrite for existing files
-  RewriteCond %{REQUEST_FILENAME} -f
-  RewriteRule ^ - [L]
+  # Don't rewrite service worker
+  RewriteCond %{REQUEST_URI} !^/service-worker\.js
   
-  # Skip rewrite for existing directories
-  RewriteCond %{REQUEST_FILENAME} -d
-  RewriteRule ^ - [L]
-  
-  # Add .html to clean URLs if file exists
-  RewriteCond %{REQUEST_FILENAME}.html -f
-  RewriteRule ^(.+)$ $1.html [L]
-  
-  # Fallback to index.html for everything else
+  # Rewrite everything else to index.html to allow React Router to handle routing
   RewriteRule ^ index.html [L]
 </IfModule>
+
+# Disable directory browsing
+Options -Indexes
 
 # Browser Caching
 <IfModule mod_expires.c>
   ExpiresActive On
+  
+  # No cache for HTML (SPA needs fresh index.html)
   ExpiresByType text/html "access plus 0 seconds"
+  
+  # Long cache for assets with hash in filename
   ExpiresByType text/css "access plus 1 year"
   ExpiresByType application/javascript "access plus 1 year"
   ExpiresByType image/jpeg "access plus 1 year"
@@ -57,7 +39,7 @@
   ExpiresByType font/woff2 "access plus 1 year"
 </IfModule>
 
-# Cache Control
+# Cache Control Headers
 <IfModule mod_headers.c>
   # No cache for HTML
   <FilesMatch "\.(html|htm)$">
@@ -66,7 +48,7 @@
     Header set Expires "0"
   </FilesMatch>
   
-  # Cache static assets
+  # Long cache for static assets
   <FilesMatch "\.(js|css|woff2|jpg|jpeg|png|gif|svg|webp|ico)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
@@ -75,11 +57,13 @@
   Header set X-Content-Type-Options "nosniff"
   Header set X-Frame-Options "SAMEORIGIN"
   Header set X-XSS-Protection "1; mode=block"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
-# Compression
+# Enable Compression
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css
-  AddOutputFilterByType DEFLATE text/javascript application/javascript application/json
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml
+  AddOutputFilterByType DEFLATE text/css text/javascript
+  AddOutputFilterByType DEFLATE application/javascript application/json
   AddOutputFilterByType DEFLATE image/svg+xml
 </IfModule>
