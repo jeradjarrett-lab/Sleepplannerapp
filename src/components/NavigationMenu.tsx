@@ -40,21 +40,21 @@ export function NavigationMenu({ currentPage: propCurrentPage }: NavigationMenuP
       id: 'sleep',
       label: 'Sleep Calculator',
       icon: Moon,
-      path: '/',
+      path: '/index.html',
       description: 'Calculate optimal bedtime'
     },
     {
       id: 'caffeine',
       label: 'Caffeine & Sleep',
       icon: Coffee,
-      path: '/caffeine-sleep',
+      path: '/caffeine-sleep.html',
       description: 'Track caffeine intake'
     },
     {
       id: 'jetlag',
       label: 'Jet Lag',
       icon: Plane,
-      path: '/jet-lag',
+      path: '/jet-lag.html',
       description: 'Beat time zone changes'
     }
   ];
