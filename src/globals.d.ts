@@ -2,6 +2,8 @@
 
 interface Window {
   adsbygoogle: any[];
+  gtag: (...args: any[]) => void;
+  dataLayer: any[];
 }
 
 declare global {

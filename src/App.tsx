@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { addResourceHints } from "./utils/resource-hints";
 import { initPerformanceMonitoring } from "./utils/performance-monitor";
@@ -40,6 +40,26 @@ function PageLoader() {
       </div>
     </div>
   );
+}
+
+// Google Analytics page view tracker for SPA
+function GoogleAnalyticsTracker() {
+  const location = useLocation();
+  
+  useEffect(() => {
+    // Track page views on route change
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('config', 'G-8R36J5H706', {
+        page_path: location.pathname + location.search,
+      });
+      
+      if (import.meta.env?.DEV) {
+        console.log('📊 GA Page View:', location.pathname);
+      }
+    }
+  }, [location]);
+  
+  return null;
 }
 
 export default function App() {
@@ -137,6 +157,7 @@ export default function App() {
   return (
     <HelmetProvider>
       <Router>
+        <GoogleAnalyticsTracker />
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<SleepCalculatorPage />} />
