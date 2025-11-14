@@ -88,9 +88,7 @@ export default function CaffeineSleepPage() {
               </div>
 
               {/* Calculator Component */}
-              <section id="calculator">
-                <CaffeineSleepCalculator />
-              </section>
+              <CaffeineSleepCalculator />
 
               {/* Share Buttons */}
               <ShareButtons 

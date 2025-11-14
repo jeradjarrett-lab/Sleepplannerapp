@@ -162,7 +162,7 @@ export function SEOContent({ section }: SEOContentProps) {
   if (section === 'caffeine') {
     return (
       <article className="mt-12 md:mt-16 space-y-8">
-        <section className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl">
+        <section id="seo-content" className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl scroll-mt-24">
           <div className="flex items-start gap-3 mb-6">
             <BookOpen className="w-8 h-8 text-amber-400 flex-shrink-0 mt-1" />
             <div>
@@ -253,7 +253,7 @@ export function SEOContent({ section }: SEOContentProps) {
   if (section === 'jetlag') {
     return (
       <article className="mt-12 md:mt-16 space-y-8">
-        <section className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl">
+        <section id="seo-content" className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl scroll-mt-24">
           <div className="flex items-start gap-3 mb-6">
             <Globe className="w-8 h-8 text-amber-400 flex-shrink-0 mt-1" />
             <div>

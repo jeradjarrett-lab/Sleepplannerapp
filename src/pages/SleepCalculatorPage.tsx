@@ -8,6 +8,11 @@ import { ScienceBackedContent } from "../components/ScienceBackedContent";
 import { ScrollNav } from "../components/ScrollNav";
 import { ScrollToTop } from "../components/ScrollToTop";
 import { ShareButtons } from "../components/ShareButtons";
+import { QuickAnswers } from "../components/QuickAnswers";
+import { SEOContent } from "../components/SEOContent";
+import { HowToSection } from "../components/HowToSection";
+import { ComparisonTable } from "../components/ComparisonTable";
+import { FAQSection } from "../components/FAQSection";
 import { updateCriticalSeo, updateNonCriticalSeo, updateStructuredData } from "../utils/seo-manager";
 
 const seoData = {
@@ -91,8 +96,23 @@ export default function SleepCalculatorPage() {
                 url="https://eyelovesleep.com/"
               />
 
-              {/* Educational Content */}
+              {/* Quick Answers */}
+              <QuickAnswers section="sleep" />
+
+              {/* SEO Content */}
+              <SEOContent section="sleep" />
+
+              {/* Science-Backed Educational Content */}
               <ScienceBackedContent section="sleep" />
+
+              {/* How To Use */}
+              <HowToSection section="sleep" />
+
+              {/* Comparison Table */}
+              <ComparisonTable section="sleep" />
+
+              {/* FAQ Section */}
+              <FAQSection section="sleep" />
             </div>
           </div>
         </main>

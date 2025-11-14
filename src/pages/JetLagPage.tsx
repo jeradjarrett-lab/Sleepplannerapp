@@ -88,9 +88,7 @@ export default function JetLagPage() {
               </div>
 
               {/* Calculator Component */}
-              <section id="calculator">
-                <JetLagCalculator />
-              </section>
+              <JetLagCalculator />
 
               {/* Share Buttons */}
               <ShareButtons 

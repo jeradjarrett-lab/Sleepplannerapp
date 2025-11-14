@@ -12,21 +12,21 @@ export function NavigationMenu({ currentPage }: NavigationMenuProps) {
       id: 'sleep',
       label: 'Sleep Calculator',
       icon: Moon,
-      path: '/',
+      path: '/index.html',
       description: 'Calculate optimal bedtime'
     },
     {
       id: 'caffeine',
       label: 'Caffeine & Sleep',
       icon: Coffee,
-      path: '/caffeine-sleep',
+      path: '/caffeine-sleep.html',
       description: 'Track caffeine intake'
     },
     {
       id: 'jetlag',
       label: 'Jet Lag',
       icon: Plane,
-      path: '/jet-lag',
+      path: '/jet-lag.html',
       description: 'Beat time zone changes'
     }
   ];
@@ -44,50 +44,47 @@ export function NavigationMenu({ currentPage }: NavigationMenuProps) {
             const isActive = currentPage === item.id;
             
             return (
-              <a
+              <motion.a
                 key={item.id}
                 href={item.path}
-                className="relative flex-1 md:flex-none"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className={`
+                  relative flex-1 md:flex-none
+                  px-3 py-2 md:px-6 md:py-3 rounded-lg
+                  transition-all duration-300 ease-out block
+                  ${isActive 
+                    ? 'text-white' 
+                    : 'text-white/60 hover:text-white/80'
+                  }
+                `}
               >
-                <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`
-                    relative px-3 py-2 md:px-6 md:py-3 rounded-lg
-                    transition-all duration-300 ease-out
-                    ${isActive 
-                      ? 'text-white' 
-                      : 'text-white/60 hover:text-white/80'
-                    }
-                  `}
-                >
-                  {/* Active indicator with sliding animation */}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeTab"
-                      className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg shadow-lg"
-                      transition={{
-                        type: 'spring',
-                        stiffness: 380,
-                        damping: 30
-                      }}
-                    />
-                  )}
-                  
-                  {/* Content */}
-                  <div className="relative flex items-center gap-1.5 md:gap-2 justify-center">
-                    <Icon className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" aria-hidden="true" />
-                    <div className="flex flex-col items-start min-w-0">
-                      <span className="text-xs md:text-sm lg:text-base whitespace-nowrap overflow-hidden text-ellipsis">
-                        {item.label}
-                      </span>
-                      <span className="hidden lg:block text-[10px] text-white/50 whitespace-nowrap">
-                        {item.description}
-                      </span>
-                    </div>
+                {/* Active indicator with sliding animation */}
+                {isActive && (
+                  <motion.div
+                    layoutId="activeTab"
+                    className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg shadow-lg"
+                    transition={{
+                      type: 'spring',
+                      stiffness: 380,
+                      damping: 30
+                    }}
+                  />
+                )}
+                
+                {/* Content */}
+                <div className="relative flex items-center gap-1.5 md:gap-2 justify-center">
+                  <Icon className="w-4 h-4 md:w-5 md:h-5 flex-shrink-0" aria-hidden="true" />
+                  <div className="flex flex-col items-start min-w-0">
+                    <span className="text-xs md:text-sm lg:text-base whitespace-nowrap overflow-hidden text-ellipsis">
+                      {item.label}
+                    </span>
+                    <span className="hidden lg:block text-[10px] text-white/50 whitespace-nowrap">
+                      {item.description}
+                    </span>
                   </div>
-                </motion.div>
-              </a>
+                </div>
+              </motion.a>
             );
           })}
         </div>
