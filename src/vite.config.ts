@@ -83,6 +83,12 @@ export default defineConfig({
     
     // Chunk splitting strategy for better caching
     rollupOptions: {
+      // Multiple page entry points
+      input: {
+        main: '/index.html',
+        'caffeine-sleep': '/caffeine-sleep.html',
+        'jet-lag': '/jet-lag.html',
+      },
       output: {
         // Manual chunk splitting
         manualChunks: {

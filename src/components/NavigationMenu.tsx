@@ -1,5 +1,4 @@
 import { Moon, Coffee, Plane } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'motion/react';
 
 interface NavigationMenuProps {
@@ -7,7 +6,6 @@ interface NavigationMenuProps {
 }
 
 export function NavigationMenu({ currentPage }: NavigationMenuProps) {
-  const location = useLocation();
 
   const navItems = [
     {
@@ -46,9 +44,9 @@ export function NavigationMenu({ currentPage }: NavigationMenuProps) {
             const isActive = currentPage === item.id;
             
             return (
-              <Link
+              <a
                 key={item.id}
-                to={item.path}
+                href={item.path}
                 className="relative flex-1 md:flex-none"
               >
                 <motion.div
@@ -89,7 +87,7 @@ export function NavigationMenu({ currentPage }: NavigationMenuProps) {
                     </div>
                   </div>
                 </motion.div>
-              </Link>
+              </a>
             );
           })}
         </div>
