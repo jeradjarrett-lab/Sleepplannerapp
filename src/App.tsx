@@ -47,16 +47,47 @@ function GoogleAnalyticsTracker() {
   const location = useLocation();
   
   useEffect(() => {
-    // Track page views on route change
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('config', 'G-8R36J5H706', {
-        page_path: location.pathname + location.search,
-      });
-      
-      if (import.meta.env?.DEV) {
-        console.log('📊 GA Page View:', location.pathname);
+    // Load GA config script once when app mounts
+    const loadGAConfig = () => {
+      if (document.querySelector('script[src="/ga-config.js"]')) {
+        return; // Already loaded
       }
+      
+      const script = document.createElement('script');
+      script.src = '/ga-config.js';
+      script.async = true;
+      document.head.appendChild(script);
+    };
+    
+    // Load GA after a short delay to not block initial render
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadGAConfig, { timeout: 2000 });
+    } else {
+      setTimeout(loadGAConfig, 2000);
     }
+  }, []);
+  
+  useEffect(() => {
+    // Track page views on route change
+    // Wait for gtag to be available
+    const trackPageView = () => {
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'page_view', {
+          page_path: location.pathname + location.search,
+          page_location: window.location.href,
+          page_title: document.title
+        });
+        
+        if (import.meta.env?.DEV) {
+          console.log('📊 GA Page View:', location.pathname);
+        }
+      } else {
+        // GA not loaded yet, try again in 1 second
+        setTimeout(trackPageView, 1000);
+      }
+    };
+    
+    trackPageView();
   }, [location]);
   
   return null;
@@ -97,14 +128,15 @@ export default function App() {
       loadShareThisButtons();
     };
 
-    // Load after 4 seconds when browser is idle (no performance impact)
+    // Load after 5 seconds when browser is idle (no performance impact)
+    // Increased delay to improve LCP and FCP scores
     if ('requestIdleCallback' in window) {
       requestIdleCallback(() => {
-        setTimeout(loadScripts, 4000);
-      }, { timeout: 6000 });
+        setTimeout(loadScripts, 5000);
+      }, { timeout: 8000 });
     } else {
       // Fallback for older browsers
-      setTimeout(loadScripts, 5000);
+      setTimeout(loadScripts, 6000);
     }
   };
 

@@ -7,16 +7,19 @@ export const addResourceHints = () => {
   if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
   const resourceHints = [
-    // Google AdSense
-    { rel: 'preconnect', href: 'https://pagead2.googlesyndication.com', crossOrigin: true },
-    { rel: 'preconnect', href: 'https://adservice.google.com', crossOrigin: true },
-    { rel: 'preconnect', href: 'https://googleads.g.doubleclick.net', crossOrigin: true },
+    // Only use dns-prefetch for third-party domains to avoid blocking
+    // preconnect is more expensive and should only be used for critical resources
+    
+    // Google AdSense - lazy loaded, so only dns-prefetch
     { rel: 'dns-prefetch', href: 'https://pagead2.googlesyndication.com' },
     { rel: 'dns-prefetch', href: 'https://adservice.google.com' },
     { rel: 'dns-prefetch', href: 'https://googleads.g.doubleclick.net' },
     
-    // ShareThis
+    // ShareThis - lazy loaded
     { rel: 'dns-prefetch', href: 'https://platform-api.sharethis.com' },
+    
+    // Histats Analytics - lazy loaded
+    { rel: 'dns-prefetch', href: 'https://s10.histats.com' },
   ];
 
   // Check if hints already exist to avoid duplicates
