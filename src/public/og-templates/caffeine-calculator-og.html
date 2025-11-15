@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caffeine Calculator OG Image</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+    
+    .og-container {
+      width: 1200px;
+      height: 630px;
+      position: relative;
+      background: linear-gradient(135deg, #2c1810 0%, #4a2c1c 50%, #6b3e2e 100%);
+      overflow: hidden;
+    }
+    
+    /* Background image with overlay */
+    .bg-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://images.unsplash.com/photo-1645771321012-919d2e7aa858?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2ZmZWUlMjBjdXAlMjBtb3JuaW5nfGVufDF8fHx8MTc2MzA4NjgxMXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.25;
+    }
+    
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(44, 24, 16, 0.95) 0%, rgba(74, 44, 28, 0.9) 50%, rgba(107, 62, 46, 0.85) 100%);
+    }
+    
+    /* Content */
+    .content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 80px;
+      text-align: center;
+    }
+    
+    /* Icon */
+    .icon-container {
+      margin-bottom: 40px;
+      animation: steam 2s ease-in-out infinite;
+    }
+    
+    .icon {
+      width: 120px;
+      height: 120px;
+      background: rgba(205, 127, 50, 0.3);
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 20px 60px rgba(205, 127, 50, 0.4);
+    }
+    
+    .icon svg {
+      width: 70px;
+      height: 70px;
+      color: #cd7f32;
+    }
+    
+    /* Text */
+    .title {
+      font-size: 68px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 20px;
+      line-height: 1.1;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+    
+    .subtitle {
+      font-size: 36px;
+      font-weight: 600;
+      color: #d4a574;
+      margin-bottom: 30px;
+      text-shadow: 0 2px 10px rgba(212, 165, 116, 0.5);
+    }
+    
+    .description {
+      font-size: 28px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 900px;
+      line-height: 1.4;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+    
+    /* Brand */
+    .brand {
+      position: absolute;
+      bottom: 40px;
+      right: 60px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .brand-icon {
+      width: 50px;
+      height: 50px;
+      background: #cd7f32;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .brand-icon svg {
+      width: 30px;
+      height: 30px;
+      color: white;
+    }
+    
+    .brand-text {
+      font-size: 32px;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+    
+    /* Decorative elements */
+    .circle {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(205, 127, 50, 0.15) 0%, transparent 70%);
+    }
+    
+    .circle1 {
+      width: 400px;
+      height: 400px;
+      top: -200px;
+      right: -100px;
+    }
+    
+    .circle2 {
+      width: 300px;
+      height: 300px;
+      bottom: -150px;
+      left: -100px;
+    }
+    
+    @keyframes steam {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-8px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="og-container">
+    <!-- Background image with overlay -->
+    <div class="bg-image"></div>
+    <div class="overlay"></div>
+    
+    <!-- Decorative circles -->
+    <div class="circle circle1"></div>
+    <div class="circle circle2"></div>
+    
+    <!-- Content -->
+    <div class="content">
+      <div class="icon-container">
+        <div class="icon">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        </div>
+      </div>
+      
+      <h1 class="title">Caffeine Calculator</h1>
+      <p class="subtitle">When to Stop Coffee</p>
+      <p class="description">Track caffeine for better sleep</p>
+    </div>
+    
+    <!-- Brand -->
+    <div class="brand">
+      <div class="brand-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      </div>
+      <span class="brand-text">EyeLoveSleep</span>
+    </div>
+  </div>
+</body>
+</html>
