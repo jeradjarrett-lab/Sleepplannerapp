@@ -7,7 +7,7 @@ import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { TimeDial } from './TimeDial';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { format } from 'date-fns@4.1.0';
-import { TimeZoneMap } from './TimeZoneMap';
+import { TimeZoneMapInteractive as TimeZoneMap } from './TimeZoneMapInteractive';
 import { TimezoneCombobox, allTimezones } from './TimezoneCombobox';
 import { motion } from 'motion/react';
 
@@ -135,9 +135,19 @@ export function JetLagCalculator() {
   const calculateSleepSchedule = () => {
     if (!departureDate) return [];
     
+    // Science-based adjustment: 1 hour per day for pre-adjustment is optimal
     const daysToAdjust = Math.min(Math.ceil(hoursDiff / 2), 5); // Max 5 days of pre-adjustment
     const shiftPerDay = isEastward ? -60 : 60; // minutes to shift each day (earlier for east, later for west)
     const schedule = [];
+    
+    // Determine optimal home bedtime (22:00 = 10 PM as default)
+    const homeBedtimeHour = 22;
+    const homeWaketimeHour = 7;
+    
+    // Calculate destination bedtime/waketime based on timezone difference
+    // The goal is to align with local time at destination
+    const destinationBedtimeHour = (homeBedtimeHour + timeDiff + 24) % 24;
+    const destinationWaketimeHour = (homeWaketimeHour + timeDiff + 24) % 24;
     
     // Pre-departure days
     for (let i = daysToAdjust; i >= 1; i--) {
@@ -145,8 +155,8 @@ export function JetLagCalculator() {
       dayDate.setDate(dayDate.getDate() - i);
       
       const minutesShift = shiftPerDay * (daysToAdjust - i + 1);
-      const baseBedtime = 22 * 60; // 10 PM in minutes
-      const baseWaketime = 7 * 60; // 7 AM in minutes
+      const baseBedtime = homeBedtimeHour * 60; // Home bedtime in minutes
+      const baseWaketime = homeWaketimeHour * 60; // Home waketime in minutes
       
       const adjustedBedtime = baseBedtime + minutesShift;
       const adjustedWaketime = baseWaketime + minutesShift;
@@ -178,18 +188,18 @@ export function JetLagCalculator() {
       phase: 'travel'
     });
     
-    // Post-arrival days - approximately 1 day per time zone crossed
-    // Rule of thumb: It takes about 1 day per time zone to fully adjust
-    let recoveryDays = Math.ceil(hoursDiff);
+    // Post-arrival days - Science-based recovery calculation
+    // Research shows: 1 day per hour of time zone difference
+    // Eastward travel: 1.5 days per hour (harder to adjust)
+    // Westward travel: 1 day per hour (easier to adjust)
+    let recoveryDays = isEastward 
+      ? Math.ceil(hoursDiff * 1.5) 
+      : Math.ceil(hoursDiff * 1.0);
     
     // Minimum 2 days for any jet lag, maximum 14 days for extreme cases
     recoveryDays = Math.max(2, Math.min(recoveryDays, 14));
     
-    // Eastward travel is harder, so add extra recovery time for significant eastward travel
-    if (isEastward && hoursDiff > 5) {
-      recoveryDays = Math.min(recoveryDays + Math.ceil(hoursDiff * 0.2), 14);
-    }
-    
+    // Calculate gradual adjustment to destination bedtime
     for (let i = 1; i <= recoveryDays; i++) {
       const dayDate = arrivalDate ? new Date(arrivalDate) : new Date(departureDate);
       if (!arrivalDate) {
@@ -197,39 +207,82 @@ export function JetLagCalculator() {
       }
       dayDate.setDate(dayDate.getDate() + i - 1);
       
-      // Gradually adjust to destination time
-      const progressPercent = i / recoveryDays;
-      const destinationBedtime = 22; // 10 PM
-      const destinationWaketime = 7; // 7 AM
+      // Gradual adjustment: Start at home time, gradually shift to destination time
+      // Day 1: Closer to home time
+      // Final day: Fully at destination time
+      const adjustmentProgress = i / recoveryDays;
       
-      const bedHour = destinationBedtime;
-      const wakeHour = destinationWaketime;
-      
-      let dayNotes = '';
-      const percentAdjusted = Math.round((i / recoveryDays) * 100);
+      // Calculate gradual bedtime shift from home to destination
+      // Using linear interpolation for smooth transition
+      let targetBedtimeMinutes;
+      let targetWaketimeMinutes;
       
       if (i === 1) {
-        dayNotes = 'First day is critical: Stay awake until at least 9 PM local time. No naps longer than 20 minutes. Get sunlight exposure.';
-      } else if (i === 2) {
-        dayNotes = 'Continue with local schedule. Short power nap (20 min max) OK if needed. Avoid caffeine after 2 PM.';
-      } else if (i === 3) {
-        dayNotes = 'Your body is adjusting. Maintain consistent sleep/wake times. Exercise helps but avoid late workouts.';
-      } else if (i <= Math.ceil(recoveryDays / 2)) {
-        dayNotes = `About ${percentAdjusted}% adjusted. Keep following the local schedule. Stay consistent with sleep times.`;
-      } else if (i < recoveryDays - 1) {
-        dayNotes = `About ${percentAdjusted}% adjusted. Most symptoms should be fading. Stick to your routine and avoid late nights.`;
-      } else if (i === recoveryDays - 1) {
-        dayNotes = 'Nearly fully adjusted. Your circadian rhythm is aligning with local time. Keep up the good habits.';
+        // Day 1: Force destination bedtime but not too early (minimum 9 PM local)
+        const destinationMinutes = destinationBedtimeHour * 60;
+        const minBedtime = 21 * 60; // 9 PM minimum
+        targetBedtimeMinutes = Math.max(minBedtime, destinationMinutes);
+        targetWaketimeMinutes = destinationWaketimeHour * 60;
       } else {
-        dayNotes = 'Final adjustment day. You should feel completely synchronized with the new timezone.';
+        // Gradual adjustment: interpolate between current and destination time
+        const homeBedMinutes = homeBedtimeHour * 60;
+        const destBedMinutes = destinationBedtimeHour * 60;
+        const homeWakeMinutes = homeWaketimeHour * 60;
+        const destWakeMinutes = destinationWaketimeHour * 60;
+        
+        // Handle wrapping around midnight
+        let bedDiff = destBedMinutes - homeBedMinutes;
+        if (Math.abs(bedDiff) > 12 * 60) {
+          // Adjust for crossing midnight
+          if (bedDiff > 0) bedDiff -= 24 * 60;
+          else bedDiff += 24 * 60;
+        }
+        
+        let wakeDiff = destWakeMinutes - homeWakeMinutes;
+        if (Math.abs(wakeDiff) > 12 * 60) {
+          if (wakeDiff > 0) wakeDiff -= 24 * 60;
+          else wakeDiff += 24 * 60;
+        }
+        
+        targetBedtimeMinutes = homeBedMinutes + (bedDiff * adjustmentProgress);
+        targetWaketimeMinutes = homeWakeMinutes + (wakeDiff * adjustmentProgress);
+      }
+      
+      // Normalize to 24-hour format
+      const bedHour = Math.floor((targetBedtimeMinutes + 24 * 60) % (24 * 60) / 60);
+      const bedMin = Math.floor((targetBedtimeMinutes + 24 * 60) % 60);
+      const wakeHour = Math.floor((targetWaketimeMinutes + 24 * 60) % (24 * 60) / 60);
+      const wakeMin = Math.floor((targetWaketimeMinutes + 24 * 60) % 60);
+      
+      // Generate personalized advice based on day and progress
+      let dayNotes = '';
+      const percentAdjusted = Math.round((i / recoveryDays) * 100);
+      const currentLocalBedtime = `${bedHour.toString().padStart(2, '0')}:${bedMin.toString().padStart(2, '0')}`;
+      
+      if (i === 1) {
+        dayNotes = `Critical first day: Stay awake until at least 9 PM local time (your target is ${formatTime12Hour(currentLocalBedtime)}). No naps longer than 20 minutes. Maximum sunlight exposure during day.`;
+      } else if (i === 2) {
+        dayNotes = `Continue adjusting to local schedule. Short power nap (20 min max) OK if needed. Avoid caffeine after 2 PM local time. Aim for ${formatTime12Hour(currentLocalBedtime)} bedtime.`;
+      } else if (i === 3) {
+        dayNotes = `Your body is adjusting (~${percentAdjusted}% there). Maintain consistent sleep/wake times. Exercise helps but avoid intense workouts after 6 PM.`;
+      } else if (i <= Math.ceil(recoveryDays / 2)) {
+        dayNotes = `About ${percentAdjusted}% adjusted. Keep following the local schedule strictly. Your target bedtime is ${formatTime12Hour(currentLocalBedtime)}. Stay consistent.`;
+      } else if (i < recoveryDays - 1) {
+        dayNotes = `About ${percentAdjusted}% adjusted. Most jet lag symptoms should be fading. Stick to ${formatTime12Hour(currentLocalBedtime)} bedtime and avoid late nights.`;
+      } else if (i === recoveryDays - 1) {
+        dayNotes = `Nearly fully adjusted (~${percentAdjusted}%). Your circadian rhythm is aligning with local time. Keep up the good habits.`;
+      } else {
+        dayNotes = `Final adjustment day! You should feel completely synchronized with the new timezone. Maintain this ${formatTime12Hour(currentLocalBedtime)} bedtime.`;
       }
       
       schedule.push({
         day: `Day ${i}`,
         date: dayDate,
-        bedtime: `${bedHour.toString().padStart(2, '0')}:00`,
-        waketime: `${wakeHour.toString().padStart(2, '0')}:00`,
-        lightExposure: isEastward ? 'Seek bright light in morning, avoid in evening' : 'Seek light in evening, wear sunglasses in morning',
+        bedtime: `${bedHour.toString().padStart(2, '0')}:${bedMin.toString().padStart(2, '0')}`,
+        waketime: `${wakeHour.toString().padStart(2, '0')}:${wakeMin.toString().padStart(2, '0')}`,
+        lightExposure: isEastward 
+          ? 'Seek bright light in morning (7-10 AM), avoid in evening. Use blue light blocking glasses after 8 PM.' 
+          : 'Seek bright light in evening (4-7 PM), wear sunglasses in morning if needed.',
         notes: dayNotes,
         phase: 'recovery'
       });

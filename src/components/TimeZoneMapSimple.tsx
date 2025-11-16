@@ -279,7 +279,7 @@ const cityCoordinates: { [key: string]: [number, number] } = {
   'Kiritimati': [1.8721, -157.3597],
 };
 
-export function TimeZoneMap({ fromCity, toCity, fromOffset, toOffset }: TimeZoneMapProps) {
+export function TimeZoneMapSimple({ fromCity, toCity, fromOffset, toOffset }: TimeZoneMapProps) {
   // Show placeholder if cities not selected
   if (!fromCity || !toCity) {
     return (
@@ -298,7 +298,6 @@ export function TimeZoneMap({ fromCity, toCity, fromOffset, toOffset }: TimeZone
   const toCoords = cityCoordinates[toCity] || [0, 0];
 
   // Convert lat/lng to SVG coordinates
-  // Lat: -90 to 90, Lng: -180 to 180
   const latToY = (lat: number) => {
     return ((90 - lat) / 180) * 100;
   };
@@ -318,7 +317,6 @@ export function TimeZoneMap({ fromCity, toCity, fromOffset, toOffset }: TimeZone
   const distance = Math.sqrt(Math.pow(toX - fromX, 2) + Math.pow(toY - fromY, 2));
   const curvature = Math.min(distance * 0.3, 20);
 
-  // Control point for the curve (perpendicular to midpoint)
   const dx = toX - fromX;
   const dy = toY - fromY;
   const perpX = -dy / distance;
@@ -327,7 +325,6 @@ export function TimeZoneMap({ fromCity, toCity, fromOffset, toOffset }: TimeZone
   const controlY = midY + perpY * curvature;
 
   const pathData = `M ${fromX} ${fromY} Q ${controlX} ${controlY} ${toX} ${toY}`;
-
   const timeDiff = Math.abs(toOffset - fromOffset);
 
   return (
@@ -344,7 +341,7 @@ export function TimeZoneMap({ fromCity, toCity, fromOffset, toOffset }: TimeZone
       </div>
       
       <div className="w-full h-[300px] md:h-[400px] rounded-lg overflow-hidden border-2 border-white/10 shadow-xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative">
-        {/* World map SVG visualization */}
+        {/* World map SVG visualization - SIMPLE SHAPES VERSION */}
         <svg
           viewBox="0 0 100 100"
           className="w-full h-full"
@@ -363,110 +360,65 @@ export function TimeZoneMap({ fromCity, toCity, fromOffset, toOffset }: TimeZone
           </defs>
           <rect width="100" height="100" fill="url(#grid)" />
 
-          {/* Simplified World Map - Major Continents & Countries */}
-          <g opacity="0.8" fill="rgba(100,160,255,0.3)" stroke="rgba(150,200,255,0.7)" strokeWidth="0.4">
-            {/* North America */}
-            {/* Canada */}
-            <path d="M 8 8 L 10 12 L 12 15 L 15 18 L 18 20 L 22 22 L 26 23 L 30 22 L 32 20 L 34 18 L 35 15 L 34 12 L 32 10 L 28 8 L 24 7 L 20 7 L 16 7 L 12 7 Z" />
+          {/* SIMPLE WORLD MAP - Large Visible Shapes with MAXIMUM VISIBILITY */}
+          <g opacity="1" fill="rgba(100,160,255,0.4)" stroke="rgba(180,220,255,0.8)" strokeWidth="1">
+            {/* North America - large ellipse */}
+            <ellipse cx="18" cy="25" rx="12" ry="18" />
             
-            {/* United States */}
-            <path d="M 10 22 L 12 25 L 14 28 L 16 30 L 18 32 L 20 33 L 24 34 L 28 33 L 30 31 L 32 28 L 33 25 L 32 23 L 30 22 L 26 22 L 22 23 L 18 24 L 14 24 Z" />
+            {/* Central America connection */}
+            <rect x="16" y="38" width="6" height="6" rx="2" />
             
-            {/* Mexico */}
-            <path d="M 14 34 L 16 36 L 18 38 L 20 39 L 22 39 L 24 38 L 25 36 L 24 34 L 22 34 L 20 34 L 18 35 Z" />
-            
-            {/* Central America */}
-            <path d="M 20 39 L 21 41 L 22 42 L 23 42 L 24 41 L 23 40 L 22 40 Z" />
-            
-            {/* South America */}
-            {/* Brazil */}
-            <path d="M 24 43 L 26 46 L 28 50 L 29 54 L 30 58 L 30 62 L 29 66 L 28 68 L 26 69 L 24 68 L 22 66 L 21 62 L 21 58 L 22 54 L 23 50 L 24 46 Z" />
-            
-            {/* Argentina */}
-            <path d="M 22 66 L 23 70 L 24 74 L 24 78 L 23 80 L 22 78 L 21 74 L 20 70 L 20 68 Z" />
+            {/* South America - ellipse */}
+            <ellipse cx="25" cy="58" rx="8" ry="20" />
             
             {/* Greenland */}
-            <path d="M 32 5 L 36 6 L 38 8 L 39 10 L 38 13 L 36 14 L 34 13 L 32 11 L 31 9 L 31 7 Z" />
+            <ellipse cx="35" cy="10" rx="5" ry="6" />
             
-            {/* Europe */}
-            {/* Scandinavia */}
-            <path d="M 48 10 L 50 12 L 52 14 L 53 16 L 52 18 L 50 18 L 48 17 L 47 15 L 47 13 Z" />
+            {/* Europe - compact shape */}
+            <ellipse cx="48" cy="22" rx="6" ry="8" />
             
-            {/* UK & Ireland */}
-            <path d="M 44 16 L 45 18 L 46 19 L 45 20 L 44 19 L 43 18 Z" />
-            
-            {/* Western Europe */}
-            <path d="M 45 20 L 47 22 L 49 24 L 51 25 L 52 26 L 51 27 L 49 27 L 47 26 L 46 24 L 45 22 Z" />
-            
-            {/* Eastern Europe */}
-            <path d="M 52 18 L 54 20 L 56 22 L 58 24 L 58 26 L 56 27 L 54 26 L 52 24 L 51 22 Z" />
-            
-            {/* Mediterranean */}
-            <path d="M 47 27 L 49 28 L 51 29 L 53 29 L 54 28 L 53 27 L 51 27 Z" />
-            
-            {/* Africa */}
-            {/* North Africa */}
-            <path d="M 46 30 L 48 32 L 50 33 L 53 34 L 56 34 L 58 33 L 58 31 L 56 30 L 54 30 L 52 30 L 50 31 Z" />
-            
-            {/* West Africa */}
-            <path d="M 45 34 L 47 36 L 48 39 L 49 41 L 48 43 L 47 42 L 46 40 L 45 38 Z" />
-            
-            {/* Central Africa */}
-            <path d="M 48 43 L 50 45 L 52 47 L 54 49 L 55 50 L 54 51 L 52 50 L 50 49 L 49 47 Z" />
-            
-            {/* East Africa */}
-            <path d="M 55 35 L 57 37 L 59 40 L 60 43 L 60 46 L 59 48 L 58 47 L 57 45 L 56 42 L 55 39 Z" />
-            
-            {/* Southern Africa */}
-            <path d="M 52 51 L 54 53 L 56 56 L 57 59 L 57 61 L 56 62 L 54 62 L 52 60 L 51 58 L 50 55 Z" />
-            
-            {/* Madagascar */}
-            <path d="M 60 52 L 61 54 L 61 57 L 60 59 L 59 58 L 59 55 L 59 53 Z" />
+            {/* Africa - distinctive shape */}
+            <ellipse cx="52" cy="45" rx="9" ry="18" />
             
             {/* Middle East */}
-            <path d="M 56 28 L 58 29 L 61 30 L 63 31 L 64 32 L 63 33 L 61 33 L 59 32 L 57 31 Z" />
+            <ellipse cx="58" cy="30" rx="4" ry="5" />
             
-            {/* Asia */}
-            {/* Russia - Western */}
-            <path d="M 58 10 L 62 12 L 66 13 L 70 14 L 72 13 L 70 11 L 66 10 L 62 9 Z" />
+            {/* Asia - large continent */}
+            <ellipse cx="72" cy="28" rx="16" ry="14" />
             
-            {/* Russia - Central */}
-            <path d="M 70 8 L 74 9 L 78 10 L 82 11 L 85 12 L 87 11 L 85 9 L 81 8 L 77 7 L 73 7 Z" />
-            
-            {/* Russia - Eastern */}
-            <path d="M 85 8 L 89 9 L 93 10 L 95 11 L 96 13 L 95 14 L 92 13 L 88 12 Z" />
-            
-            {/* India */}
-            <path d="M 65 35 L 67 37 L 69 40 L 70 43 L 70 46 L 69 48 L 67 49 L 65 48 L 64 46 L 63 43 L 63 40 L 64 37 Z" />
+            {/* India subcontinent */}
+            <ellipse cx="67" cy="42" rx="4" ry="7" />
             
             {/* Southeast Asia */}
-            <path d="M 70 43 L 72 45 L 74 47 L 76 48 L 77 47 L 76 45 L 74 44 L 72 43 Z" />
+            <ellipse cx="74" cy="47" rx="4" ry="4" />
             
-            {/* China */}
-            <path d="M 70 20 L 73 22 L 76 24 L 79 26 L 82 28 L 84 30 L 85 32 L 84 34 L 82 34 L 79 33 L 76 31 L 73 29 L 71 27 L 69 25 L 68 23 Z" />
+            {/* Japan archipelago */}
+            <ellipse cx="86" cy="30" rx="2" ry="6" transform="rotate(15 86 30)" />
             
-            {/* Japan */}
-            <path d="M 86 26 L 87 28 L 88 31 L 88 33 L 87 34 L 86 33 L 85 31 L 85 29 L 85 27 Z" />
+            {/* Indonesia chain */}
+            <ellipse cx="78" cy="51" rx="7" ry="2" />
             
-            {/* Korean Peninsula */}
-            <path d="M 84 28 L 85 30 L 85 32 L 84 33 L 83 32 L 83 30 Z" />
-            
-            {/* Indonesia */}
-            <path d="M 72 50 L 74 51 L 77 52 L 80 52 L 82 51 L 81 50 L 79 50 L 76 50 L 74 50 Z" />
-            <path d="M 83 51 L 85 51 L 87 51 L 88 50 L 87 49 L 85 49 L 83 50 Z" />
-            
-            {/* Philippines */}
-            <path d="M 82 42 L 83 44 L 83 46 L 82 48 L 81 47 L 81 45 L 81 43 Z" />
-            
-            {/* Australia */}
-            <path d="M 78 56 L 82 55 L 86 55 L 90 56 L 93 58 L 94 61 L 94 64 L 92 67 L 89 69 L 85 70 L 81 70 L 78 68 L 76 65 L 76 62 L 77 59 Z" />
+            {/* Australia - large island */}
+            <ellipse cx="83" cy="64" rx="9" ry="8" />
             
             {/* New Zealand */}
-            <path d="M 95 72 L 96 74 L 96 76 L 95 77 L 94 76 L 94 74 Z" />
-            <path d="M 94 78 L 95 80 L 95 82 L 94 83 L 93 82 L 93 80 Z" />
+            <ellipse cx="95" cy="73" rx="1.5" ry="4" />
             
-            {/* Antarctica (simplified) */}
-            <path d="M 0 88 L 15 90 L 30 92 L 50 93 L 70 92 L 85 90 L 100 88 L 100 98 L 0 98 Z" opacity="0.4" />
+            {/* Antarctica - bottom strip */}
+            <ellipse cx="50" cy="91" rx="45" ry="6" />
+            
+            {/* Madagascar */}
+            <ellipse cx="60" cy="56" rx="1.5" ry="4" />
+          </g>
+
+          {/* Continent Labels - Small readable text */}
+          <g fill="rgba(180,220,255,0.9)" fontSize="2.5" fontFamily="Inter, sans-serif" textAnchor="middle">
+            <text x="18" y="26">N. AMERICA</text>
+            <text x="25" y="60">S. AMERICA</text>
+            <text x="48" y="23">EUROPE</text>
+            <text x="52" y="46">AFRICA</text>
+            <text x="72" y="29">ASIA</text>
+            <text x="83" y="65">AUSTRALIA</text>
           </g>
 
           {/* Equator line */}
@@ -475,8 +427,8 @@ export function TimeZoneMap({ fromCity, toCity, fromOffset, toOffset }: TimeZone
             y1="50"
             x2="100"
             y2="50"
-            stroke="rgba(255,255,255,0.15)"
-            strokeWidth="0.3"
+            stroke="rgba(255,255,255,0.2)"
+            strokeWidth="0.4"
             strokeDasharray="2,2"
           />
 
@@ -486,29 +438,9 @@ export function TimeZoneMap({ fromCity, toCity, fromOffset, toOffset }: TimeZone
             y1="0"
             x2="50"
             y2="100"
-            stroke="rgba(255,255,255,0.15)"
-            strokeWidth="0.3"
+            stroke="rgba(255,255,255,0.2)"
+            strokeWidth="0.4"
             strokeDasharray="2,2"
-          />
-          
-          {/* Tropic lines */}
-          <line
-            x1="0"
-            y1="36"
-            x2="100"
-            y2="36"
-            stroke="rgba(255,255,255,0.08)"
-            strokeWidth="0.2"
-            strokeDasharray="1,1"
-          />
-          <line
-            x1="0"
-            y1="64"
-            x2="100"
-            y2="64"
-            stroke="rgba(255,255,255,0.08)"
-            strokeWidth="0.2"
-            strokeDasharray="1,1"
           />
 
           {/* Flight path */}
@@ -516,9 +448,9 @@ export function TimeZoneMap({ fromCity, toCity, fromOffset, toOffset }: TimeZone
             d={pathData}
             fill="none"
             stroke="url(#gradient)"
-            strokeWidth="0.5"
+            strokeWidth="0.8"
             strokeDasharray="2,1"
-            opacity="0.8"
+            opacity="0.9"
           />
 
           <defs>
@@ -533,31 +465,31 @@ export function TimeZoneMap({ fromCity, toCity, fromOffset, toOffset }: TimeZone
             <circle
               cx={fromX}
               cy={fromY}
-              r="2"
+              r="2.5"
               fill="#4f86f7"
               stroke="white"
-              strokeWidth="0.5"
-              opacity="0.9"
+              strokeWidth="0.6"
+              opacity="1"
             />
             <circle
               cx={fromX}
               cy={fromY}
-              r="3"
+              r="3.5"
               fill="none"
               stroke="#4f86f7"
-              strokeWidth="0.3"
-              opacity="0.5"
+              strokeWidth="0.4"
+              opacity="0.6"
             >
               <animate
                 attributeName="r"
-                from="2"
-                to="5"
+                from="2.5"
+                to="6"
                 dur="2s"
                 repeatCount="indefinite"
               />
               <animate
                 attributeName="opacity"
-                from="0.5"
+                from="0.6"
                 to="0"
                 dur="2s"
                 repeatCount="indefinite"
@@ -570,31 +502,31 @@ export function TimeZoneMap({ fromCity, toCity, fromOffset, toOffset }: TimeZone
             <circle
               cx={toX}
               cy={toY}
-              r="2"
+              r="2.5"
               fill="#a855f7"
               stroke="white"
-              strokeWidth="0.5"
-              opacity="0.9"
+              strokeWidth="0.6"
+              opacity="1"
             />
             <circle
               cx={toX}
               cy={toY}
-              r="3"
+              r="3.5"
               fill="none"
               stroke="#a855f7"
-              strokeWidth="0.3"
-              opacity="0.5"
+              strokeWidth="0.4"
+              opacity="0.6"
             >
               <animate
                 attributeName="r"
-                from="2"
-                to="5"
+                from="2.5"
+                to="6"
                 dur="2s"
                 repeatCount="indefinite"
               />
               <animate
                 attributeName="opacity"
-                from="0.5"
+                from="0.6"
                 to="0"
                 dur="2s"
                 repeatCount="indefinite"
@@ -604,7 +536,7 @@ export function TimeZoneMap({ fromCity, toCity, fromOffset, toOffset }: TimeZone
 
           {/* Animated plane */}
           <g>
-            <text fontSize="3" fill="#a855f7">
+            <text fontSize="4" fill="#a855f7">
               <animateMotion dur="6s" repeatCount="indefinite" path={pathData} />
               ✈️
             </text>
@@ -627,7 +559,7 @@ export function TimeZoneMap({ fromCity, toCity, fromOffset, toOffset }: TimeZone
       </div>
 
       <p className="text-xs text-white/40 text-center">
-        Simplified world map showing your travel route between time zones
+        World map showing your travel route between time zones
       </p>
     </div>
   );
